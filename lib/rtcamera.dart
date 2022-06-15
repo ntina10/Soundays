@@ -26,7 +26,7 @@ class _RtCameraState extends State<RtCamera> {
   late List<int> _theImg;
   File myfile = new File("assets/test_face.jpg");
 
-  void _initializeCamera() async {
+  void _initializeCamera() {
     final CameraController cameraController = CameraController(
       cameras[1],
       ResolutionPreset.high,
@@ -39,10 +39,11 @@ class _RtCameraState extends State<RtCamera> {
       }
       setState(() {});
 
-      await _controller.startImageStream((CameraImage availableImage) async {
+      _controller.startImageStream((CameraImage availableImage) async {
         // var myimg = convertYUV420toImage(availableImage);
-        await callApi(availableImage);
-        await Future.delayed(Duration(seconds: 2));
+        _controller.stopImageStream();
+        callApi(availableImage);
+        await Future.delayed(Duration(seconds: 5));
       });
 
     });
@@ -168,7 +169,7 @@ class _RtCameraState extends State<RtCamera> {
   }
 
   Future<void> callApi(img) async {
-    var url = Uri.parse('http://192.168.1.12:3000/temp');
+    var url = Uri.parse('http://192.168.1.8:3000/temp');
     print("Stuck here before await getDataCam");
 
     //convert CameraImage to List<int>
@@ -178,8 +179,9 @@ class _RtCameraState extends State<RtCamera> {
     //pass List<int> to File object so that api getData() works
     //File thisImg = await File('assets/test_face.jpg').writeAsBytes(_theImg);
     //print("set go");
-
-    var data = await getDataCam(_theImg, url);
+    Uint8List ooof = Uint8List.fromList(_theImg);
+    File thisIsItHopefully = File.fromRawPath(ooof);
+    var data = await getDataCam(ooof, url);
     print("notHere");
     var decodedData = jsonDecode(data.body);
 

@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 Future<http.Response> getDataCam(file, url) async {
-  //String filename = file.path.split('/').last;
+  // String filename = file.path.split('/').last;
   print("Got in get data");
   var request = http.MultipartRequest(
     'POST',
@@ -10,7 +10,7 @@ Future<http.Response> getDataCam(file, url) async {
   );
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
 
-  print("This is file"+file.toString());
+  print("This is file " + file.toString());
   // var multipartFile = http.MultipartFile.fromBytes(
   //   'image',
   //   (await rootBundle.load('lib/assets/'+filename)).buffer.asUint8List(),
@@ -23,9 +23,19 @@ Future<http.Response> getDataCam(file, url) async {
     http.MultipartFile.fromBytes(
       'image',
       file,
-
+      filename: 'placeholder_filename'
     ),
   );
+
+  // request.files.add(
+  //   // multipartFile
+  //   http.MultipartFile(
+  //     'image',
+  //     file.readAsBytes().asStream(),
+  //     file.lengthSync(),
+  //     filename: filename,
+  //   ),
+  // );
 
   print(request.files[0]);
 

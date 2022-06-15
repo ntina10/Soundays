@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 Future<http.Response> getData(file, url) async {
   print("Got in get data");
   String filename = file.path.split('/').last;
-  print("Got in get data 2");
   var request = http.MultipartRequest(
     'POST',
     url,

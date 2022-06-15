@@ -45,7 +45,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
 
   void _recognizeEmotions() async {
-    // TODO: Initialize the text recognizer here, and
+    // Initialize the recognizer here, and
     // parse the text to find email addresses in it
     _getImageSize(File(_imagePath));
 
@@ -54,7 +54,7 @@ class _DetailScreenState extends State<DetailScreen> {
     //
     // print("THIS", inputImage);
 
-    var url = Uri.parse('http://192.168.1.12:3000/emotion');
+    var url = Uri.parse('http://192.168.1.8:3000/emotion');
 
     var data = await getData(File(_imagePath), url);
     var decodedData = jsonDecode(data.body);

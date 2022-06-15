@@ -25,6 +25,8 @@ def hello_world():
     print("Request", request)
     imagefile = request.files["image"]
 
+    print("imagefile image", imagefile)
+
     filename = werkzeug.utils.secure_filename(imagefile.filename)
     print("\nReceived image File name : " + imagefile.filename)
     imagefile.save("images/" + filename)
@@ -44,14 +46,16 @@ def mytemp():
     json_file['query'] = 'Hello World!'
 
     print("This is an api call")
-    print("Request", request)
+    print("Request", request.files)
     imagefile = request.files["image"]
 
+    print("imagefile", imagefile)
+
     filename = "sth.jpg"
-    # filename = werkzeug.utils.secure_filename(imagefile.filename)
-    # print("\nReceived image File name : " + imagefile.filename)
     imagefile.save("images/" + filename)
     test_image = "./images/" + filename
+
+    print("save done")
 
     image_prediction = detector.detect_image(test_image)
 
