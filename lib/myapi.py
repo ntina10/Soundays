@@ -1,3 +1,5 @@
+import math
+
 from flask import Flask, jsonify, request
 import werkzeug.utils
 from feat.detector import Detector
@@ -61,6 +63,11 @@ def mytemp():
 
     emotion = (image_prediction.emotions()).to_dict()
     print(emotion)
+    print(emotion['anger'][0])
+    if(math. isnan(emotion['anger'][0])):
+        emotion = {}
+        emotion['ans'] = 'No Face Detected!'
+
     json_file['result'] = emotion
 
     return jsonify(json_file)

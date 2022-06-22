@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
@@ -19,34 +20,52 @@ class RtCamera extends StatefulWidget {
 
 class _RtCameraState extends State<RtCamera> {
 
-  late final CameraController _controller;
+  late CameraController _controller;
+
+  bool _isDetecting = false;
+  bool _faceFound = true;
 
   List<String>? _listEmotionStrings;
   List<String>? _listResultsStrings;
   late List<int> _theImg;
   File myfile = new File("assets/test_face.jpg");
 
-  void _initializeCamera() {
+  Future<void> _initializeCamera() async {
     final CameraController cameraController = CameraController(
       cameras[1],
       ResolutionPreset.high,
     );
     _controller = cameraController;
+    await _controller.initialize();
 
-    _controller.initialize().then((_) async {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
+    await Future.delayed(Duration(milliseconds: 500));
+    // tempDir = await getApplicationDocumentsDirectory();
+    // String _embPath = tempDir.path + '/emb.json';
+    // jsonFile = new File(_embPath);
+    // if (jsonFile.existsSync()) data = json.decode(jsonFile.readAsStringSync());
 
-      _controller.startImageStream((CameraImage availableImage) async {
-        // var myimg = convertYUV420toImage(availableImage);
-        _controller.stopImageStream();
-        callApi(availableImage);
-        await Future.delayed(Duration(seconds: 5));
-      });
+    _controller.startImageStream((CameraImage availableImage) async {
+      if (_isDetecting) return;
+      _isDetecting = true;
 
+      // var myimg = convertYUV420toImage(availableImage);
+      //_controller.stopImageStream();
+      //await Future.delayed(Duration(seconds: 3));
+      //Timer(Duration(seconds: 3), () {
+
+      callApi(availableImage);
     });
+
+    // S.then((_) async { //_controller.initialize().then
+    //   if (!mounted) {
+    //     return;
+    //   }
+    //   setState(() {});
+    //
+    //   //start image stream
+    //   });
+    //
+    // });
   }
 
   // Future<Image?> convertYUV420toImageColor(CameraImage image) async {
@@ -180,28 +199,49 @@ class _RtCameraState extends State<RtCamera> {
     //File thisImg = await File('assets/test_face.jpg').writeAsBytes(_theImg);
     //print("set go");
     Uint8List ooof = Uint8List.fromList(_theImg);
-    File thisIsItHopefully = File.fromRawPath(ooof);
+    //File thisIsItHopefully = File.fromRawPath(ooof);
     var data = await getDataCam(ooof, url);
     print("notHere");
     var decodedData = jsonDecode(data.body);
 
-    List<String> emotionStrings = ["anger",  "disgust", "fear", "happiness", "neutral", "sadness", "surprise"];
-    List<String> resultsStrings = [];
+    _isDetecting = false;
 
-    for(var i in emotionStrings) {
-      resultsStrings.add(decodedData['result'][i]['0'].toString());
+    if (decodedData['result']['ans'] == null) {
+      List<String> emotionStrings = [
+        "anger",
+        "disgust",
+        "fear",
+        "happiness",
+        "neutral",
+        "sadness",
+        "surprise"
+      ];
+      List<String> resultsStrings = [];
+
+      for (var i in emotionStrings) {
+        resultsStrings.add(decodedData['result'][i]['0'].toString());
+      }
+
+      setState(() {
+        _faceFound = true;
+        _listEmotionStrings = emotionStrings;
+        _listResultsStrings = resultsStrings;
+      });
+    } else {
+      List<String> resultsStrings = [];
+      resultsStrings.add("No Face Detected");
+      setState(() {
+        _faceFound = false;
+        _listResultsStrings = resultsStrings;
+      });
     }
 
-    setState(() {
-      _listEmotionStrings = emotionStrings;
-      _listResultsStrings = resultsStrings;
-    });
   }
 
   @override
   void initState() {
-    _initializeCamera();
     super.initState();
+    _initializeCamera();
   }
 
   @override
@@ -221,10 +261,12 @@ class _RtCameraState extends State<RtCamera> {
         children: <Widget>[
           CameraPreview(_controller),
           Container(
-            height: 60,
+            height: 110,
             child:
             // SingleChildScrollView(
             // child:
+            _faceFound != false
+            ?
             _listEmotionStrings != null
                 ? ListView.builder(
               shrinkWrap: true,
@@ -238,7 +280,18 @@ class _RtCameraState extends State<RtCamera> {
               child: Center(
                 child: CircularProgressIndicator(),
               ),
-            ),
+            )
+            :
+              Container(
+                child: Center(
+                  child: Column(
+                    children: [
+                      CircularProgressIndicator(),
+                      Text("No Face Detected")
+                    ],
+                  ),
+              ),
+              ),
           ),
         ],
       )
