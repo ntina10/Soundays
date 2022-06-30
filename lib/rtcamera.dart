@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:test_zero/main.dart';
@@ -17,16 +17,13 @@ class RtCamera extends StatefulWidget {
 class _RtCameraState extends State<RtCamera> {
 
   late CameraController _controller;
-
-  bool _isDetecting = false;
   bool _faceFound = true;
 
   Timer? mytimer;
 
   List<String>? _listEmotionStrings;
   List<String>? _listResultsStrings;
-  late List<int> _theImg;
-  File myfile = new File("assets/test_face.jpg");
+  late Map _map;
 
   Future<void> _initializeCamera() async {
     final CameraController cameraController = CameraController(
@@ -102,15 +99,26 @@ class _RtCameraState extends State<RtCamera> {
         "surprise"
       ];
       List<String> resultsStrings = [];
+      List<double> resultsD = [];
 
       for (var i in emotionStrings) {
+        resultsD.add(decodedData['result'][i]['0']);
         resultsStrings.add(decodedData['result'][i]['0'].toString());
       }
+
+      Map<String, double> map = Map.fromIterables(emotionStrings, resultsD);
+      var sortedEntries = map.entries.toList()..sort((e1, e2) {
+        var diff = e2.value.compareTo(e1.value);
+        if (diff == 0) diff = e2.key.compareTo(e1.key);
+        return diff;
+      });
+      var newMap = Map<String, double>.fromEntries(sortedEntries);
 
       setState(() {
         _faceFound = true;
         _listEmotionStrings = emotionStrings;
         _listResultsStrings = resultsStrings;
+        _map = newMap;
       });
     } else {
       List<String> resultsStrings = [];
@@ -164,12 +172,19 @@ class _RtCameraState extends State<RtCamera> {
             _faceFound != false
             ?
             _listEmotionStrings != null
-                ? ListView.builder(
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: _listEmotionStrings!.length,
-              itemBuilder: (context, index) =>
-                  Text(_listEmotionStrings![index] + ": " + _listResultsStrings![index]),
+            //     ? ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: BouncingScrollPhysics(),
+            //   itemCount: _listEmotionStrings!.length,
+            //   itemBuilder: (context, index) =>
+            //       Text(_listEmotionStrings![index] + ": " + _listResultsStrings![index]),
+            // )
+            ? ListView.builder(
+              itemCount: _map.length,
+              itemBuilder: (BuildContext context, int index) {
+                String key = _map.keys.elementAt(index);
+                return Text("$key" + ": " + "${_map[key]}");
+              },
             )
                 :
             Container(
