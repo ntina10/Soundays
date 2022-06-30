@@ -1,15 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:ffi/ffi.dart';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:test_zero/main.dart';
-import 'package:test_zero/reqCam.dart';
-import 'package:image/image.dart' as imglib;
+import 'package:test_zero/request.dart';
 
 class RtCamera extends StatefulWidget {
   const RtCamera({Key? key}) : super(key: key);
@@ -25,6 +21,8 @@ class _RtCameraState extends State<RtCamera> {
   bool _isDetecting = false;
   bool _faceFound = true;
 
+  Timer? mytimer;
+
   List<String>? _listEmotionStrings;
   List<String>? _listResultsStrings;
   late List<int> _theImg;
@@ -36,175 +34,62 @@ class _RtCameraState extends State<RtCamera> {
       ResolutionPreset.high,
     );
     _controller = cameraController;
-    await _controller.initialize();
-
-    await Future.delayed(Duration(milliseconds: 500));
-    // tempDir = await getApplicationDocumentsDirectory();
-    // String _embPath = tempDir.path + '/emb.json';
-    // jsonFile = new File(_embPath);
-    // if (jsonFile.existsSync()) data = json.decode(jsonFile.readAsStringSync());
-
-    _controller.startImageStream((CameraImage availableImage) async {
-      if (_isDetecting) return;
-      _isDetecting = true;
-
-      // var myimg = convertYUV420toImage(availableImage);
-      //_controller.stopImageStream();
-      //await Future.delayed(Duration(seconds: 3));
-      //Timer(Duration(seconds: 3), () {
-
-      callApi(availableImage);
+    await _controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
     });
 
-    // S.then((_) async { //_controller.initialize().then
-    //   if (!mounted) {
-    //     return;
-    //   }
-    //   setState(() {});
-    //
-    //   //start image stream
-    //   });
-    //
-    // });
+    await Future.delayed(Duration(milliseconds: 500));
+
   }
 
-  // Future<Image?> convertYUV420toImageColor(CameraImage image) async {
-  //   try {
-  //     final int width = image.width;
-  //     final int height = image.height;
-  //     final int uvRowStride = image.planes[1].bytesPerRow;
-  //     final int? uvPixelStride = image.planes[1].bytesPerPixel;
-  //
-  //     // print("uvRowStride: " + uvRowStride.toString());
-  //     // print("uvPixelStride: " + uvPixelStride.toString());
-  //
-  //     // imgLib -> Image package from https://pub.dartlang.org/packages/image
-  //     var img = imglib.Image(width, height); // Create Image buffer
-  //
-  //     // Fill image buffer with plane[0] from YUV420_888
-  //     for(int x=0; x < width; x++) {
-  //       for(int y=0; y < height; y++) {
-  //         final int uvIndex = uvPixelStride! * (x/2).floor() + uvRowStride*(y/2).floor();
-  //         final int index = y * width + x;
-  //
-  //         final yp = image.planes[0].bytes[index];
-  //         final up = image.planes[1].bytes[uvIndex];
-  //         final vp = image.planes[2].bytes[uvIndex];
-  //         // Calculate pixel color
-  //         int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
-  //         int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
-  //         int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
-  //         // color: 0x FF  FF  FF  FF
-  //         //           A   B   G   R
-  //         img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
-  //       }
-  //     }
-  //
-  //     imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
-  //     List<int> png = pngEncoder.encodeImage(img);
-  //
-  //     setState(() {
-  //       print("it is happening");
-  //       myfile.writeAsBytes(png);
-  //     });
-  //
-  //     var newpng = Image.memory(Uint8List.fromList(png));
-  //     setState((){
-  //       _theImg = newpng;
-  //     });
-  //
-  //     // muteYUVProcessing = false;
-  //     return Image.memory(Uint8List.fromList(png));
-  //   } catch (e) {
-  //     print(">>>>>>>>>>>> ERROR:" + e.toString());
-  //   }
-  //   return null;
-  // }
-
-  /////////////////////////////////////////////////
-
-  Future<List<int>?> convertImagetoPng(CameraImage image) async {
-    try {
-      imglib.Image img;
-      if (image.format.group == ImageFormatGroup.yuv420) {
-        img = _convertYUV420(image);
-      } else if (image.format.group == ImageFormatGroup.bgra8888) {
-        img = _convertBGRA8888(image);
+  void handleTimeout() async {  // callback function
+    // Do some work.
+    await _takePicture().then((String? path) {
+      if (path != null) {
+        callApi(path);
       } else {
-        return null;
+        print('Image path not found!');
       }
-
-      imglib.PngEncoder pngEncoder = new imglib.PngEncoder();
-
-      // Convert to png
-      List<int> png = pngEncoder.encodeImage(img);
-
-      setState((){
-        _theImg = png;
-      });
-
-      return png;
-    } catch (e) {
-      print(">>>>>>>>>>>> ERROR:" + e.toString());
-    }
-    return null;
+    });
   }
 
-// CameraImage BGRA8888 -> PNG
-// Color
-  imglib.Image _convertBGRA8888(CameraImage image) {
-    return imglib.Image.fromBytes(
-      image.width,
-      image.height,
-      image.planes[0].bytes,
-      format: imglib.Format.bgra,
-    );
-  }
-
-// CameraImage YUV420_888 -> PNG -> Image (compresion:0, filter: none)
-// Black
-  imglib.Image _convertYUV420(CameraImage image) {
-    var img = imglib.Image(image.width, image.height); // Create Image buffer
-
-    Plane plane = image.planes[0];
-    const int shift = (0xFF << 24);
-
-    // Fill image buffer with plane[0] from YUV420_888
-    for (int x = 0; x < image.width; x++) {
-      for (int planeOffset = 0;
-      planeOffset < image.height * image.width;
-      planeOffset += image.width) {
-        final pixelColor = plane.bytes[planeOffset + x];
-        // color: 0x FF  FF  FF  FF
-        //           A   B   G   R
-        // Calculate pixel color
-        var newVal = shift | (pixelColor << 16) | (pixelColor << 8) | pixelColor;
-
-        img.data[planeOffset + x] = newVal;
-      }
+  Future<String?> _takePicture() async {
+    if (!_controller.value.isInitialized) {
+      print("Controller is not initialized");
+      return null;
     }
 
-    return img;
+    String? imagePath;
+
+    if (_controller.value.isTakingPicture) {
+      print("Processing is in progress...");
+      return null;
+    }
+
+    try {
+      // Turning off the camera flash
+      _controller.setFlashMode(FlashMode.off);
+      // Returns the image in cross-platform file abstraction
+      final XFile file = await _controller.takePicture();
+      // Retrieving the path
+      imagePath = file.path;
+    } on CameraException catch (e) {
+      print("Camera Exception: $e");
+      return null;
+    }
+
+    return imagePath;
   }
 
-  Future<void> callApi(img) async {
-    var url = Uri.parse('http://192.168.1.8:3000/temp');
-    print("Stuck here before await getDataCam");
+  Future<void> callApi(mypath) async {
 
-    //convert CameraImage to List<int>
-    convertImagetoPng(img); //pass _theImg variable
-    //convertYUV420toImageColor(img); //pass myfile variable
-    //print("done");
-    //pass List<int> to File object so that api getData() works
-    //File thisImg = await File('assets/test_face.jpg').writeAsBytes(_theImg);
-    //print("set go");
-    Uint8List ooof = Uint8List.fromList(_theImg);
-    //File thisIsItHopefully = File.fromRawPath(ooof);
-    var data = await getDataCam(ooof, url);
-    print("notHere");
+    var url = Uri.parse('http://192.168.1.5:3000/emotion');
+
+    var data = await getData(File(mypath), url);
     var decodedData = jsonDecode(data.body);
-
-    _isDetecting = false;
 
     if (decodedData['result']['ans'] == null) {
       List<String> emotionStrings = [
@@ -242,12 +127,25 @@ class _RtCameraState extends State<RtCamera> {
   void initState() {
     super.initState();
     _initializeCamera();
+    mytimer = Timer.periodic(Duration(milliseconds: 5000),
+            (mytimer) async {  // callback function
+          // Do some work.
+          await _takePicture().then((String? path) {
+            if (path != null) {
+              callApi(path);
+            } else {
+              print('Image path not found!');
+            }
+          });
+        }
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    mytimer?.cancel();
+    _controller.dispose();
   }
 
   @override
@@ -263,8 +161,6 @@ class _RtCameraState extends State<RtCamera> {
           Container(
             height: 110,
             child:
-            // SingleChildScrollView(
-            // child:
             _faceFound != false
             ?
             _listEmotionStrings != null

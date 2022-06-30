@@ -1,5 +1,4 @@
 import math
-
 from flask import Flask, jsonify, request
 import werkzeug.utils
 from feat.detector import Detector
@@ -37,40 +36,53 @@ def hello_world():
     image_prediction = detector.detect_image(test_image)
 
     emotion = (image_prediction.emotions()).to_dict()
-    print(emotion)
-    json_file['result'] = emotion
-
-    return jsonify(json_file)
-
-@app.route('/temp', methods = ['POST'])
-def mytemp():
-    json_file = {}
-    json_file['query'] = 'Hello World!'
-
-    print("This is an api call")
-    print("Request", request.files)
-    imagefile = request.files["image"]
-
-    print("imagefile", imagefile)
-
-    filename = "sth.jpg"
-    imagefile.save("images/" + filename)
-    test_image = "./images/" + filename
-
-    print("save done")
-
-    image_prediction = detector.detect_image(test_image)
-
-    emotion = (image_prediction.emotions()).to_dict()
-    print(emotion)
-    print(emotion['anger'][0])
+#here start new
     if(math. isnan(emotion['anger'][0])):
         emotion = {}
         emotion['ans'] = 'No Face Detected!'
 
+ #here end new
+    # print(emotion)
     json_file['result'] = emotion
+    json_file['file'] = filename
+
+    print(json_file)
 
     return jsonify(json_file)
+
+# @app.route('/temp', methods = ['POST'])
+# def mytemp():
+#     json_file = {}
+#     json_file['query'] = 'Hello World!'
+#
+#     print("This is an api call")
+#     print("Request", request.files)
+#     imagefile = request.files["image"]
+#
+#     print("imagefile", imagefile)
+#
+#     randomness = ''.join(random.choices(string.ascii_lowercase, k=5))
+#     filename = randomness + ".png"
+#     imagefile.save("images/" + filename)
+#     test_image = "./images/" + filename
+#
+#     print("save done in ", filename)
+#
+#     image_prediction = detector.detect_image(test_image)
+#
+#     emotion = (image_prediction.emotions()).to_dict()
+#
+#     print(emotion['anger'][0])
+#     if(math. isnan(emotion['anger'][0])):
+#         emotion = {}
+#         emotion['ans'] = 'No Face Detected!'
+#
+#     json_file['result'] = emotion
+#     json_file['file'] = filename
+#
+#     print(json_file)
+#
+#     return jsonify(json_file)
 
 
 if __name__ == '__main__':

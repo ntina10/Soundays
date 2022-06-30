@@ -45,16 +45,13 @@ class _DetailScreenState extends State<DetailScreen> {
 
 
   void _recognizeEmotions() async {
-    // Initialize the recognizer here, and
-    // parse the text to find email addresses in it
+    // Initialize the recognizer here
     _getImageSize(File(_imagePath));
 
     // Creating an InputImage object using the image path
     // final inputImage = Image.file(File(_imagePath));
-    //
-    // print("THIS", inputImage);
 
-    var url = Uri.parse('http://192.168.1.8:3000/emotion');
+    var url = Uri.parse('http://192.168.1.5:3000/emotion');
 
     var data = await getData(File(_imagePath), url);
     var decodedData = jsonDecode(data.body);
@@ -65,23 +62,6 @@ class _DetailScreenState extends State<DetailScreen> {
     for(var i in emotionStrings) {
       resultsStrings.add(decodedData['result'][i]['0'].toString());
     }
-// // Retrieving the RecognisedText from the InputImage
-//     final text = await _textDetector.processImage(inputImage);
-//
-//     // Regular expression for verifying an email address
-//     String pattern = r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$";
-//     RegExp regEx = RegExp(pattern);
-//
-//     List<String> emailStrings = [];
-//
-// // Finding and storing the text String(s)
-//     for (TextBlock block in text.blocks) {
-//       for (TextLine line in block.lines) {
-//         if (regEx.hasMatch(line.text)) {
-//           emailStrings.add(line.text);
-//         }
-//       }
-//     }
 
     setState(() {
       _listEmotionStrings = emotionStrings;

@@ -11,12 +11,6 @@ Future<http.Response> getDataCam(file, url) async {
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
 
   print("This is file " + file.toString());
-  // var multipartFile = http.MultipartFile.fromBytes(
-  //   'image',
-  //   (await rootBundle.load('lib/assets/'+filename)).buffer.asUint8List(),
-  //   filename: filename, // use the real name if available, or omit
-  //   // contentType: MediaType('image', 'jpg'),
-  // );
 
   request.files.add(
     //multipartFile
