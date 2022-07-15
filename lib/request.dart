@@ -12,8 +12,8 @@ Future<http.Response> getData(file, url) async {
 
   // var multipartFile = http.MultipartFile.fromBytes(
   //   'image',
-  //   (await rootBundle.load('lib/assets/test_face.jpg')).buffer.asUint8List(),
-  //   filename: 'test_face.jpg', // use the real name if available, or omit
+  //   (await rootBundle.load('lib/assets/my_test.jpg')).buffer.asUint8List(),
+  //   filename: 'my_test.jpg', // use the real name if available, or omit
   //   // contentType: MediaType('image', 'jpg'),
   // );
 

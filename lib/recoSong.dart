@@ -50,13 +50,21 @@ class _RecoSongState extends State<RecoSong> {
     var maxE = mapMax['energy'];
     var maxV = mapMax['valence'];
 
-    var pop = _mygenres[0];
+    String seed_generator(List<String> mylist) {
+      String result = mylist[0];
+      for (var i=1; i<mylist.length; i++) {
+        result = result + '%2C' + mylist[i];
+      }
+      return result;
+    }
+
+    var glist = seed_generator(_mygenres);
 
     var mytoken = await auth.getAuthToken();
     // print(mytoken);
 
     final response = await http
-        .get(Uri.parse('https://api.spotify.com/v1/recommendations?limit=15&market=GR&seed_genres=$pop&min_energy=$minE&max_energy=$maxE&min_valence=$minV&max_valence=$maxV'),
+        .get(Uri.parse('https://api.spotify.com/v1/recommendations?limit=15&market=GR&seed_genres=$glist&min_energy=$minE&max_energy=$maxE&min_valence=$minV&max_valence=$maxV'),
             headers: {
               "Accept": "application/json",
               "Content-Type": "application/json",
@@ -141,6 +149,9 @@ class _RecoSongState extends State<RecoSong> {
     recommendation.tracks.forEach((track) {
       print(track.name);
       print(" id: " + track.id);
+    });
+    recommendation.seeds.forEach((seed) {
+      print(" id: " + seed.id);
     });
 
   }

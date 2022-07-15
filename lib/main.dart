@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:test_zero/mycamera.dart';
 import 'package:test_zero/rtcamera.dart';
 import 'package:test_zero/recoSong.dart';
+import 'package:test_zero/choose_genres.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -19,7 +20,8 @@ Future<void> main() async {
     routes: {
       '/camera': (context) => MyCamera(),
       '/rtcamera': (context) => RtCamera(),
-      '/song': (context) => RecoSong(myemotion: 'Happy', mygenres: ['pop', 'rock'],),
+      '/song': (context) => RecoSong(myemotion: 'Sad', mygenres: ['pop', 'rock', 'alternative'],),
+      '/genres': (context) => ChooseGenres(),
     },
     title: 'Flutter Emotion Recognition',
     theme: ThemeData(
@@ -61,6 +63,11 @@ class MyApp extends StatelessWidget {
                     await Navigator.pushNamed(context, '/song');
                   },
                   child: Text("song recommender")),
+              ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/genres');
+                  },
+                  child: Text("choose genres")),
             ],
           ),
         ),
