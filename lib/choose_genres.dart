@@ -9,34 +9,44 @@ class ChooseGenres extends StatefulWidget {
 
 class _ChooseGenresState extends State<ChooseGenres> {
   var genres = [
-    {'alternative': 'Alternative'},
-    {'anime': 'Anime'},
-    {'blues': 'Blues'},
-    {'classical' : 'Classical'},
-    {'country': 'Country'},
-    {'disco': 'Disco'},
-    {'disney': 'Disney'},
-    {'electronic': 'Electronic'},
-    {'folk': 'Folk'},
-    {'funk': 'Funk'},
-    {'heavy-metal': 'Heavy Metal'},
-    {'hip-hop': 'Hip Hop'},
-    {'j-pop': 'j-pop'},
-    {'j-rock': 'j-rock'},
-    {'jazz': 'Jazz'},
-    {'k-pop': 'k-pop'},
-    {'metal': 'Metal'},
-    {'opera': 'Opera'},
-    {'pop': 'Pop'},
-    {'punk': 'Punk'},
-    {'r-n-b': 'RNB'},
-    {'reggae': 'Reggae'},
-    {'rock': 'Rock'},
-    {'soul': 'Soul'}
+    {'id': 'alternative', 'value': 'Alternative'},
+    {'id': 'anime', 'value': 'Anime'},
+    {'id': 'blues', 'value': 'Blues'},
+    {'id': 'classical', 'value': 'Classical'},
+    {'id': 'country', 'value': 'Country'},
+    {'id': 'disco', 'value': 'Disco'},
+    {'id': 'disney', 'value': 'Disney'},
+    {'id': 'electronic', 'value': 'Electronic'},
+    {'id': 'folk', 'value': 'Folk'},
+    {'id': 'funk', 'value': 'Funk'},
+    {'id': 'heavy-metal', 'value': 'Heavy Metal'},
+    {'id': 'hip-hop', 'value': 'Hip Hop'},
+    {'id': 'j-pop', 'value': 'j-pop'},
+    {'id': 'j-rock', 'value': 'j-rock'},
+    {'id': 'jazz', 'value': 'Jazz'},
+    {'id': 'k-pop', 'value': 'k-pop'},
+    {'id': 'metal', 'value': 'Metal'},
+    {'id': 'opera', 'value': 'Opera'},
+    {'id': 'pop', 'value': 'Pop'},
+    {'id': 'punk', 'value': 'Punk'},
+    {'id': 'r-n-b', 'value': 'RNB'},
+    {'id': 'reggae', 'value': 'Reggae'},
+    {'id': 'rock', 'value': 'Rock'},
+    {'id': 'soul', 'value': 'Soul'}
   ];
 
   List<bool> selected = [];
   int counter = 0;
+
+  List<String> get_selected() {
+    List<String> ans = [];
+    for(var i =0; i<genres.length; i++) {
+      if(selected[i] == true) {
+          ans.add(genres[i]['id'] ?? '');
+      }
+    }
+    return ans;
+  }
 
   @override
   void initState() {
@@ -107,7 +117,8 @@ class _ChooseGenresState extends State<ChooseGenres> {
                 backgroundColor: MaterialStateProperty.all(Colors.grey)
               ) : null,
               onPressed: (counter < 1) ? null : () async {
-                await Navigator.pushNamed(context, '/camera');
+                var genreResults = get_selected();
+                await Navigator.pushNamed(context, '/take_pic', arguments: genreResults);
               },
               child: Text("start emotion recognition")),
         ],

@@ -4,21 +4,25 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:test_zero/main.dart';
+import 'package:test_zero/recoSong.dart';
 import 'package:test_zero/request.dart';
 
-class RtCamera extends StatefulWidget {
-  const RtCamera({Key? key}) : super(key: key);
+class TakeMyPic extends StatefulWidget {
+  const TakeMyPic({Key? key}) : super(key: key);
 
   @override
-  _RtCameraState createState() => _RtCameraState();
+  _TakeMyPicState createState() => _TakeMyPicState();
 }
 
-class _RtCameraState extends State<RtCamera> {
+class _TakeMyPicState extends State<TakeMyPic> {
 
   late CameraController _controller;
   bool _faceFound = true;
 
   Timer? mytimer;
+  Duration myDuration = const Duration(seconds: 6);
+
+  List<String> mydata = []; //genres we get from previous screen
 
   List<String>? _listEmotionStrings;
   List<String>? _listResultsStrings;
@@ -130,22 +134,44 @@ class _RtCameraState extends State<RtCamera> {
 
   }
 
+  void setCountDown() async {
+    const reduceSecondsBy = 1;
+    setState(() {
+      final seconds = myDuration.inSeconds - reduceSecondsBy;
+      if (seconds < 0) {
+        mytimer!.cancel();
+        myDuration = Duration(seconds: seconds);
+      } else {
+        myDuration = Duration(seconds: seconds);
+      }
+    });
+    if (myDuration == const Duration(seconds: 0)) {
+      await _takePicture().then((String? path) async {
+        if (path != null) {
+          await callApi(path);
+          var emotionRes = _map.keys.first;
+          print("emotionRes " + emotionRes);
+          // add navigation to recoSong with data: _map (emotion) and genres(?) (selected genres)
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RecoSong(myemotion: emotionRes, mygenres: mydata),
+            ),
+          );
+          print("Picture taken!!!");
+          print(_map);
+        } else {
+          print('Image path not found!');
+        }
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _initializeCamera();
-    mytimer = Timer.periodic(Duration(milliseconds: 5000),
-            (mytimer) async {  // callback function
-          // Do some work.
-          await _takePicture().then((String? path) {
-            if (path != null) {
-              callApi(path);
-            } else {
-              print('Image path not found!');
-            }
-          });
-        }
-    );
+    mytimer = Timer.periodic( const Duration(seconds: 1), (_) => setCountDown() );
   }
 
   @override
@@ -155,8 +181,11 @@ class _RtCameraState extends State<RtCamera> {
     _controller.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    mydata = ModalRoute.of(context)!.settings.arguments as List<String>;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('ER camera'),
@@ -165,43 +194,40 @@ class _RtCameraState extends State<RtCamera> {
           ? Stack(
         children: <Widget>[
           CameraPreview(_controller),
+          myDuration.inSeconds > -1 ?
+            Text("take picture in " + myDuration.inSeconds.toString())
+              : Text("Your picture is ready! \nLets get the results.."),
           Container(
             height: 110,
             child:
             _faceFound != false
-            ?
-            _listEmotionStrings != null
+                ?
+                null
+            // _listEmotionStrings != null
             //     ? ListView.builder(
-            //   shrinkWrap: true,
-            //   physics: BouncingScrollPhysics(),
-            //   itemCount: _listEmotionStrings!.length,
-            //   itemBuilder: (context, index) =>
-            //       Text(_listEmotionStrings![index] + ": " + _listResultsStrings![index]),
+            //   itemCount: _map.length,
+            //   itemBuilder: (BuildContext context, int index) {
+            //     String key = _map.keys.elementAt(index);
+            //     return Text("$key" + ": " + "${_map[key]}");
+            //   },
             // )
-            ? ListView.builder(
-              itemCount: _map.length,
-              itemBuilder: (BuildContext context, int index) {
-                String key = _map.keys.elementAt(index);
-                return Text("$key" + ": " + "${_map[key]}");
-              },
-            )
+            //     :
+            // Container(
+            //   child: Center(
+            //     child: CircularProgressIndicator(),
+            //   ),
+            // )
                 :
             Container(
               child: Center(
-                child: CircularProgressIndicator(),
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(),
+                    Text("No Face Detected")
+                  ],
+                ),
               ),
-            )
-            :
-              Container(
-                child: Center(
-                  child: Column(
-                    children: [
-                      CircularProgressIndicator(),
-                      Text("No Face Detected")
-                    ],
-                  ),
-              ),
-              ),
+            ),
           ),
         ],
       )

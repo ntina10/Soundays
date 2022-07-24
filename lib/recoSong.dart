@@ -85,56 +85,29 @@ class _RecoSongState extends State<RecoSong> {
   }
 
   Future<void> doMagic() async {
+    print('Recommendations:');
 
-    // print('Artists:');
-    // var artists = await spotify.artists.list(['5p7f24Rk5HkUZsaS3BLG5F']);
-    // artists.forEach((x) => print(x.name));
-    // https://open.spotify.com/artist/5p7f24Rk5HkUZsaS3BLG5F?si=yj8jJ9ubT7OgbnDOvg9JdA
-    //
-    // print('\nAlbum:');
-    // var album = await spotify.albums.get('2Hog1V8mdTWKhCYqI5paph');
-    // print(album.name);
-    //
-    // print('\nAlbum Tracks:');
-    // var tracks = await spotify.albums.getTracks(album.id!).all();
-    // tracks.forEach((track) {
-    //   print(track.name);
-    // });
-
-    print('\n');
-    print('\nRecommendations:');
-
-    if(_myemotion == 'Happy' || _myemotion == 'Surprised') {
-      mapMin = {'valence': 0.8, 'energy': 0.8};
+    if(_myemotion == 'happiness' || _myemotion == 'surprise') {
+      mapMin = {'valence': 0.7, 'energy': 0.7};
       mapMax = {'valence': 1.0, 'energy': 1.0};
-      mapT = {'valence': 1.0, 'energy': 1.0};
+      mapT = {'valence': 0.8, 'energy': 0.8};
       print('happy');
-    } else if(_myemotion == 'Sad' || _myemotion == 'Disgust') {
+    } else if(_myemotion == 'sadness' || _myemotion == 'disgust') {
       mapMin = {'valence': 0.0, 'energy': 0.0};
       mapMax = {'valence': 0.4, 'energy': 0.4};
       mapT = {'valence': 0.2, 'energy': 0.2};
       print('sad');
-    } else if(_myemotion == 'Angry' || _myemotion == 'Fear') {
+    } else if(_myemotion == 'anger' || _myemotion == 'fear') {
       mapMin = {'valence': 0.0, 'energy': 0.6};
       mapMax = {'valence': 0.4, 'energy': 1.0};
       mapT = {'valence': 0.2, 'energy': 0.7};
       print('angry');
-    } else if(_myemotion == 'Neutral') {
+    } else if(_myemotion == 'neutral') {
       mapMin = {'valence': 0.4, 'energy': 0.4};
       mapMax = {'valence': 0.6, 'energy': 0.6};
       mapT = {'valence': 0.5, 'energy': 0.5};
       print('neutral');
     }
-    // recos = await spotify.recommendations.get(
-    //   // seedArtists: [],
-    //   seedGenres: ['pop'],
-    //   // seedTracks: [],
-    //   limit: 25,
-    //   market: "GR",
-    //   min: mapMin,
-    //   max: mapMax,
-    //   target: mapT
-    // );
 
     var recos = await fetchRecos();
     print(recos);
@@ -146,6 +119,7 @@ class _RecoSongState extends State<RecoSong> {
       recommendation = recommendation;
     });
 
+    //////////////debug printing
     recommendation.tracks.forEach((track) {
       print(track.name);
       print(" id: " + track.id);
@@ -166,9 +140,7 @@ class _RecoSongState extends State<RecoSong> {
           backgroundColor: Colors.green[800],
           elevation: 5.0,
         ),
-        body:
-          // Text("see results in your console!"),
-        recommendation == null
+        body: recommendation == null
             ? Center(child: CircularProgressIndicator())
             : Scrollbar(child: MyListView(songData: recommendation)),
 

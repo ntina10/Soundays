@@ -51,7 +51,7 @@ class _DetailScreenState extends State<DetailScreen> {
     // Creating an InputImage object using the image path
     // final inputImage = Image.file(File(_imagePath));
 
-    var url = Uri.parse('http://192.168.1.5:3000/emotion');
+    var url = Uri.parse('http://192.168.1.8:3000/emotion');
 
     var data = await getData(File(_imagePath), url);
     var decodedData = jsonDecode(data.body);
