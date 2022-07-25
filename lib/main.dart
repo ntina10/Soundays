@@ -12,14 +12,7 @@ List<CameraDescription> cameras = [];
 
 void _launchurl() async {
   const url = 'spotify:track:3Vo4wInECJQuz9BIBMOu8i';
-  print("in launch");
-  // if (await canLaunch(url)) {    //not working for some cases
-  //   await launchUrl(Uri.parse(url));
-  // } else if (await canLaunch('https://play.google.com/store/apps/details?id=com.spotify.music&hl=en_IN')) {
-  //   await launch('https://play.google.com/store/apps/details?id=com.spotify.music&hl=en_IN');
-  // } else {
-  //   throw 'error';
-  // }
+
   try {
     await launchUrl(Uri.parse(url));
   } catch (err) {
@@ -29,6 +22,14 @@ void _launchurl() async {
       throw 'e';
     }
   }
+  // if (await canLaunch(url)) {    //canLaunch not working for some cases
+  //   await launchUrl(Uri.parse(url));
+  // } else if (await canLaunch('https://play.google.com/store/apps/details?id=com.spotify.music&hl=en_IN')) {
+  //   await launch('https://play.google.com/store/apps/details?id=com.spotify.music&hl=en_IN');
+  // } else {
+  //   throw 'error';
+  // }
+
 }
 
 Future<void> main() async {
@@ -96,7 +97,8 @@ class MyApp extends StatelessWidget {
                   child: Text("choose genres")),
               ElevatedButton(
                   onPressed: () async {
-                    // await _audioPlayer.play(UrlSource("https://api.spotify.com/v1/tracks/5jE48hhRu8E6zBDPRSkEq7"));
+                    //await _audioPlayer.play(UrlSource('https://p.scdn.co/mp3-preview/bd6c0e165b80074444e4794ce07d8a416c3fe2dd?cid=774b29d4f13844c495f206cafdad9c86'));  //from "spotify" downloaded file
+                      //UrlSource("https://api.spotify.com/v1/tracks/5jE48hhRu8E6zBDPRSkEq7")
                     _launchurl();
                   },
                   child: Text("the player testing")),

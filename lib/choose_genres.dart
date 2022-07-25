@@ -101,7 +101,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                                 : Colors.black26),
                         borderRadius: BorderRadius.circular(20.0)),
                     child: Text(
-                      genres[index].values.toString(),
+                      genres[index]['value'].toString(),
                       style: TextStyle(
                           color: selected[index]
                               ? Colors.white

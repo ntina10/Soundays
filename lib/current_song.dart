@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test_zero/models/recommendations.dart';
 import 'package:test_zero/models/track.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-enum PlayerState { stopped, playing, paused }
+//enum PlayerState { stopped, playing, paused }
 
 class CurrentSong extends StatefulWidget {
   final Track _song;
@@ -15,15 +17,15 @@ class CurrentSong extends StatefulWidget {
 }
 
 class _CurrentSongState extends State<CurrentSong> {
-  // MusicFinder audioPlayer;
+  AudioPlayer audioPlayer = AudioPlayer();
   // Duration duration;
   // Duration position;
-  // PlayerState playerState;
+  //PlayerState plState; //audioPlayer.state
   late Track song;
-  bool isMuted = true;
-  //
-  // get isPlaying => playerState == PlayerState.playing;
-  // get isPaused => playerState == PlayerState.paused;
+  bool isMuted = false;
+
+  get isPlaying => audioPlayer.state == PlayerState.playing;
+  get isPaused => audioPlayer.state == PlayerState.paused;
   //
   // get durationText =>
   //     duration != null ? duration.toString().split('.').first : '';
@@ -35,37 +37,38 @@ class _CurrentSongState extends State<CurrentSong> {
   @override
   initState() {
     super.initState();
-    //initPlayer();
+    initPlayer();
     song = widget._song;
   }
 
   @override
   void dispose() {
+    audioPlayer.dispose();
     super.dispose();
   }
 
-  // void onComplete() {
-  //   setState(() => playerState = PlayerState.stopped);
-  //   play(widget.songData.nextSong);
-  // }
-  //
-  // initPlayer() async {
-  //   if (audioPlayer == null) {
-  //     audioPlayer = widget.songData.audioPlayer;
-  //   }
-  //   setState(() {
-  //     song = widget._song;
-  //     if (widget.nowPlayTap == null || widget.nowPlayTap == false) {
-  //       if (playerState != PlayerState.stopped) {
-  //         stop();
-  //       }
-  //     }
-  //     play(song);
-  //     //  else {
-  //     //   widget._song;
-  //     //   playerState = PlayerState.playing;
-  //     // }
-  //   });
+  void onComplete() {
+    setState(() => audioPlayer.state = PlayerState.stopped);
+    //play(widget.songData.nextSong);
+  }
+
+  initPlayer() async {
+
+    await audioPlayer.setSourceUrl(widget._song.previewUrl);
+
+    // setState(() {
+    //   song = widget._song;
+    //   if (widget.nowPlayTap == null || widget.nowPlayTap == false) {
+    //     if (playerState != PlayerState.stopped) {
+    //       stop();
+    //     }
+    //   }
+    //   play(song);
+    //   //  else {
+    //   //   widget._song;
+    //   //   playerState = PlayerState.playing;
+    //   // }
+    // });
   //   audioPlayer.setDurationHandler((d) => setState(() {
   //     duration = d;
   //   }));
@@ -73,13 +76,17 @@ class _CurrentSongState extends State<CurrentSong> {
   //   audioPlayer.setPositionHandler((p) => setState(() {
   //     position = p;
   //   }));
-  //
-  //   audioPlayer.setCompletionHandler(() {
-  //     onComplete();
-  //     setState(() {
-  //       position = duration;
-  //     });
-  //   });
+
+    if(audioPlayer.state == PlayerState.completed) {
+      onComplete();
+    }
+
+    audioPlayer.onPlayerComplete.listen((event) {
+      onComplete();
+      // setState(() {
+      //   position = duration;
+      // });
+    });
   //
   //   audioPlayer.setErrorHandler((msg) {
   //     setState(() {
@@ -88,9 +95,9 @@ class _CurrentSongState extends State<CurrentSong> {
   //       position = new Duration(seconds: 0);
   //     });
   //   });
-  // }
-  //
-  // Future play(Song s) async {
+  }
+
+  // Future play(Track s) async {
   //   if (s != null) {
   //     final result = await audioPlayer.play(s.uri, isLocal: true);
   //     if (result == 1)
@@ -101,17 +108,29 @@ class _CurrentSongState extends State<CurrentSong> {
   //   }
   // }
   //
-  // Future pause() async {
-  //   final result = await audioPlayer.pause();
-  //   if (result == 1) setState(() => playerState = PlayerState.paused);
-  // }
+
+  Future play(Track s) async {
+    print("the track" + s.toString());
+    print("the url" + s.previewUrl);
+    if (s.previewUrl == '') {
+      print("No preview is available");
+    } else {
+      //await audioPlayer.play(UrlSource(s.previewUrl)); //both lines work
+      await audioPlayer.resume();
+      setState(() => audioPlayer.state = PlayerState.playing);
+    }
+  }
+  Future pause() async {
+    await audioPlayer.pause();
+    setState(() => audioPlayer.state = PlayerState.paused);
+  }
   //
   // Future stop() async {
-  //   final result = await audioPlayer.stop();
+  //   val result = await audioPlayer.stop();
   //   if (result == 1)
   //     setState(() {
   //       playerState = PlayerState.stopped;
-  //       position = new Duration();
+  //       //position = new Duration();
   //     });
   // }
   //
@@ -126,14 +145,39 @@ class _CurrentSongState extends State<CurrentSong> {
   //   stop();
   //   play(s.prevSong);
   // }
-  //
-  // Future mute(bool muted) async {
-  //   final result = await audioPlayer.mute(muted);
-  //   if (result == 1)
-  //     setState(() {
-  //       isMuted = muted;
-  //     });
-  // }
+
+  void _launchurl() async {
+    var url = widget._song.uri;
+
+    try {
+      await launchUrl(Uri.parse(url));
+    } catch (err) {
+      try {
+        await launch('https://play.google.com/store/apps/details/?id=com.spotify.music&hl=el&gl=US');
+      } catch (e) {
+        throw 'e';
+      }
+    }
+    // if (await canLaunch(url)) {    //canLaunch not working for some cases
+    //   await launchUrl(Uri.parse(url));
+    // } else if (await canLaunch('https://play.google.com/store/apps/details?id=com.spotify.music&hl=en_IN')) {
+    //   await launch('https://play.google.com/store/apps/details?id=com.spotify.music&hl=en_IN');
+    // } else {
+    //   throw 'error';
+    // }
+
+  }
+
+  Future mute(bool muted) async {
+    if (muted) {
+      await audioPlayer.setVolume(0.0);
+    } else {
+      await audioPlayer.setVolume(1.0);
+    }
+    setState(() {
+      isMuted = muted;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +188,7 @@ class _CurrentSongState extends State<CurrentSong> {
             children: <Widget>[
               Text(
                 song.name,
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.headline4,
               ),
               Text(
                 song.artists[0].name,
@@ -155,12 +199,12 @@ class _CurrentSongState extends State<CurrentSong> {
               )
             ],
           ),
-          // Row(mainAxisSize: MainAxisSize.min, children: [
+          Row(mainAxisSize: MainAxisSize.min, children: [
           //   ControlButton(Icons.skip_previous, () => prev(widget.songData)),
-          //   ControlButton(isPlaying ? Icons.pause : Icons.play_arrow,
-          //       isPlaying ? () => pause() : () => play(widget._song)),
+            IconButton(icon: isPlaying ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
+                onPressed: isPlaying ? () => pause() : () => play(widget._song)),
           //   ControlButton(Icons.skip_next, () => next(widget.songData)),
-          // ]),
+          ]),
           // duration == null
           //     ? Container()
           //     : Slider(
@@ -185,15 +229,11 @@ class _CurrentSongState extends State<CurrentSong> {
             children: <Widget>[
               IconButton(
                   icon: isMuted
-                      ? Icon(
-                    Icons.headset,
-                    color: Theme.of(context).unselectedWidgetColor,
-                  )
-                      : Icon(Icons.headset_off,
-                      color: Theme.of(context).unselectedWidgetColor),
+                      ? Icon(Icons.headset_off, color: Theme.of(context).unselectedWidgetColor)
+                      : Icon(Icons.headset, color: Theme.of(context).unselectedWidgetColor),
                   color: Theme.of(context).primaryColor,
                   onPressed: () {
-                    //mute(!isMuted);
+                    mute(!isMuted);
                   }),
               // new IconButton(
               //     onPressed: () => mute(true),
@@ -205,6 +245,11 @@ class _CurrentSongState extends State<CurrentSong> {
               //     color: Colors.cyan),
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 40.0),
+          ),
+          MaterialButton(child: Text("Listen the full track \non Spotify", style: Theme.of(context).textTheme.caption, textAlign: TextAlign.center,),
+              onPressed: () { _launchurl(); })
         ]));
 
     var playerUI = Column(
