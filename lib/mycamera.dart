@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:test_zero/main.dart';
@@ -62,6 +64,8 @@ class _MyCameraState extends State<MyCamera> {
   @override
   void initState() {
     _initializeCamera();
+    // final dir = Directory('/lib/images');
+    // dir.deleteSync(recursive: true);
     super.initState();
   }
 

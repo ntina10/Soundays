@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:test_zero/main.dart';
 import 'package:test_zero/request.dart';
+import 'globals.dart' as globals;
 
 class RtCamera extends StatefulWidget {
   const RtCamera({Key? key}) : super(key: key);
@@ -21,7 +22,6 @@ class _RtCameraState extends State<RtCamera> {
   Timer? mytimer;
 
   List<String>? _listEmotionStrings;
-  List<String>? _listResultsStrings;
   late Map _map;
 
   Future<void> _initializeCamera() async {
@@ -82,7 +82,7 @@ class _RtCameraState extends State<RtCamera> {
 
   Future<void> callApi(mypath) async {
 
-    var url = Uri.parse('http://192.168.1.8:3000/emotion');
+    var url = Uri.parse(globals.apiAddress + '/emotion');
 
     var data = await getData(File(mypath), url);
     var decodedData = jsonDecode(data.body);
@@ -97,12 +97,11 @@ class _RtCameraState extends State<RtCamera> {
         "sadness",
         "surprise"
       ];
-      List<String> resultsStrings = [];
+      // List<String> resultsStrings = [];
       List<double> resultsD = [];
 
       for (var i in emotionStrings) {
         resultsD.add(decodedData['result'][i]['0']);
-        resultsStrings.add(decodedData['result'][i]['0'].toString());
       }
 
       Map<String, double> map = Map.fromIterables(emotionStrings, resultsD);
@@ -116,15 +115,13 @@ class _RtCameraState extends State<RtCamera> {
       setState(() {
         _faceFound = true;
         _listEmotionStrings = emotionStrings;
-        _listResultsStrings = resultsStrings;
         _map = newMap;
       });
     } else {
-      List<String> resultsStrings = [];
-      resultsStrings.add("No Face Detected");
+      // List<String> resultsStrings = [];
+      // resultsStrings.add("No Face Detected");
       setState(() {
         _faceFound = false;
-        _listResultsStrings = resultsStrings;
       });
     }
 
@@ -136,13 +133,13 @@ class _RtCameraState extends State<RtCamera> {
     _initializeCamera();
     mytimer = Timer.periodic(Duration(milliseconds: 5000),
             (mytimer) async {  // callback function
-          // Do some work.
-          await _takePicture().then((String? path) {
-            if (path != null) {
-              callApi(path);
-            } else {
-              print('Image path not found!');
-            }
+            // Do some work.
+              await _takePicture().then((String? path) {
+                if (path != null) {
+                  callApi(path);
+                } else {
+                  print('Image path not found!');
+                }
           });
         }
     );
@@ -182,7 +179,7 @@ class _RtCameraState extends State<RtCamera> {
               itemCount: _map.length,
               itemBuilder: (BuildContext context, int index) {
                 String key = _map.keys.elementAt(index);
-                return Text("$key" + ": " + "${_map[key]}");
+                return Text("$key" + ": " + "${(_map[key]*100).toStringAsFixed(3)} %");
               },
             )
                 :

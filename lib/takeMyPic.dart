@@ -6,6 +6,9 @@ import 'package:camera/camera.dart';
 import 'package:test_zero/main.dart';
 import 'package:test_zero/recoSong.dart';
 import 'package:test_zero/request.dart';
+import 'globals.dart' as globals;
+
+enum FaceStatus {yes, no, notYet}
 
 class TakeMyPic extends StatefulWidget {
   const TakeMyPic({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class TakeMyPic extends StatefulWidget {
 class _TakeMyPicState extends State<TakeMyPic> {
 
   late CameraController _controller;
-  bool _faceFound = true;
+  FaceStatus _faceFound = FaceStatus.notYet;
 
   Timer? mytimer;
   Duration myDuration = const Duration(seconds: 6);
@@ -25,7 +28,6 @@ class _TakeMyPicState extends State<TakeMyPic> {
   List<String> mydata = []; //genres we get from previous screen
 
   List<String>? _listEmotionStrings;
-  List<String>? _listResultsStrings;
   late Map _map;
 
   Future<void> _initializeCamera() async {
@@ -43,17 +45,6 @@ class _TakeMyPicState extends State<TakeMyPic> {
 
     await Future.delayed(Duration(milliseconds: 500));
 
-  }
-
-  void handleTimeout() async {  // callback function
-    // Do some work.
-    await _takePicture().then((String? path) {
-      if (path != null) {
-        callApi(path);
-      } else {
-        print('Image path not found!');
-      }
-    });
   }
 
   Future<String?> _takePicture() async {
@@ -86,12 +77,13 @@ class _TakeMyPicState extends State<TakeMyPic> {
 
   Future<void> callApi(mypath) async {
 
-    var url = Uri.parse('http://192.168.1.8:3000/emotion');
+    var url = Uri.parse(globals.apiAddress + '/emotion');
 
     var data = await getData(File(mypath), url);
     var decodedData = jsonDecode(data.body);
 
     if (decodedData['result']['ans'] == null) {
+
       List<String> emotionStrings = [
         "anger",
         "disgust",
@@ -101,12 +93,11 @@ class _TakeMyPicState extends State<TakeMyPic> {
         "sadness",
         "surprise"
       ];
-      List<String> resultsStrings = [];
       List<double> resultsD = [];
+      print('hereeeeeee');
 
       for (var i in emotionStrings) {
         resultsD.add(decodedData['result'][i]['0']);
-        resultsStrings.add(decodedData['result'][i]['0'].toString());
       }
 
       Map<String, double> map = Map.fromIterables(emotionStrings, resultsD);
@@ -118,19 +109,23 @@ class _TakeMyPicState extends State<TakeMyPic> {
       var newMap = Map<String, double>.fromEntries(sortedEntries);
 
       setState(() {
-        _faceFound = true;
+        _faceFound = FaceStatus.yes;
         _listEmotionStrings = emotionStrings;
-        _listResultsStrings = resultsStrings;
         _map = newMap;
       });
+      print('in yes face variables are set');
+
     } else {
-      List<String> resultsStrings = [];
-      resultsStrings.add("No Face Detected");
+
       setState(() {
-        _faceFound = false;
-        _listResultsStrings = resultsStrings;
+        _faceFound = FaceStatus.no;
       });
+
+      print('in no face');
     }
+
+    print('CALL API IS OVER');
+    print('faceFound is ' + _faceFound.toString());
 
   }
 
@@ -149,17 +144,36 @@ class _TakeMyPicState extends State<TakeMyPic> {
       await _takePicture().then((String? path) async {
         if (path != null) {
           await callApi(path);
-          var emotionRes = _map.keys.first;
-          print("emotionRes " + emotionRes);
-          // add navigation to recoSong with data: _map (emotion) and genres(?) (selected genres)
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RecoSong(myemotion: emotionRes, mygenres: mydata),
-            ),
-          );
-          print("Picture taken!!!");
-          print(_map);
+          print('Api was called');
+          if (_faceFound == FaceStatus.yes) {
+            // setState(() {
+            //   _faceFound = true;
+            // });
+            print('faceFound2 is ' + _faceFound.toString());
+            var emotionRes = _map.keys.first;
+
+            print("emotionRes " + emotionRes);
+            // add navigation to recoSong with data: _map (emotion) and selected genres
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    RecoSong(myemotion: emotionRes, mygenres: mydata),
+              ),
+            );
+            print("Picture taken!!!");
+            print(_map);
+          } else if (_faceFound == FaceStatus.no){
+            print("No face is in this picture");
+            print('faceFound3 is ' + _faceFound.toString());
+            //recall the timer to take a second picture
+            setState(() {
+              //_faceFound = true;  //back to the default value
+              myDuration = const Duration(seconds: 5);
+              mytimer = Timer.periodic( const Duration(seconds: 1), (_) => setCountDown() );
+            });
+
+          }
         } else {
           print('Image path not found!');
         }
@@ -181,7 +195,6 @@ class _TakeMyPicState extends State<TakeMyPic> {
     _controller.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     mydata = ModalRoute.of(context)!.settings.arguments as List<String>;
@@ -194,46 +207,46 @@ class _TakeMyPicState extends State<TakeMyPic> {
           ? Stack(
         children: <Widget>[
           CameraPreview(_controller),
-          myDuration.inSeconds > -1 ?
-            Text("take picture in " + myDuration.inSeconds.toString())
-              : Text("Your picture is ready! \nLets get the results.."),
-          Container(
-            height: 110,
-            child:
-            _faceFound != false
-                ?
-                null
-            // _listEmotionStrings != null
-            //     ? ListView.builder(
-            //   itemCount: _map.length,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     String key = _map.keys.elementAt(index);
-            //     return Text("$key" + ": " + "${_map[key]}");
-            //   },
-            // )
-            //     :
-            // Container(
-            //   child: Center(
-            //     child: CircularProgressIndicator(),
-            //   ),
-            // )
-                :
-            Container(
-              child: Center(
-                child: Column(
-                  children: [
-                    CircularProgressIndicator(),
-                    Text("No Face Detected")
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // myDuration.inSeconds > -1
+          //     ? Text("take picture in " + myDuration.inSeconds.toString())
+          //     : _faceFound == true
+          //       ? Column(children: const [
+          //           Text("Your picture is ready! \nLets get the results.."),
+          //           CircularProgressIndicator()
+          //         ])
+          //       : const Center(
+          //         child:
+          //             Text("No Face Detected"),
+          //         ),
+          myDuration.inSeconds > -1
+              ? Text("take picture in " + myDuration.inSeconds.toString())
+              : _faceFound == FaceStatus.yes
+                ? Column(children: const [
+                    Text("Your picture is ready! \nLets get the results.."),
+                    CircularProgressIndicator()
+                  ])
+                : _faceFound == FaceStatus.no
+                  ? Text("No Face Detected")
+                  : Container()
+          // myDuration.inSeconds > -1
+          //     ? Text("take picture in " + myDuration.inSeconds.toString())
+          //     : Column(children: const [
+          //           Text("Your picture is taken!")
+          //         ]),
+          // _faceFound == true
+          //       ? Column(children: const [
+          //           Text("Lets get the results.."),
+          //           CircularProgressIndicator()
+          //         ])
+          //       : const Center(
+          //         child:
+          //             Text("No Face Detected"),
+          //         ),
         ],
       )
           : Container(
         color: Colors.black,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(),
         ),
       ),

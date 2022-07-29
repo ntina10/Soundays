@@ -235,18 +235,10 @@ class _CurrentSongState extends State<CurrentSong> {
                   onPressed: () {
                     mute(!isMuted);
                   }),
-              // new IconButton(
-              //     onPressed: () => mute(true),
-              //     icon: new Icon(Icons.headset_off),
-              //     color: Colors.cyan),
-              // new IconButton(
-              //     onPressed: () => mute(false),
-              //     icon: new Icon(Icons.headset),
-              //     color: Colors.cyan),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 40.0),
+            padding: const EdgeInsets.only(bottom: 60.0),
           ),
           MaterialButton(child: Text("Listen the full track \non Spotify", style: Theme.of(context).textTheme.caption, textAlign: TextAlign.center,),
               onPressed: () { _launchurl(); })

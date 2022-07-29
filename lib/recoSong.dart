@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-// import 'package:spotify/spotify.dart';
 import 'package:test_zero/my_listview.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_zero/auth_spotify.dart';
@@ -28,17 +26,12 @@ class _RecoSongState extends State<RecoSong> {
   Map<String, num> mapT = {'valence': 0.5, 'energy': 0.5};
 
   final Authentication auth = new Authentication();
-
-  //var recos;
   var recommendation;
 
   @override
   void initState() {
     _myemotion = widget.myemotion;
     _mygenres = widget.mygenres;
-
-    // credentials = SpotifyApiCredentials("ea02e1bbc577462bbb9d9baa73c55151", "9b895619bd414c1eae753515e45f2561");
-    // spotify = SpotifyApi(credentials);
 
     doMagic();
     super.initState();
