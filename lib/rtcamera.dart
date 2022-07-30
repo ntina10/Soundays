@@ -41,17 +41,6 @@ class _RtCameraState extends State<RtCamera> {
 
   }
 
-  void handleTimeout() async {  // callback function
-    // Do some work.
-    await _takePicture().then((String? path) {
-      if (path != null) {
-        callApi(path);
-      } else {
-        print('Image path not found!');
-      }
-    });
-  }
-
   Future<String?> _takePicture() async {
     if (!_controller.value.isInitialized) {
       print("Controller is not initialized");
@@ -82,7 +71,7 @@ class _RtCameraState extends State<RtCamera> {
 
   Future<void> callApi(mypath) async {
 
-    var url = Uri.parse(globals.apiAddress + '/emotion');
+    var url = Uri.parse(globals.apiAddress + '/emotion');   //globals.apiAddress + '/emotion'
 
     var data = await getData(File(mypath), url);
     var decodedData = jsonDecode(data.body);
@@ -118,8 +107,6 @@ class _RtCameraState extends State<RtCamera> {
         _map = newMap;
       });
     } else {
-      // List<String> resultsStrings = [];
-      // resultsStrings.add("No Face Detected");
       setState(() {
         _faceFound = false;
       });
@@ -131,7 +118,7 @@ class _RtCameraState extends State<RtCamera> {
   void initState() {
     super.initState();
     _initializeCamera();
-    mytimer = Timer.periodic(Duration(milliseconds: 5000),
+    mytimer = Timer.periodic(Duration(milliseconds: 4000),
             (mytimer) async {  // callback function
             // Do some work.
               await _takePicture().then((String? path) {
@@ -166,29 +153,23 @@ class _RtCameraState extends State<RtCamera> {
             height: 110,
             child:
             _faceFound != false
-            ?
-            _listEmotionStrings != null
-            //     ? ListView.builder(
-            //   shrinkWrap: true,
-            //   physics: BouncingScrollPhysics(),
-            //   itemCount: _listEmotionStrings!.length,
-            //   itemBuilder: (context, index) =>
-            //       Text(_listEmotionStrings![index] + ": " + _listResultsStrings![index]),
-            // )
-            ? ListView.builder(
-              itemCount: _map.length,
-              itemBuilder: (BuildContext context, int index) {
-                String key = _map.keys.elementAt(index);
-                return Text("$key" + ": " + "${(_map[key]*100).toStringAsFixed(3)} %");
-              },
-            )
-                :
-            Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
-            :
+              ?
+              _listEmotionStrings != null
+                  ?
+                  ListView.builder(
+                    itemCount: _map.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      String key = _map.keys.elementAt(index);
+                      return Text("$key" + ": " + "${(_map[key]*100).toStringAsFixed(3)} %");
+                    },
+                  )
+                  :
+                  Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+              :
               Container(
                 child: Center(
                   child: Column(

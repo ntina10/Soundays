@@ -104,7 +104,6 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     _imagePath = widget.imagePath;
-
     _recognizeEmotions();
     _getImageSize(File(_imagePath));
     super.initState();
@@ -124,89 +123,85 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Image Details"),
-        ),
-        body: _imageSize != null
-            ? Stack(
-          children: [
-            Container(
-              width: double.maxFinite,
-              color: Colors.black,
-              child: AspectRatio(
-                aspectRatio: _imageSize!.aspectRatio,
-                child: Image.file(
-                  File(_imagePath),
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Image Details"),
+      ),
+      body: _imageSize != null
+          ? Stack(
+        children: [
+          Container(
+            width: double.maxFinite,
+            color: Colors.black,
+            child: AspectRatio(
+              aspectRatio: _imageSize!.aspectRatio,
+              child: Image.file(
+                File(_imagePath),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Card(
-                elevation: 8,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          "Identified emotions - probability",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Card(
+              elevation: 8,
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        "Identified emotions - probability",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
-                        height: 60,
-                        child:
-                        _faceFound != false
-                            ? _listEmotionStrings != null
-                              ? ListView.builder(
-                                  itemCount: _map.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    String key = _map.keys.elementAt(index);
-                                    return Text("$key" + ": " + "${(_map[key]*100).toStringAsFixed(3)} %");
-                                  },
-                                )
-                              : Container(
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                )
+                    ),
+                    Container(
+                      height: 60,
+                      child:
+                      _faceFound != false
+                          ? _listEmotionStrings != null
+                            ? ListView.builder(
+                                itemCount: _map.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  String key = _map.keys.elementAt(index);
+                                  return Text("$key" + ": " + "${(_map[key]*100).toStringAsFixed(3)} %");
+                                },
+                              )
                             : Container(
                                 child: Center(
-                                  child: Column(
-                                    children: [
-                                      CircularProgressIndicator(),
-                                      Text("No Face Detected")
-                                    ],
-                                  ),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                          : Container(
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Text("No Face Detected \n Try again!", textAlign: TextAlign.center,)
+                                  ],
                                 ),
                               ),
-                        ),
-                      // ),
-                    ],
-                  ),
+                            ),
+                      ),
+                    // ),
+                  ],
                 ),
               ),
             ),
-          ],
-        )
-            : Container(
-              color: Colors.black,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
+          ),
+        ],
+      )
+          : Container(
+            color: Colors.black,
+            child: const Center(
+              child: CircularProgressIndicator(),
             ),
-      ),
+          ),
     );
   }
 }

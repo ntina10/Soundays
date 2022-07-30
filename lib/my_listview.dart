@@ -14,12 +14,14 @@ class MyListView extends StatelessWidget {
       itemCount: songData.tracks.length,
       itemBuilder: (context, int index) {
         var s = songData.tracks[index];
+        var myindex = index;
         final MaterialColor color = _colors[index % _colors.length];
         //var artFile =
         //s.albumArt == null ? null : File.fromUri(Uri.parse(s.albumArt));
 
         return ListTile(
           dense: false,
+          tileColor: color.shade200,
           // leading: Hero(
           //   child: avatar(artFile, s.title, color),
           //   tag: s.title,
@@ -33,7 +35,7 @@ class MyListView extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CurrentSong(songData, s)));
+                    builder: (context) => CurrentSong(songData, s, myindex)));
           },
         );
       },

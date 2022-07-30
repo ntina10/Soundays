@@ -8,7 +8,7 @@ import 'package:test_zero/recoSong.dart';
 import 'package:test_zero/request.dart';
 import 'globals.dart' as globals;
 
-enum FaceStatus {yes, no, notYet}
+//enum FaceStatus {yes, no, notYet}
 
 class TakeMyPic extends StatefulWidget {
   const TakeMyPic({Key? key}) : super(key: key);
@@ -20,10 +20,11 @@ class TakeMyPic extends StatefulWidget {
 class _TakeMyPicState extends State<TakeMyPic> {
 
   late CameraController _controller;
-  FaceStatus _faceFound = FaceStatus.notYet;
+  // FaceStatus _faceFound = FaceStatus.notYet;
+  bool  _faceFound = true;
 
   Timer? mytimer;
-  Duration myDuration = const Duration(seconds: 6);
+  Duration myDuration = const Duration(seconds: 4);
 
   List<String> mydata = []; //genres we get from previous screen
 
@@ -109,7 +110,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
       var newMap = Map<String, double>.fromEntries(sortedEntries);
 
       setState(() {
-        _faceFound = FaceStatus.yes;
+        _faceFound = true;
         _listEmotionStrings = emotionStrings;
         _map = newMap;
       });
@@ -118,7 +119,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
     } else {
 
       setState(() {
-        _faceFound = FaceStatus.no;
+        _faceFound = false;
       });
 
       print('in no face');
@@ -145,7 +146,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
         if (path != null) {
           await callApi(path);
           print('Api was called');
-          if (_faceFound == FaceStatus.yes) {
+          if (_faceFound == true) {
             // setState(() {
             //   _faceFound = true;
             // });
@@ -163,13 +164,13 @@ class _TakeMyPicState extends State<TakeMyPic> {
             );
             print("Picture taken!!!");
             print(_map);
-          } else if (_faceFound == FaceStatus.no){
+          } else if (_faceFound == false){
             print("No face is in this picture");
             print('faceFound3 is ' + _faceFound.toString());
             //recall the timer to take a second picture
             setState(() {
               //_faceFound = true;  //back to the default value
-              myDuration = const Duration(seconds: 5);
+              myDuration = const Duration(seconds: 3);
               mytimer = Timer.periodic( const Duration(seconds: 1), (_) => setCountDown() );
             });
 
@@ -220,12 +221,12 @@ class _TakeMyPicState extends State<TakeMyPic> {
           //         ),
           myDuration.inSeconds > -1
               ? Text("take picture in " + myDuration.inSeconds.toString())
-              : _faceFound == FaceStatus.yes
+              : _faceFound == true
                 ? Column(children: const [
-                    Text("Your picture is ready! \nLets get the results.."),
+                    Text("Your picture is ready! \nWait as we are getting the results.."),
                     CircularProgressIndicator()
                   ])
-                : _faceFound == FaceStatus.no
+                : _faceFound == false
                   ? Text("No Face Detected")
                   : Container()
           // myDuration.inSeconds > -1

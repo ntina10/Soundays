@@ -8,9 +8,10 @@ import 'package:audioplayers/audioplayers.dart';
 
 class CurrentSong extends StatefulWidget {
   final Track _song;
-  final Recommendation songData;
+  final Recommendation _songData;
+  final int _idx;
 
-  const CurrentSong(this.songData, this._song);
+  const CurrentSong(this._songData, this._song, this._idx);
 
   @override
   _CurrentSongState createState() => _CurrentSongState();
@@ -22,7 +23,12 @@ class _CurrentSongState extends State<CurrentSong> {
   // Duration position;
   //PlayerState plState; //audioPlayer.state
   late Track song;
+  late int idx;
+  late Recommendation songData;
+
   bool isMuted = false;
+
+  late bool hasPreview;
 
   get isPlaying => audioPlayer.state == PlayerState.playing;
   get isPaused => audioPlayer.state == PlayerState.paused;
@@ -37,8 +43,12 @@ class _CurrentSongState extends State<CurrentSong> {
   @override
   initState() {
     super.initState();
-    initPlayer();
+
     song = widget._song;
+    idx = widget._idx;
+    songData = widget._songData;
+    hasPreview = song.previewUrl != '';
+    initPlayer();
   }
 
   @override
@@ -54,7 +64,7 @@ class _CurrentSongState extends State<CurrentSong> {
 
   initPlayer() async {
 
-    await audioPlayer.setSourceUrl(widget._song.previewUrl);
+    //await audioPlayer.setSourceUrl(song.previewUrl);
 
     // setState(() {
     //   song = widget._song;
@@ -87,27 +97,8 @@ class _CurrentSongState extends State<CurrentSong> {
       //   position = duration;
       // });
     });
-  //
-  //   audioPlayer.setErrorHandler((msg) {
-  //     setState(() {
-  //       playerState = PlayerState.stopped;
-  //       duration = new Duration(seconds: 0);
-  //       position = new Duration(seconds: 0);
-  //     });
-  //   });
-  }
 
-  // Future play(Track s) async {
-  //   if (s != null) {
-  //     final result = await audioPlayer.play(s.uri, isLocal: true);
-  //     if (result == 1)
-  //       setState(() {
-  //         playerState = PlayerState.playing;
-  //         song = s;
-  //       });
-  //   }
-  // }
-  //
+  }
 
   Future play(Track s) async {
     print("the track" + s.toString());
@@ -115,8 +106,8 @@ class _CurrentSongState extends State<CurrentSong> {
     if (s.previewUrl == '') {
       print("No preview is available");
     } else {
-      //await audioPlayer.play(UrlSource(s.previewUrl)); //both lines work
-      await audioPlayer.resume();
+      await audioPlayer.play(UrlSource(s.previewUrl)); //both lines work
+      //await audioPlayer.resume();
       setState(() => audioPlayer.state = PlayerState.playing);
     }
   }
@@ -124,7 +115,16 @@ class _CurrentSongState extends State<CurrentSong> {
     await audioPlayer.pause();
     setState(() => audioPlayer.state = PlayerState.paused);
   }
-  //
+
+  Future stop() async {
+    await audioPlayer.stop();
+    setState(() {
+      audioPlayer.state = PlayerState.stopped;
+      //position = new Duration();
+    });
+  }
+
+
   // Future stop() async {
   //   val result = await audioPlayer.stop();
   //   if (result == 1)
@@ -133,21 +133,31 @@ class _CurrentSongState extends State<CurrentSong> {
   //       //position = new Duration();
   //     });
   // }
-  //
-  // Future next(SongData s) async {
-  //   stop();
-  //   setState(() {
-  //     play(s.nextSong);
-  //   });
-  // }
-  //
-  // Future prev(SongData s) async {
-  //   stop();
-  //   play(s.prevSong);
-  // }
+
+  Future next(Recommendation s) async {
+    stop();
+    setState(() {
+      //play(s.nextSong);
+      song = songData.tracks[idx+1];
+      idx = idx+1;
+      hasPreview = song.previewUrl != '';
+    });
+    initPlayer();
+  }
+
+  Future prev(Recommendation s) async {
+    stop();
+    setState(() {
+      //play(s.prevSong);
+      song = songData.tracks[idx-1];
+      idx = idx-1;
+      hasPreview = song.previewUrl != '';
+    });
+    initPlayer();
+  }
 
   void _launchurl() async {
-    var url = widget._song.uri;
+    var url = song.uri;
 
     try {
       await launchUrl(Uri.parse(url));
@@ -201,42 +211,53 @@ class _CurrentSongState extends State<CurrentSong> {
           ),
           Row(mainAxisSize: MainAxisSize.min, children: [
           //   ControlButton(Icons.skip_previous, () => prev(widget.songData)),
-            IconButton(icon: isPlaying ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
-                onPressed: isPlaying ? () => pause() : () => play(widget._song)),
+            IconButton(icon: Icon(Icons.skip_previous), onPressed: idx > 0 ? () => prev(songData) : null),
+
+            hasPreview ?
+            Column(
+              children: [
+                IconButton(icon: isPlaying ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
+                    onPressed: isPlaying ? () => pause() : () => play(song)),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(
+                        icon: isMuted
+                            ? Icon(Icons.headset_off, color: Theme.of(context).unselectedWidgetColor)
+                            : Icon(Icons.headset, color: Theme.of(context).unselectedWidgetColor),
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          mute(!isMuted);
+                        }),
+                  ],
+                )
+              ],
+            ) : Text('No preview \nis available', style: TextStyle(fontStyle: FontStyle.italic),),
+
+            IconButton(icon: Icon(Icons.skip_next), onPressed: idx < 14 ? () => next(songData) : null),
           //   ControlButton(Icons.skip_next, () => next(widget.songData)),
           ]),
-          // duration == null
-          //     ? Container()
-          //     : Slider(
-          //     value: position?.inMilliseconds?.toDouble() ?? 0,
-          //     onChanged: (double value) =>
-          //         audioPlayer.seek((value / 1000).roundToDouble()),
-          //     min: 0.0,
-          //     max: duration.inMilliseconds.toDouble()),
-          // Row(mainAxisSize: MainAxisSize.min, children: [
-          //   Text(
-          //       position != null
-          //           ? "${positionText ?? ''} / ${durationText ?? ''}"
-          //           : duration != null ? durationText : '',
-          //       // ignore: conflicting_dart_import
-          //       style: TextStyle(fontSize: 24.0))
-          // ]),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              IconButton(
-                  icon: isMuted
-                      ? Icon(Icons.headset_off, color: Theme.of(context).unselectedWidgetColor)
-                      : Icon(Icons.headset, color: Theme.of(context).unselectedWidgetColor),
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    mute(!isMuted);
-                  }),
-            ],
-          ),
+
+            // duration == null
+            //     ? Container()
+            //     : Slider(
+            //     value: position?.inMilliseconds?.toDouble() ?? 0,
+            //     onChanged: (double value) =>
+            //         audioPlayer.seek((value / 1000).roundToDouble()),
+            //     min: 0.0,
+            //     max: duration.inMilliseconds.toDouble()),
+            // Row(mainAxisSize: MainAxisSize.min, children: [
+            //   Text(
+            //       position != null
+            //           ? "${positionText ?? ''} / ${durationText ?? ''}"
+            //           : duration != null ? durationText : '',
+            //       // ignore: conflicting_dart_import
+            //       style: TextStyle(fontSize: 24.0))
+            // ]),
+
           Padding(
             padding: const EdgeInsets.only(bottom: 60.0),
           ),

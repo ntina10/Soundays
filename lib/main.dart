@@ -65,12 +65,12 @@ class MyApp extends StatelessWidget {
                   onPressed: () async {
                     await Navigator.pushNamed(context, '/song');
                   },
-                  child: Text("song recommender")),
+                  child: Text("audio features testing")),
               ElevatedButton(
                   onPressed: () async {
                     await Navigator.pushNamed(context, '/genres');
                   },
-                  child: Text("choose genres")),
+                  child: Text("song recommender")),
             ],
           ),
         ),

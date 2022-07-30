@@ -123,20 +123,29 @@ class _RecoSongState extends State<RecoSong> {
 
   }
 
+  Future<bool> _onWillPop() async {
+    Navigator.of(context)
+        .popUntil(ModalRoute.withName("/genres"));
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.green[300],
-        appBar: AppBar(
-          title: Text('Your $_myemotion Playlist'),
-          centerTitle: true,
-          backgroundColor: Colors.green[800],
-          elevation: 5.0,
-        ),
-        body: recommendation == null
-            ? Center(child: CircularProgressIndicator())
-            : Scrollbar(child: MyListView(songData: recommendation)),
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+          backgroundColor: Colors.green[300],
+          appBar: AppBar(
+            title: Text('Your $_myemotion Playlist'),
+            centerTitle: true,
+            backgroundColor: Colors.green[800],
+            elevation: 5.0,
+          ),
+          body: recommendation == null
+              ? Center(child: CircularProgressIndicator())
+              : Scrollbar(child: MyListView(songData: recommendation)),
 
+      ),
     );
   }
 
