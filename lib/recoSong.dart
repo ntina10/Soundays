@@ -137,9 +137,23 @@ class _RecoSongState extends State<RecoSong> {
           backgroundColor: Colors.green[300],
           appBar: AppBar(
             title: Text('Your $_myemotion Playlist'),
-            centerTitle: true,
             backgroundColor: Colors.green[800],
             elevation: 5.0,
+              actions: <Widget> [
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        //Navigator.pushReplacementNamed(context, "/home");
+                        Navigator.popUntil(context, (route) => route.isFirst);
+                      },
+                      child: Icon(
+                        Icons.home,
+                        size: 26.0,
+                      ),
+                    )
+                )
+              ]
           ),
           body: recommendation == null
               ? Center(child: CircularProgressIndicator())
