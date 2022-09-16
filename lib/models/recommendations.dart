@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_zero/models/track.dart';
-import 'package:test_zero/models/seed.dart';
+import 'package:soundays/models/track.dart';
+import 'package:soundays/models/seed.dart';
 
 class Recommendation{
   List<Track> tracks;

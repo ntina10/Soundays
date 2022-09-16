@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:test_zero/main.dart';
-import 'package:test_zero/request.dart';
+import 'package:soundays/main.dart';
+import 'package:soundays/request.dart';
 import 'globals.dart' as globals;
 
 class RtCamera extends StatefulWidget {

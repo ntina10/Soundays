@@ -18,7 +18,6 @@ Future<void> deleteFile(String fileName) async {
   // return 1;
 
 
-
   // final directory = await getApplicationDocumentsDirectory(); //   /data/user/0/com.example.test_zero/app_flutter
   // final dir = await getApplicationSupportDirectory(); //  /data/user/0/com.example.test_zero/files
   // //final dire = await getLibraryDirectory();

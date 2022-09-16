@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_zero/models/recommendations.dart';
-import 'package:test_zero/current_song.dart';
+import 'package:soundays/models/recommendations.dart';
+import 'package:soundays/current_song.dart';
 
 class MyListView extends StatelessWidget {
   final Recommendation songData;

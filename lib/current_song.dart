@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_zero/models/recommendations.dart';
-import 'package:test_zero/models/track.dart';
+import 'package:soundays/models/recommendations.dart';
+import 'package:soundays/models/track.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:audioplayers/audioplayers.dart';
 

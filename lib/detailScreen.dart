@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_zero/request.dart';
+import 'package:soundays/request.dart';
 import 'globals.dart' as globals;
-import 'package:test_zero/deleteImages.dart';
+import 'package:soundays/deleteImages.dart';
 
 
 class DetailScreen extends StatefulWidget {

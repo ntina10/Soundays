@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:test_zero/main.dart';
-import 'package:test_zero/recoSong.dart';
-import 'package:test_zero/request.dart';
+import 'package:soundays/main.dart';
+import 'package:soundays/recoSong.dart';
+import 'package:soundays/request.dart';
 import 'globals.dart' as globals;
 
 //enum FaceStatus {yes, no, notYet}
@@ -21,7 +21,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
 
   late CameraController _controller;
   // FaceStatus _faceFound = FaceStatus.notYet;
-  bool  _faceFound = true;
+  bool _faceFound = true;
 
   Timer? mytimer;
   Duration myDuration = const Duration(seconds: 4);

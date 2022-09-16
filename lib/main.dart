@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:test_zero/mycamera.dart';
-import 'package:test_zero/rtcamera.dart';
-import 'package:test_zero/recoSong.dart';
-import 'package:test_zero/choose_genres.dart';
-import 'package:test_zero/takeMyPic.dart';
+import 'package:soundays/mycamera.dart';
+import 'package:soundays/rtcamera.dart';
+import 'package:soundays/recoSong.dart';
+import 'package:soundays/choose_genres.dart';
+import 'package:soundays/takeMyPic.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -22,7 +22,7 @@ Future<void> main() async {
       '/camera': (context) => MyCamera(),
       '/rtcamera': (context) => RtCamera(),
       '/take_pic': (context) => TakeMyPic(),
-      '/song': (context) => RecoSong(myemotion: 'sadness', mygenres: ['pop', 'rock', 'alternative'],),
+      '/song': (context) => RecoSong(myemotion: 'disgust', mygenres: ['pop'],),
       '/genres': (context) => ChooseGenres(),
     },
     title: 'Emotion Recognition and Song Recommendation',

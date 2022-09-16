@@ -1,4 +1,4 @@
-package com.example.test_zero
+package com.example.soundays
 
 import io.flutter.embedding.android.FlutterActivity
 

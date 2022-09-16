@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_zero/models/album.dart';
-import 'package:test_zero/models/artist.dart';
+import 'package:soundays/models/album.dart';
+import 'package:soundays/models/artist.dart';
 
 class Track {
   final Album album;
