@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChooseGenres extends StatefulWidget {
@@ -58,71 +59,162 @@ class _ChooseGenresState extends State<ChooseGenres> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Choose up to 5 genres'),
-        centerTitle: true,
-        backgroundColor: Colors.green[800],
-        elevation: 5.0,
-      ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            //color: Colors.red,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: genres.length,
-                itemBuilder: (ctx, index) => InkWell(
-                  onTap: () {
-                      if (selected[index]) {
-                        setState(() {
-                          selected[index] = false;
-                          counter -= 1;
-                        });
-                      } else {
-                        if (counter < 5) {
-                          setState(() {
-                            selected[index] = true;
-                            counter += 1;
-                          });
-                        }
-                      }
-                  },
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              // radius: 0.8,
+              // center: Alignment.center,
+              colors: [
+                // Color.fromARGB(255, 255, 255, 255),
+                // Color.fromARGB(255, 255, 205, 215),
+                Color(0xFFB79DFF),
+                Color(0xFFFFFFFF),
+              ],
+          )),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 50,),
+                Text('What makes your\nheart move?', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
+                SizedBox(height: 20,),
+                Text('Select up to 5', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                Expanded(
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: selected[index] ? Colors.lightBlueAccent : Colors.transparent,
-                        border: Border.all(
-                            color: selected[index]
-                                ? Colors.transparent
-                                : Colors.black26),
-                        borderRadius: BorderRadius.circular(20.0)),
-                    child: Text(
-                      genres[index]['value'].toString(),
-                      style: TextStyle(
-                          color: selected[index]
-                              ? Colors.white
-                              : Colors.blue.withOpacity(0.8),
-                          fontSize: 15),
-                    ),
+                    child: _myListWidget()
                   ),
-                )
+                ),
+              ],
             ),
-          ),
-          ElevatedButton(
-              style: (counter < 1) ? ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.grey)
-              ) : null,
-              onPressed: (counter < 1) ? null : () async {
-                var genreResults = get_selected();
-                await Navigator.pushNamed(context, '/take_pic', arguments: genreResults);
-              },
-              child: Text("start emotion recognition")),
-        ],
+            Positioned(
+              bottom: 60,
+              left: 145,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: (counter < 1) ? Colors.grey : Colors.black, shape: StadiumBorder()),
+                onPressed: (counter < 1) ? null : () async {
+                  var genreResults = get_selected();
+                  await Navigator.pushNamed(context, '/take_pic', arguments: genreResults);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
+                  child: Text("Next", style: TextStyle(color: Colors.white, fontSize: 18)),
+                )
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
+  Widget _myListWidget() {
+    return ListView.builder(
+        shrinkWrap: true,
+        //scrollDirection: Axis.vertical,
+        //physics: AlwaysScrollableScrollPhysics(),
+        itemCount: genres.length,
+        itemBuilder: (ctx, index) => InkWell(
+          onTap: () {
+            if (selected[index]) {
+              setState(() {
+                selected[index] = false;
+                counter -= 1;
+              });
+            } else {
+              if (counter < 5) {
+                setState(() {
+                  selected[index] = true;
+                  counter += 1;
+                });
+              }
+            }
+          },
+          child: index == genres.length - 1 ? _lastElement(index) :
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+            //alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+                color: selected[index] ? Colors.white : Colors.transparent,
+                border: Border.all(
+                    color: Colors.white
+                  // color: selected[index]
+                  //     ? Colors.transparent
+                  //     : Colors.black26
+                ),
+                borderRadius: BorderRadius.circular(28.0)),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      genres[index]['value'].toString(),
+                      style: TextStyle(
+                        // color: selected[index]
+                        //     ? Colors.white
+                        //     : Colors.blue.withOpacity(0.8),
+                          fontFamily: "Poppins",
+                          fontSize: 16),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
+                )
+              ],
+            ),
+          ),
+        )
+    );
+
+  }
+
+  Widget _lastElement(index) {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+          //alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+              color: selected[index] ? Colors.white : Colors.transparent,
+              border: Border.all(
+                  color: Colors.white
+                // color: selected[index]
+                //     ? Colors.transparent
+                //     : Colors.black26
+              ),
+              borderRadius: BorderRadius.circular(28.0)),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    genres[index]['value'].toString(),
+                    style: TextStyle(
+                      // color: selected[index]
+                      //     ? Colors.white
+                      //     : Colors.blue.withOpacity(0.8),
+                        fontFamily: "Poppins",
+                        fontSize: 16),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 120,),
+      ],
+    );
+  }
 }
+
