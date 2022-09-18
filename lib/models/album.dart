@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soundays/models/image_obj.dart';
 
 class Album {
   final String albumType;
@@ -6,7 +7,7 @@ class Album {
   final dynamic externalUrls;
   final String href;
   final String id;
-  final List<dynamic> images;
+  final List<ImageObj> images;
   final String name;
   final String releaseDate;
   final String releaseDatePrecision;
@@ -36,7 +37,7 @@ class Album {
       externalUrls: json['external_urls'],
       href: json['href'],
       id: json['id'],
-      images: json['images'],
+      images: ImageObj.listFromMap(json),
       name: json['name'],
       releaseDate: json['release_date'],
       releaseDatePrecision: json['release_date_precision'],

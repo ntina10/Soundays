@@ -154,30 +154,55 @@ class _RecoSongState extends State<RecoSong> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-          backgroundColor: Colors.green[300],
-          appBar: AppBar(
-            title: Text('Your $_myemotion Playlist'),
-            backgroundColor: Colors.green[800],
-            elevation: 5.0,
-              actions: <Widget> [
-                Padding(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        //Navigator.pushReplacementNamed(context, "/home");
-                        Navigator.popUntil(context, (route) => route.isFirst);
-                      },
-                      child: Icon(
-                        Icons.home,
-                        size: 26.0,
-                      ),
-                    )
-                )
-              ]
-          ),
+          backgroundColor: Colors.white,
+          // appBar: AppBar(
+          //   title: Text('Your $_myemotion Playlist'),
+          //   backgroundColor: Colors.green[800],
+          //   elevation: 5.0,
+          //     actions: <Widget> [
+          //       Padding(
+          //           padding: EdgeInsets.only(right: 20.0),
+          //           child: GestureDetector(
+          //             onTap: () {
+          //               //Navigator.pushReplacementNamed(context, "/home");
+          //               Navigator.popUntil(context, (route) => route.isFirst);
+          //             },
+          //             child: Icon(
+          //               Icons.home,
+          //               size: 26.0,
+          //             ),
+          //           )
+          //       )
+          //     ]
+          // ),
+          // body: recommendation == null
+          //     ? Center(child: CircularProgressIndicator())
+          //     : Scrollbar(child: MyListView(songData: recommendation)),
           body: recommendation == null
-              ? Center(child: CircularProgressIndicator())
-              : Scrollbar(child: MyListView(songData: recommendation)),
+            ? Center(child: CircularProgressIndicator())
+            :
+          Center(
+            child: Column(
+              children: [
+                SizedBox(height: 70,),
+                Image.asset('assets/playlist.png'),
+                SizedBox(height: 30,),
+                Text('Your $_myemotion Playlist', style: TextStyle(fontSize: 24, fontFamily: 'Poppins', fontWeight: FontWeight.bold),),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
+                  child: Divider(
+                    height: 10,
+                    color: Colors.grey[800],
+                  ),
+                ),
+                Expanded(
+                    child: Container(
+                        child: Scrollbar(child: MyListView(songData: recommendation))
+                    )
+                ),
+              ],
+            ),
+          ),
 
       ),
     );
