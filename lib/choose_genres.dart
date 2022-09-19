@@ -83,6 +83,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                 Text('What makes your\nheart move?', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
                 SizedBox(height: 20,),
                 Text('Select up to 5', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                SizedBox(height: 10,),
                 Expanded(
                   child: Container(
                     child: _myListWidget()
@@ -114,6 +115,8 @@ class _ChooseGenresState extends State<ChooseGenres> {
   Widget _myListWidget() {
     return ListView.builder(
         shrinkWrap: true,
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.zero,
         //scrollDirection: Axis.vertical,
         //physics: AlwaysScrollableScrollPhysics(),
         itemCount: genres.length,

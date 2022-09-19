@@ -19,8 +19,8 @@ class CurrentSong extends StatefulWidget {
 
 class _CurrentSongState extends State<CurrentSong> {
   AudioPlayer audioPlayer = AudioPlayer();
-  // Duration duration;
-  // Duration position;
+  late Duration duration;
+  late Duration position;
   //PlayerState plState; //audioPlayer.state
   late Track song;
   late int idx;
@@ -32,7 +32,7 @@ class _CurrentSongState extends State<CurrentSong> {
 
   get isPlaying => audioPlayer.state == PlayerState.playing;
   get isPaused => audioPlayer.state == PlayerState.paused;
-  //
+
   // get durationText =>
   //     duration != null ? duration.toString().split('.').first : '';
   // get positionText =>
@@ -87,6 +87,22 @@ class _CurrentSongState extends State<CurrentSong> {
   //     position = p;
   //   }));
 
+    // audioPlayer.onDurationChanged.listen((d) => setState(() {
+    //   duration = d;
+    //   print("The DURATION is "+ duration.toString());
+    // }));
+
+    audioPlayer.onDurationChanged.listen((Duration d) {
+      print('Max duration: ' + d.inSeconds.toString());
+      setState(() => duration = d);
+    });
+
+    audioPlayer.onPositionChanged.listen((positionValue) {
+        print('Position new: ' + positionValue.inSeconds.toString());
+        setState(() => position = positionValue);
+        //updatePlayerBar();
+    });
+
     if(audioPlayer.state == PlayerState.completed) {
       onComplete();
     }
@@ -106,11 +122,16 @@ class _CurrentSongState extends State<CurrentSong> {
     if (s.previewUrl == '') {
       print("No preview is available");
     } else {
+      //var duration = audioPlayer.setSourceUrl(s.previewUrl);
+      //print("The DURATION is"+ duration.toString());
       await audioPlayer.play(UrlSource(s.previewUrl)); //both lines work
+      // var duration = audioPlayer.getDuration();
+
       //await audioPlayer.resume();
       setState(() => audioPlayer.state = PlayerState.playing);
     }
   }
+
   Future pause() async {
     await audioPlayer.pause();
     setState(() => audioPlayer.state = PlayerState.paused);
