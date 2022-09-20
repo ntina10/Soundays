@@ -24,7 +24,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
   bool _faceFound = true;
 
   Timer? mytimer;
-  Duration myDuration = const Duration(seconds: 4);
+  Duration myDuration = const Duration(seconds: 3);
 
   List<String> mydata = []; //genres we get from previous screen
 
@@ -201,50 +201,59 @@ class _TakeMyPicState extends State<TakeMyPic> {
     mydata = ModalRoute.of(context)!.settings.arguments as List<String>;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ER camera'),
-      ),
+      backgroundColor: Colors.white,
       body: _controller.value.isInitialized
-          ? Stack(
-        children: <Widget>[
-          CameraPreview(_controller),
-          // myDuration.inSeconds > -1
-          //     ? Text("take picture in " + myDuration.inSeconds.toString())
-          //     : _faceFound == true
-          //       ? Column(children: const [
-          //           Text("Your picture is ready! \nLets get the results.."),
-          //           CircularProgressIndicator()
-          //         ])
-          //       : const Center(
-          //         child:
-          //             Text("No Face Detected"),
-          //         ),
-          myDuration.inSeconds > -1
-              ? Text("take picture in " + myDuration.inSeconds.toString())
-              : _faceFound == true
-                ? Column(children: const [
-                    Text("Your picture is ready! \nWait as we are getting the results.."),
-                    CircularProgressIndicator()
-                  ])
-                : _faceFound == false
-                  ? Text("No Face Detected")
-                  : Container()
-          // myDuration.inSeconds > -1
-          //     ? Text("take picture in " + myDuration.inSeconds.toString())
-          //     : Column(children: const [
-          //           Text("Your picture is taken!")
-          //         ]),
-          // _faceFound == true
-          //       ? Column(children: const [
-          //           Text("Lets get the results.."),
-          //           CircularProgressIndicator()
-          //         ])
-          //       : const Center(
-          //         child:
-          //             Text("No Face Detected"),
-          //         ),
-        ],
-      )
+          ?
+          Center(
+            child: Column(
+              children: [
+                SizedBox(height: 50,),
+                Text('Get ready!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
+                SizedBox(height: 20,),
+                Text('Show us the cute face!', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                SizedBox(height: 20,),
+                Container(
+                  height: 630,
+                  width: 350,
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: CameraPreview(_controller),
+                      ),
+                      myDuration.inSeconds > -1 && myDuration.inSeconds != 0
+                          ? Center(
+                            child: Text(myDuration.inSeconds.toString(), textAlign: TextAlign.center, style: TextStyle(fontSize: 70.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),)
+                          )
+                          : Center(
+                            child: Column(children: const [
+                                    Text("Your picture is ready! \nWait for the results..", textAlign: TextAlign.center, style: TextStyle(fontSize: 26.0, fontFamily: "Poppins",)),
+                                CircularProgressIndicator()
+                              ]),
+                          )
+
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+
+      // Stack(
+      //   children: <Widget>[
+      //     CameraPreview(_controller),
+      //     myDuration.inSeconds > -1
+      //         ? Text("take picture in " + myDuration.inSeconds.toString())
+      //         : _faceFound == true
+      //           ? Column(children: const [
+      //               Text("Your picture is ready! \nWait as we are getting the results.."),
+      //               CircularProgressIndicator()
+      //             ])
+      //           : _faceFound == false
+      //             ? Text("No Face Detected")
+      //             : Container()
+      //   ],
+      // )
           : Container(
         color: Colors.black,
         child: const Center(

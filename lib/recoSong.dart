@@ -175,11 +175,16 @@ class _RecoSongState extends State<RecoSong> {
           //       )
           //     ]
           // ),
-          // body: recommendation == null
-          //     ? Center(child: CircularProgressIndicator())
-          //     : Scrollbar(child: MyListView(songData: recommendation)),
+
           body: recommendation == null
-            ? Center(child: CircularProgressIndicator())
+            ? Center(child: Column(
+              children: [
+                SizedBox(height: 100,),
+                Text("We are generating\nyour playlist", textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontFamily: "Poppins",)),
+                SizedBox(height: 40,),
+                CircularProgressIndicator(),
+              ],
+            ))
             :
           Center(
             child: Column(
@@ -196,9 +201,7 @@ class _RecoSongState extends State<RecoSong> {
                   ),
                 ),
                 Expanded(
-                    child: Container(
-                        child: Scrollbar(child: MyListView(songData: recommendation))
-                    )
+                    child: Scrollbar(child: MyListView(songData: recommendation))
                 ),
               ],
             ),
