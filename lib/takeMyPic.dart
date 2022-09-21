@@ -22,15 +22,15 @@ class _TakeMyPicState extends State<TakeMyPic> {
 
   late CameraController _controller;
   // FaceStatus _faceFound = FaceStatus.notYet;
-  bool _faceFound = true;
+  // bool _faceFound = true;
 
   Timer? mytimer;
   Duration myDuration = const Duration(seconds: 4);
 
   List<String> mydata = []; //genres we get from previous screen
 
-  List<String>? _listEmotionStrings;
-  late Map _map;
+  // List<String>? _listEmotionStrings;
+  // late Map _map;
 
   Future<void> _initializeCamera() async {
     final CameraController cameraController = CameraController(
@@ -89,7 +89,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
       }
     });
     if (myDuration == const Duration(seconds: 0)) {
-      await Future.delayed(Duration(seconds: 1));
+      //await Future.delayed(Duration(seconds: 1));
       await _takePicture().then((String? path) async {
         if (path != null) {
           Navigator.pushReplacement(
@@ -101,6 +101,19 @@ class _TakeMyPicState extends State<TakeMyPic> {
               ),
             ),
           );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => PicturePreview(
+          //       imagePath: path,
+          //       genresList: mydata,
+          //     ),
+          //   ),
+          // ).then((_) {
+          //   setState(() {
+          //     myDuration = const Duration(seconds: 4);
+          //   });
+          // });
           // await callApi(path);
           // print('Api was called');
           // if (_faceFound == true) {
@@ -159,9 +172,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _controller.value.isInitialized
-          ?
-          Center(
+      body: Center(
             child: Column(
               children: [
                 SizedBox(height: 50,),
@@ -172,7 +183,8 @@ class _TakeMyPicState extends State<TakeMyPic> {
                 Container(
                   height: 630,
                   width: 330,
-                  child: Stack(
+                  color: Colors.white,
+                  child: _controller.value.isInitialized ? Stack(
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -191,7 +203,12 @@ class _TakeMyPicState extends State<TakeMyPic> {
                           // )
                           : Container()
                     ],
-                  ),
+                  ) : const SizedBox(
+                        height: 30,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
                 )
               ],
             ),
@@ -212,12 +229,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
       //             : Container()
       //   ],
       // )
-          : Container(
-        color: Colors.black,
-        child: const Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
+
     );
   }
 

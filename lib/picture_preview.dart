@@ -154,7 +154,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
           child: Column(
             children: [
               SizedBox(height: 70,),
-              Text('Get ready!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
+              Text('Looking good!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
               SizedBox(height: 40,),
               _imageSize != null
               ? Transform.rotate(
@@ -171,6 +171,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       borderRadius: BorderRadius.circular(30),
                       child: Image.file(
                           File(_imagePath),
+                        fit: BoxFit.cover,
                         ),
 
                     ),
@@ -209,14 +210,18 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       if (_faceFound == true) {
                         var myemotion = _map.keys.first;
                         print("emotionRes " + myemotion);
-                        // add navigation to recosong... FOR NOW ONLY //////////////////////
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
                                 EmotionScreen(myEmotion: myemotion, myGenres: mygenres),
                           ),
-                        );
+                        ).then((_) {
+                          setState(() {
+                            in_progress = false;
+                          });
+                        });
                         print("Picture taken!!!");
                         print(_map);
                       } else if (_faceFound == false){
@@ -258,7 +263,30 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       ),
                     )
                 ),
-              )
+              ),
+              SizedBox(height: 20,),
+              MaterialButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 27,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white
+                      ),
+                      child: Icon(Icons.autorenew),
+                    ),
+                    SizedBox(width: 10,),
+                    Text('Inaccurate? Retake photo', style: TextStyle(fontSize: 14.0, fontFamily: "Poppins",),),
+                  ],
+                ),
+                onPressed: () {
+                  ///////////////////// mhpos edo push replacement?????????? ////////////////////////
+                  Navigator.pushNamed(context, '/take_pic', arguments: mygenres);
+                },
+              ),
           ],
         ),
       ),

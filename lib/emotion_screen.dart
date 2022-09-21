@@ -16,7 +16,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
   late final List<String> genres;
 
   Map emotionMap = {
-    'surpise': 'surprised',
+    'surprise': 'surprised',
     'anger': 'angry',
     'disgust': 'disgust',
     'fear': 'fear',
@@ -25,7 +25,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
     'neutral': 'neutral'
   };
   Map colorMap = {
-    'surpise': Color(0xFFFCD06A),
+    'surprise': Color(0xFFFCD06A),
     'anger': Color(0xFFFCBBD7),
     'disgust': Color(0xFF99FF8A),
     'fear': Color(0xFFA9CFEA),
@@ -46,11 +46,14 @@ class _EmotionScreenState extends State<EmotionScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+          gradient: RadialGradient(
+            // begin: Alignment.centerLeft,
+            // end: Alignment.centerRight,
+            radius: 1.0,
+            //focal: Alignment(0.3, -0.1),
+            center: Alignment(0.0, -0.35),
             colors: [
-              colorMap[emotion],
+              //colorMap[emotion],
               Color(0xFFFFFFFF),
               colorMap[emotion]
             ],

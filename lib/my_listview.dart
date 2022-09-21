@@ -44,6 +44,12 @@ class _MyListViewState extends State<MyListView> {
     initPlayer();
   }
 
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
   void onComplete() {
     setState(() => audioPlayer.state = PlayerState.stopped);
     for (int i = 0; i < audiostatus.length; i++) {
