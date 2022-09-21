@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:soundays/pre_picture.dart';
 
 class ChooseGenres extends StatefulWidget {
   const ChooseGenres({Key? key}) : super(key: key);
@@ -98,7 +99,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                 style: ElevatedButton.styleFrom(primary: (counter < 1) ? Colors.grey : Colors.black, shape: StadiumBorder()),
                 onPressed: (counter < 1) ? null : () async {
                   var genreResults = get_selected();
-                  await Navigator.pushNamed(context, '/take_pic', arguments: genreResults);
+                  await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),

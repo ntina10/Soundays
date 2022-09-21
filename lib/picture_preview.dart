@@ -5,6 +5,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:soundays/emotion_screen.dart';
+import 'package:soundays/no_face_screen.dart';
 import 'package:soundays/request.dart';
 import 'globals.dart' as globals;
 
@@ -132,8 +133,8 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
 
   @override
   void dispose() {
-    super.dispose();
     _repeatingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -162,16 +163,27 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                 child: Transform(
                   alignment: Alignment.center,
                   transform: Matrix4.rotationY(math.pi),
-                  child: Container(
-                    //width: double.maxFinite,
-                    //color: Colors.black,
-                    width: 220,
-                    height: 390,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.file(
-                          File(_imagePath),
-                        fit: BoxFit.cover,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    ),
+                    elevation: 12,
+                    child: SizedBox(
+                      width: 240,
+                      height: 340,
+                      child:  Container(
+                          width: 190,
+                          height: 250,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 80.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Image.file(
+                                File(_imagePath),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
 
                     ),
@@ -227,7 +239,13 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       } else if (_faceFound == false){
                         print("No face is in this picture");
                         //add navigation to no-face Screen   ////////////////////////////////
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NoFaceScreen(mygenres: mygenres),
+                          ),
+                        );
                       }
                     }
                     : () {},

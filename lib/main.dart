@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:soundays/mycamera.dart';
+import 'package:soundays/pre_picture.dart';
 import 'package:soundays/rtcamera.dart';
 import 'package:soundays/recoSong.dart';
 import 'package:soundays/choose_genres.dart';
@@ -29,6 +30,7 @@ Future<void> main() async {
     routes: {
       '/camera': (context) => MyCamera(),
       '/rtcamera': (context) => RtCamera(),
+      '/pre_pic': (context) => PrePicture(),
       '/take_pic': (context) => TakeMyPic(),
       '/song': (context) => RecoSong(myemotion: 'disgust', mygenres: ['pop'],),
       '/genres': (context) => ChooseGenres(),

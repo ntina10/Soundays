@@ -60,12 +60,10 @@ class _MyListViewState extends State<MyListView> {
 
   initPlayer() async {
     audioPlayer.onDurationChanged.listen((Duration d) {
-      print('Max duration: ' + d.inSeconds.toString());
       setState(() => duration = d);
     });
 
     audioPlayer.onPositionChanged.listen((positionValue) {
-      print('Position new: ' + positionValue.inSeconds.toString());
       setState(() => position = positionValue);
       //updatePlayerBar();
     });

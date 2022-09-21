@@ -28,6 +28,25 @@ class _RecoSongState extends State<RecoSong> {
   final Authentication auth = new Authentication();
   var recommendation;
 
+  Map emotionMap = {
+    'surprise': 'surprised',
+    'anger': 'angry',
+    'disgust': 'disgust',
+    'fear': 'fear',
+    'happiness': 'happy',
+    'sadness': 'sad',
+    'neutral': 'neutral'
+  };
+  Map colorMap = {
+    'surprise': Color(0xFFFCD06A),
+    'anger': Color(0xFFFCBBD7),
+    'disgust': Color(0xFF99FF8A),
+    'fear': Color(0xFFA9CFEA),
+    'happiness': Color(0xFFFCD06A),
+    'sadness': Color(0xFFA9CFEA),
+    'neutral': Color(0xFFFCD06A)
+  };
+
   @override
   void initState() {
     _myemotion = widget.myemotion;
@@ -59,7 +78,6 @@ class _RecoSongState extends State<RecoSong> {
     var glist = seed_generator(_mygenres);
 
     var mytoken = await auth.getAuthToken();
-    // print(mytoken);
 
     final response = await http
         .get(Uri.parse('https://api.spotify.com/v1/recommendations?limit=15&market=GR&seed_genres=$glist&min_energy=$minE&max_energy=$maxE&target_energy=$tE&min_valence=$minV&max_valence=$maxV&target_valence=$tV'),
@@ -73,11 +91,11 @@ class _RecoSongState extends State<RecoSong> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-
       return jsonDecode(response.body);
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
+      print('Exception thrown in '+ response.statusCode.toString());
       throw Exception('Failed to load recommendations');
     }
   }
@@ -155,6 +173,7 @@ class _RecoSongState extends State<RecoSong> {
       onWillPop: _onWillPop,
       child: Scaffold(
           backgroundColor: Colors.white,
+
           // appBar: AppBar(
           //   title: Text('Your $_myemotion Playlist'),
           //   backgroundColor: Colors.green[800],
@@ -176,23 +195,14 @@ class _RecoSongState extends State<RecoSong> {
           //     ]
           // ),
 
-          body: recommendation == null
-            ? Center(child: Column(
-              children: [
-                SizedBox(height: 100,),
-                Text("We are generating\nyour playlist", textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontFamily: "Poppins",)),
-                SizedBox(height: 40,),
-                CircularProgressIndicator(),
-              ],
-            ))
-            :
-          Center(
+          body: Center(
             child: Column(
               children: [
                 SizedBox(height: 70,),
-                Image.asset('assets/playlist.png'),
+                Container(width: 90, height: 90, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
+                SizedBox(height: 10,),
+                Text('Feeling\n' + emotionMap[_myemotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",)),
                 SizedBox(height: 30,),
-                Text('Your $_myemotion Playlist', style: TextStyle(fontSize: 24, fontFamily: 'Poppins', fontWeight: FontWeight.bold),),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
                   child: Divider(
@@ -200,13 +210,21 @@ class _RecoSongState extends State<RecoSong> {
                     color: Colors.grey[800],
                   ),
                 ),
-                Expanded(
-                    child: Scrollbar(child: MyListView(songData: recommendation))
-                ),
+                recommendation == null
+                    ? Center(child: Column(
+                        children: [
+                          SizedBox(height: 100,),
+                          Text("We are generating\nyour playlist", textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontFamily: "Poppins",)),
+                          SizedBox(height: 40,),
+                          CircularProgressIndicator(),
+                        ],
+                      ))
+                    : Expanded(
+                        child: Scrollbar(child: MyListView(songData: recommendation))
+                      ),
               ],
             ),
           ),
-
       ),
     );
   }
