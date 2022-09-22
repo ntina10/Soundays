@@ -30,6 +30,7 @@ class _PrePictureState extends State<PrePicture> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 28.0,
+                  fontFamily: "Poppins",
                 ),
               ),
               SizedBox(height: 20,),
@@ -43,7 +44,7 @@ class _PrePictureState extends State<PrePicture> {
                 ),
               ),
               SizedBox(height: 40,),
-              Container(height: 300,  width: 300, child: Image.asset('assets/sd2.png')),
+              Container(height: 300,  width: 300, child: Image.asset('assets/no_face_img.png')),
               SizedBox(height: 70,),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
@@ -52,7 +53,7 @@ class _PrePictureState extends State<PrePicture> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                    child: Text("Take a selfie!", style: TextStyle(color: Colors.white, fontSize: 18)),
+                    child: Text("Take a selfie!", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: "Poppins",)),
                   )
               ),
             ],

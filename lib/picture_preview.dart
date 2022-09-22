@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:soundays/animation_dots.dart';
 import 'package:soundays/emotion_screen.dart';
 import 'package:soundays/no_face_screen.dart';
 import 'package:soundays/request.dart';
@@ -27,20 +28,10 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
 
   bool _faceFound = true;
 
-  List<String>? _listEmotionStrings;
+  //List<String>? _listEmotionStrings;
   late Map _map;
 
   bool in_progress = false;
-
-  //about flashing circles
-  late AnimationController _repeatingController;
-  final List<Interval> _dotIntervals = const [
-    Interval(0.25, 0.8),
-    Interval(0.35, 0.9),
-    Interval(0.45, 1.0),
-  ];
-  Color flashingCircleDarkColor = const Color(0xFF333333);
-  Color flashingCircleBrightColor = const Color(0xFFaec1dd);
 
   // Fetching the image size from the image file
   Future<void> _getImageSize(File imageFile) async {
@@ -98,7 +89,6 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
 
       setState(() {
         _faceFound = true;
-        _listEmotionStrings = emotionStrings;
         _map = newMap;
       });
       print('in yes face variables are set');
@@ -122,18 +112,11 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
     super.initState();
     mygenres = widget.genresList;
     _imagePath = widget.imagePath;
-    //_recognizeEmotions();
     _getImageSize(File(_imagePath));
-
-    _repeatingController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
   }
 
   @override
   void dispose() {
-    _repeatingController.dispose();
     super.dispose();
   }
 
@@ -216,7 +199,8 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       setState(() {
                         in_progress = true;
                       });
-                      _repeatingController.repeat();
+                      //_repeatingController.repeat();
+                      //_appearanceController.repeat();
                       await callApi(_imagePath);
 
                       if (_faceFound == true) {
@@ -238,7 +222,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                         print(_map);
                       } else if (_faceFound == false){
                         print("No face is in this picture");
-                        //add navigation to no-face Screen   ////////////////////////////////
+                        //add navigation to no-face Screen
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -252,33 +236,8 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                     child: ! in_progress
                         ? Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 18,  fontFamily: "Poppins"))
                         : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 64.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          FlashingCircle(
-                            index: 0,
-                            repeatingController: _repeatingController,
-                            dotIntervals: _dotIntervals,
-                            flashingCircleDarkColor: flashingCircleDarkColor,
-                            flashingCircleBrightColor: flashingCircleBrightColor,
-                          ),
-                          FlashingCircle(
-                            index: 1,
-                            repeatingController: _repeatingController,
-                            dotIntervals: _dotIntervals,
-                            flashingCircleDarkColor: flashingCircleDarkColor,
-                            flashingCircleBrightColor: flashingCircleBrightColor,
-                          ),
-                          FlashingCircle(
-                            index: 2,
-                            repeatingController: _repeatingController,
-                            dotIntervals: _dotIntervals,
-                            flashingCircleDarkColor: flashingCircleDarkColor,
-                            flashingCircleBrightColor: flashingCircleBrightColor,
-                          ),
-                        ],
-                      ),
+                            padding: const EdgeInsets.symmetric(horizontal: 64.0),
+                            child: AnimationDots()
                     )
                 ),
               ),
@@ -309,47 +268,5 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
         ),
       ),
     ));
-  }
-}
-
-class FlashingCircle extends StatelessWidget {
-  const FlashingCircle({
-    required this.index,
-    required this.repeatingController,
-    required this.dotIntervals,
-    required this.flashingCircleBrightColor,
-    required this.flashingCircleDarkColor,
-  });
-
-  final int index;
-  final AnimationController repeatingController;
-  final List<Interval> dotIntervals;
-  final Color flashingCircleDarkColor;
-  final Color flashingCircleBrightColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: repeatingController,
-      builder: (context, child) {
-        final circleFlashPercent = dotIntervals[index].transform(
-          repeatingController.value,
-        );
-        final circleColorPercent = math.sin(math.pi * circleFlashPercent);
-
-        return Container(
-          width: 16,
-          height: 16,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color.lerp(
-              flashingCircleDarkColor,
-              flashingCircleBrightColor,
-              circleColorPercent,
-            ),
-          ),
-        );
-      },
-    );
   }
 }
