@@ -7,7 +7,7 @@ class AnimationDots extends StatefulWidget {
   _AnimationDotsState createState() => _AnimationDotsState();
 }
 
-class _AnimationDotsState extends State<AnimationDots> with TickerProviderStateMixin{
+class _AnimationDotsState extends State<AnimationDots> with SingleTickerProviderStateMixin{
 
   //about flashing circles
   // late AnimationController _repeatingController;

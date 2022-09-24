@@ -8,7 +8,7 @@ import 'package:soundays/animation_dots.dart';
 import 'package:soundays/emotion_screen.dart';
 import 'package:soundays/no_face_screen.dart';
 import 'package:soundays/request.dart';
-import 'globals.dart' as globals;
+import 'package:soundays/globals.dart' as globals;
 
 class PicturePreview extends StatefulWidget {
   final String imagePath;
@@ -140,8 +140,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
               SizedBox(height: 70,),
               Text('Looking good!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
               SizedBox(height: 40,),
-              _imageSize != null
-              ? Transform.rotate(
+              Transform.rotate(
                 angle: math.pi /40,
                 child: Transform(
                   alignment: Alignment.center,
@@ -157,23 +156,24 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       child:  Container(
                           width: 190,
                           height: 250,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 80.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Image.file(
-                                File(_imagePath),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                          child: _imageSize != null
+                              ? Padding(
+                                padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 80.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Image.file(
+                                    File(_imagePath),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                          )  : Container(),
                         ),
 
                     ),
                   ),
                 ),
               )
-              : Container(),
+             ,
               // : Transform.rotate(
               //   angle: math.pi /40,
               //   child: Transform(

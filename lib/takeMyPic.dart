@@ -21,6 +21,7 @@ class TakeMyPic extends StatefulWidget {
 class _TakeMyPicState extends State<TakeMyPic> {
 
   late CameraController _controller;
+  //late String img_path = '';
   // FaceStatus _faceFound = FaceStatus.notYet;
   // bool _faceFound = true;
 
@@ -92,6 +93,9 @@ class _TakeMyPicState extends State<TakeMyPic> {
       //await Future.delayed(Duration(seconds: 1));
       await _takePicture().then((String? path) async {
         if (path != null) {
+          // setState(() {
+          //   img_path = path;
+          // });
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -101,50 +105,6 @@ class _TakeMyPicState extends State<TakeMyPic> {
               ),
             ),
           );
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => PicturePreview(
-          //       imagePath: path,
-          //       genresList: mydata,
-          //     ),
-          //   ),
-          // ).then((_) {
-          //   setState(() {
-          //     myDuration = const Duration(seconds: 4);
-          //   });
-          // });
-          // await callApi(path);
-          // print('Api was called');
-          // if (_faceFound == true) {
-          //   // setState(() {
-          //   //   _faceFound = true;
-          //   // });
-          //   print('faceFound2 is ' + _faceFound.toString());
-          //   var emotionRes = _map.keys.first;
-          //
-          //   print("emotionRes " + emotionRes);
-          //   // add navigation to recoSong with data: _map (emotion) and selected genres
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) =>
-          //           RecoSong(myemotion: emotionRes, mygenres: mydata),
-          //     ),
-          //   );
-          //   print("Picture taken!!!");
-          //   print(_map);
-          // } else if (_faceFound == false){
-          //   print("No face is in this picture");
-          //   print('faceFound3 is ' + _faceFound.toString());
-          //   //recall the timer to take a second picture
-          //   setState(() {
-          //     //_faceFound = true;  //back to the default value
-          //     myDuration = const Duration(seconds: 3);
-          //     mytimer = Timer.periodic( const Duration(seconds: 1), (_) => setCountDown() );
-          //   });
-          //
-          // }
         } else {
           print('Image path not found!');
         }
@@ -188,7 +148,12 @@ class _TakeMyPicState extends State<TakeMyPic> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: CameraPreview(_controller),
+                        child:
+                              // img_path != '' ? Image.file(
+                              //                     File(img_path),
+                              //                     fit: BoxFit.cover,
+                              //                   ) :
+                                            CameraPreview(_controller),
                       ),
                       myDuration.inSeconds < 4 && myDuration.inSeconds > 0
                           ? Center(

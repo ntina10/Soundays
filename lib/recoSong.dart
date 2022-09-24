@@ -220,7 +220,7 @@ class _RecoSongState extends State<RecoSong> {
                         ],
                       ))
                     : Expanded(
-                        child: Scrollbar(child: MyListView(songData: recommendation))
+                        child: Scrollbar(child: MyListView(songData: recommendation, emotion: _myemotion))
                       ),
               ],
             ),

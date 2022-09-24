@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -36,3 +38,13 @@ Future<http.Response> getData(file, url) async {
   return response;
 }
 
+Future<http.Response> setRate(emo, rat, url) async {
+  var response = await http.post(
+      url,
+      headers: <String, String> {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({'emotion': emo, 'rating': rat}));
+  print('response is ${response.statusCode}');
+  return response;
+}

@@ -1,4 +1,5 @@
 import math
+import json
 from flask import Flask, jsonify, request
 import werkzeug.utils
 from feat.detector import Detector
@@ -47,6 +48,24 @@ def get_emotion():
     print(json_file)
 
     return jsonify(json_file)
+
+@app.route('/rating', methods = ['POST'])
+def set_rating():
+    req = json.loads(request.data.decode())
+    myemotion = req['emotion']
+    myrating = req['rating']
+
+    #open text file
+    text_file = open("./my_ratings.txt", "a")
+
+    #write string to file
+    text_file.write('{emotion: ' + myemotion + ', rating: ' + str(myrating) + '}\n')
+
+    #close file
+    text_file.close()
+
+    return jsonify(True)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3000)

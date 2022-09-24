@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:soundays/bg_color.dart';
 import 'package:soundays/mycamera.dart';
 import 'package:soundays/pre_picture.dart';
 import 'package:soundays/rtcamera.dart';
@@ -72,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 class MyApp extends StatelessWidget {
 
-  PageController _controller = PageController();
+  final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +116,7 @@ class MyApp extends StatelessWidget {
             child: ElevatedButton(
                 onPressed: () async {
                   await Navigator.pushNamed(context, '/genres');
+                  // await Navigator.push(context, MaterialPageRoute(builder: (context) => BgColor(mychild: Text('Hello'))));
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black,
