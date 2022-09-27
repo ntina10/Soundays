@@ -32,16 +32,9 @@ class WelcomePage2 extends StatelessWidget {
           SizedBox(height: 40,),
 
           Container(
-            height: 300,
-            width: 300,
-            child: Center(
-              child: Stack(
-                children: [
-                  Image.asset('assets/sd2b.png'),
-                  Image.asset('assets/sd2.png')
-                ],
-              ),
-            ),
+            height: 280,
+            width: 280,
+            child: Image.asset('assets/main2.png')
           )
           //Container(height: 300,  width: 300, child: Image.asset('assets/sd2.png')),
         ],

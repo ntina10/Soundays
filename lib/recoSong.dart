@@ -61,11 +61,11 @@ class _RecoSongState extends State<RecoSong> {
     var minV = mapMin['valence'];
     var maxE = mapMax['energy'];
     var maxV = mapMax['valence'];
-    // var minA = mapMin['myVal'];
-    // var maxA = mapMax['myVal'];
+    var minA = mapMin['myVal'];
+    var maxA = mapMax['myVal'];
     var tE = mapT['energy'];
     var tV = mapT['valence'];
-    // var tA = mapT['myVal'];
+    var tA = mapT['myVal'];
 
     String seed_generator(List<String> mylist) {
       String result = mylist[0];
@@ -80,7 +80,7 @@ class _RecoSongState extends State<RecoSong> {
     var mytoken = await auth.getAuthToken();
 
     final response = await http
-        .get(Uri.parse('https://api.spotify.com/v1/recommendations?limit=15&market=GR&seed_genres=$glist&min_energy=$minE&max_energy=$maxE&target_energy=$tE&min_valence=$minV&max_valence=$maxV&target_valence=$tV'),
+        .get(Uri.parse('https://api.spotify.com/v1/recommendations?limit=15&market=GR&seed_genres=$glist&min_energy=$minE&max_energy=$maxE&target_energy=$tE&min_valence=$minV&max_valence=$maxV&target_valence=$tV&min_acousticness=$minA&max_acousticness=$maxA&target_acousticness=$tA'),
             headers: {
               "Accept": "application/json",
               "Content-Type": "application/json",
@@ -104,14 +104,14 @@ class _RecoSongState extends State<RecoSong> {
     print('Recommendations:');
 
     if(_myemotion == 'happiness') {
-      mapMin = {'valence': 0.7, 'energy': 0.7};
-      mapMax = {'valence': 1.0, 'energy': 0.9};
-      mapT = {'valence': 0.8, 'energy': 0.8};
+      mapMin = {'valence': 0.7, 'energy': 0.7, 'myVal': 0.0}; //add acoustic features if needed
+      mapMax = {'valence': 1.0, 'energy': 0.9, 'myVal': 0.5};
+      mapT = {'valence': 0.8, 'energy': 0.8, 'myVal': 0.25};
       print('happy');
     } else if( _myemotion == 'surprise') {
-      mapMin = {'valence': 0.6, 'energy': 0.9};
-      mapMax = {'valence': 0.8, 'energy': 1.0};
-      mapT = {'valence': 0.7, 'energy': 0.95};
+      mapMin = {'valence': 0.6, 'energy': 0.9, 'myVal': 0.0};
+      mapMax = {'valence': 0.8, 'energy': 1.0, 'myVal': 0.5};
+      mapT = {'valence': 0.7, 'energy': 0.95, 'myVal': 0.25};
       print('surprise');
     } else if(_myemotion == 'sadness') {
       mapMin = {'valence': 0.0, 'energy': 0.0};
@@ -124,19 +124,19 @@ class _RecoSongState extends State<RecoSong> {
       mapT = {'valence': 0.1, 'energy': 0.7};
       print('disgust');
     } else if(_myemotion == 'anger') {
-      mapMin = {'valence': 0.0, 'energy': 0.7};
-      mapMax = {'valence': 0.5, 'energy': 1.0};
-      mapT = {'valence': 0.3, 'energy': 0.9};
+      mapMin = {'valence': 0.0, 'energy': 0.7, 'myVal': 0.0};
+      mapMax = {'valence': 0.5, 'energy': 1.0, 'myVal': 0.5};
+      mapT = {'valence': 0.3, 'energy': 0.9, 'myVal': 0.25};
       print('angry');
     } else if(_myemotion == 'fear') {
-      mapMin = {'valence': 0.0, 'energy': 0.8};
-      mapMax = {'valence': 0.4, 'energy': 1.0};
-      mapT = {'valence': 0.3, 'energy': 0.95};
+      mapMin = {'valence': 0.0, 'energy': 0.8, 'myVal': 0.0};
+      mapMax = {'valence': 0.4, 'energy': 1.0, 'myVal': 0.5};
+      mapT = {'valence': 0.3, 'energy': 0.95, 'myVal': 0.25};
       print('fear');
     } else if(_myemotion == 'neutral') {
-      mapMin = {'valence': 0.4, 'energy': 0.4};
-      mapMax = {'valence': 0.6, 'energy': 0.6};
-      mapT = {'valence': 0.5, 'energy': 0.5};
+      mapMin = {'valence': 0.4, 'energy': 0.4, 'myVal': 0.4};
+      mapMax = {'valence': 0.6, 'energy': 0.6, 'myVal': 0.6};
+      mapT = {'valence': 0.5, 'energy': 0.5, 'myVal' : 0.5};
       print('neutral');
     }
 

@@ -14,6 +14,8 @@ import 'package:soundays/welcome_pages/welcome_page1.dart';
 import 'package:soundays/welcome_pages/welcome_page2.dart';
 import 'package:soundays/welcome_pages/welcome_page3.dart';
 
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 //hello world!
 
 List<CameraDescription> cameras = [];
@@ -40,7 +42,7 @@ Future<void> main() async {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: SplashScreen()
+    home: MyApp() //SplashScreen()
   )
   );
 }
@@ -65,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.blue[100],
       body: Center(
-        child: Image.asset('assets/splash_logo.png'),
+        child: Image.asset('assets/sound_logo.png'),
       ),
     );
   }

@@ -91,6 +91,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
         _faceFound = true;
         _map = newMap;
       });
+      print(_map.toString());
       print('in yes face variables are set');
 
     } else {

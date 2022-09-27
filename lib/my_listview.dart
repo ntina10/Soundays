@@ -200,43 +200,48 @@ class _MyListViewState extends State<MyListView> {
             );
           },
         ),
-        Positioned(
-          bottom: 60,
-          left: 120,
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
-              onPressed: selectedIndex != -1 ?
-                  () { _launchurl(); } : null,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 15.0, 16.0, 15.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5.0),
-                      child: Text("Listen on", style: TextStyle(color: Colors.white, fontSize: 18)),
+        Padding(
+          padding: const EdgeInsets.only(top: 420.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 56,
+                  width: 56,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
+                  child: Center(
+                    child: IconButton(
+                      icon: Icon(Icons.star_rate_rounded,),
+                      color: Color(0xFFF9DB6F),
+                      iconSize: 40,
+                      onPressed: () {showAlertDialog(context, myemotion);},
                     ),
-                    SizedBox(
-                      height: 25,
-                      child: Image.asset('assets/spotify_logo.png'),
-                    )
-                  ],
-                ),
-              )
+                  )
+              ),
+              SizedBox(width: 8,),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
+                  onPressed: selectedIndex != -1 ?
+                      () { _launchurl(); } : null,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16.0, 15.0, 16.0, 15.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5.0),
+                          child: Text("Listen on", style: TextStyle(color: Colors.white, fontSize: 18)),
+                        ),
+                        SizedBox(
+                          height: 25,
+                          child: Image.asset('assets/spotify_logo.png'),
+                        )
+                      ],
+                    ),
+                  )
+              ),
+            ],
           ),
         ),
-        Positioned(
-          bottom: 60,
-          left: 40,
-          child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
-            child: IconButton(
-              icon: Icon(Icons.star_rate_rounded,),
-              color: Color(0xFFF9DB6F),
-              iconSize: 40,
-              onPressed: () {showAlertDialog(context, myemotion);},
-            )
-          ),
-        )
       ],
     );
   }

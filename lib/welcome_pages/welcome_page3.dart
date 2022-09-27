@@ -29,8 +29,8 @@ class WelcomePage3 extends StatelessWidget {
               fontFamily: "Poppins",
             ),
           ),
-          SizedBox(height: 10,),
-          Container(height: 300,  width: 300, child: Image.asset('assets/sd3.png')),
+          SizedBox(height: 50,),
+          Container(height: 220,  width: 220, child: Image.asset('assets/main3.png')),
         ],
       ),
     );
