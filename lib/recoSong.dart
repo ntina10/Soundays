@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soundays/my_listview.dart';
 import 'package:http/http.dart' as http;
@@ -61,11 +62,11 @@ class _RecoSongState extends State<RecoSong> {
     var minV = mapMin['valence'];
     var maxE = mapMax['energy'];
     var maxV = mapMax['valence'];
-    var minA = mapMin['myVal'];
-    var maxA = mapMax['myVal'];
+    // var minA = mapMin['myVal'];
+    // var maxA = mapMax['myVal'];
     var tE = mapT['energy'];
     var tV = mapT['valence'];
-    var tA = mapT['myVal'];
+    // var tA = mapT['myVal'];
 
     String seed_generator(List<String> mylist) {
       String result = mylist[0];
@@ -80,8 +81,8 @@ class _RecoSongState extends State<RecoSong> {
     var mytoken = await auth.getAuthToken();
 
     final response = await http
-        .get(Uri.parse('https://api.spotify.com/v1/recommendations?limit=15&market=GR&seed_genres=$glist&min_energy=$minE&max_energy=$maxE&target_energy=$tE&min_valence=$minV&max_valence=$maxV&target_valence=$tV&min_acousticness=$minA&max_acousticness=$maxA&target_acousticness=$tA'),
-            headers: {
+        .get(Uri.parse('https://api.spotify.com/v1/recommendations?limit=25&seed_genres=$glist&min_energy=$minE&max_energy=$maxE&target_energy=$tE&min_valence=$minV&max_valence=$maxV&target_valence=$tV'),
+            headers: {                                                      //&market=GR
               "Accept": "application/json",
               "Content-Type": "application/json",
               "Authorization": "Bearer $mytoken"
@@ -161,71 +162,89 @@ class _RecoSongState extends State<RecoSong> {
 
   }
 
-  Future<bool> _onWillPop() async {
-    Navigator.of(context)
-        .popUntil(ModalRoute.withName("/genres"));
-    return false;
-  }
+  // Future<bool> _onWillPop() async {
+  //   Navigator.of(context)
+  //       .popUntil(ModalRoute.withName("/genres"));
+  //   return false;
+  // }
+  // WillPopScope(
+  // onWillPop: _onWillPop,
+  // child: Scaffold())
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-          backgroundColor: Colors.white,
+    return Scaffold(
+        backgroundColor: Colors.white,
 
-          // appBar: AppBar(
-          //   title: Text('Your $_myemotion Playlist'),
-          //   backgroundColor: Colors.green[800],
-          //   elevation: 5.0,
-          //     actions: <Widget> [
-          //       Padding(
-          //           padding: EdgeInsets.only(right: 20.0),
-          //           child: GestureDetector(
-          //             onTap: () {
-          //               //Navigator.pushReplacementNamed(context, "/home");
-          //               Navigator.popUntil(context, (route) => route.isFirst);
-          //             },
-          //             child: Icon(
-          //               Icons.home,
-          //               size: 26.0,
-          //             ),
-          //           )
-          //       )
-          //     ]
-          // ),
+        // appBar: AppBar(
+        //   title: Text('Your $_myemotion Playlist'),
+        //   backgroundColor: Colors.green[800],
+        //   elevation: 5.0,
+        //     actions: <Widget> [
+        //       Padding(
+        //           padding: EdgeInsets.only(right: 20.0),
+        //           child: GestureDetector(
+        //             onTap: () {
+        //               //Navigator.pushReplacementNamed(context, "/home");
+        //               Navigator.popUntil(context, (route) => route.isFirst);
+        //             },
+        //             child: Icon(
+        //               Icons.home,
+        //               size: 26.0,
+        //             ),
+        //           )
+        //       )
+        //     ]
+        // ),
 
-          body: Center(
-            child: Column(
-              children: [
-                SizedBox(height: 70,),
-                Container(width: 90, height: 90, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
-                SizedBox(height: 10,),
-                Text('Feeling\n' + emotionMap[_myemotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",)),
-                SizedBox(height: 30,),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-                  child: Divider(
-                    height: 10,
-                    color: Colors.grey[800],
+        body: Center(
+          child: Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    radius: 1.0,
+                    center: Alignment(0.0, -0.20),
+                    colors: [
+                      Color(0xFFFFFFFF),
+                      colorMap[_myemotion]
+                    ],
                   ),
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
                 ),
-                recommendation == null
-                    ? Center(child: Column(
-                        children: [
-                          SizedBox(height: 100,),
-                          Text("We are generating\nyour playlist", textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontFamily: "Poppins",)),
-                          SizedBox(height: 40,),
-                          CircularProgressIndicator(),
-                        ],
-                      ))
-                    : Expanded(
-                        child: Scrollbar(child: MyListView(songData: recommendation, emotion: _myemotion))
-                      ),
-              ],
-            ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 70,),
+                    Container(width: 90, height: 90, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
+                    SizedBox(height: 10,),
+                    Text('Feeling\n' + emotionMap[_myemotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",)),
+                    SizedBox(height: 30,),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
+                child: Divider(
+                  height: 10,
+                  color: Colors.grey[800],
+                ),
+              ),
+              recommendation == null
+                  ? Center(child: Column(
+                      children: const [
+                        SizedBox(height: 100,),
+                        Text("We are generating\nyour playlist", textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontFamily: "Poppins",)),
+                        SizedBox(height: 40,),
+                        CircularProgressIndicator(),
+                      ],
+                    ))
+                  : Expanded(
+                      child: Scrollbar(child: MyListView(songData: recommendation, emotion: _myemotion))
+                    ),
+            ],
           ),
-      ),
+        ),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:animated_background/animated_background.dart';
 import 'package:camera/camera.dart';
 import 'package:soundays/bg_color.dart';
 import 'package:soundays/mycamera.dart';
@@ -47,31 +48,31 @@ Future<void> main() async {
   );
 }
 
-class SplashScreen extends StatefulWidget {
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-        Duration(seconds: 3),
-            () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => MyApp())));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue[100],
-      body: Center(
-        child: Image.asset('assets/sound_logo.png'),
-      ),
-    );
-  }
-}
+// class SplashScreen extends StatefulWidget {
+//   @override
+//   _SplashScreenState createState() => _SplashScreenState();
+// }
+//
+// class _SplashScreenState extends State<SplashScreen> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     Timer(
+//         Duration(seconds: 3),
+//             () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+//             builder: (BuildContext context) => MyApp())));
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.blue[100],
+//       body: Center(
+//         child: Image.asset('assets/sound_logo.png'),
+//       ),
+//     );
+//   }
+// }
 
 class MyApp extends StatelessWidget {
 
@@ -81,61 +82,62 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      // appBar: AppBar(
-      //   title: Text('Soundays'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.green[800],
-      //   elevation: 5.0,
-      // ),
-      backgroundColor: Colors.redAccent,
-      body: Stack(
-        children: [
+        // appBar: AppBar(
+        //   title: Text('Soundays'),
+        //   centerTitle: true,
+        //   backgroundColor: Colors.green[800],
+        //   elevation: 5.0,
+        // ),
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
 
-          PageView(
-            controller: _controller,
-            children: [
-              WelcomePage1(),
-              WelcomePage2(),
-              WelcomePage3()
-            ],
-          ),
-
-
-          // SizedBox(height: 200,),
-
-          Container(
-            alignment: Alignment(0, 0.45),
-            child: SmoothPageIndicator(
+            PageView(
               controller: _controller,
-              count: 3,
-              effect: ExpandingDotsEffect(dotColor:  Colors.white, activeDotColor:  Colors.white,),
+              children: [
+                WelcomePage1(),
+                WelcomePage2(),
+                WelcomePage3()
+              ],
             ),
-          ),
 
-          Positioned(
-            left: 90,
-            bottom: 80,
-            child: ElevatedButton(
-                onPressed: () async {
-                  await Navigator.pushNamed(context, '/genres');
-                  // await Navigator.push(context, MaterialPageRoute(builder: (context) => BgColor(mychild: Text('Hello'))));
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    shape: StadiumBorder()
-                    // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
-                ),
-                // ButtonStyle(
-                //   backgroundColor: MaterialStateProperty.all(Colors.black),
-                // ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                  child: Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 18)),
-                ),
+
+            // SizedBox(height: 200,),
+
+            Container(
+              alignment: Alignment(0, 0.45),
+              child: SmoothPageIndicator(
+                controller: _controller,
+                count: 3,
+                effect: ExpandingDotsEffect(dotColor:  Colors.white, activeDotColor:  Colors.white,),
+              ),
             ),
-          )
-        ],
-      ),
+
+            Positioned(
+              left: 90,
+              bottom: 80,
+              child: ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/genres');
+                    //await Navigator.push(context, MaterialPageRoute(builder: (context) => BgColor(mychild: Text('Hello'))));
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      shape: StadiumBorder()
+                      // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
+                  ),
+                  // ButtonStyle(
+                  //   backgroundColor: MaterialStateProperty.all(Colors.black),
+                  // ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
+                    child: Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 18)),
+                  ),
+              ),
+            )
+          ],
+        ),
+
     );
   }
 }
