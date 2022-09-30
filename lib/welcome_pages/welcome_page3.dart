@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soundays/myElements.dart';
 
 class WelcomePage3 extends StatelessWidget {
   const WelcomePage3({Key? key}) : super(key: key);
@@ -9,28 +10,9 @@ class WelcomePage3 extends StatelessWidget {
       color: Colors.orange[100],
       child: Column(
         children: [
-          SizedBox(height: 50,),
-          Text(
-            "Sounday\nFunday!",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 28.0,
-            ),
-          ),
-          SizedBox(height: 20,),
-          Text(
-            "That’s it! We analyze your\nemotions, and offer hand picked\nsongs just for you, according to\nyour mood!",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18.0,
-              fontFamily: "Poppins",
-            ),
-          ),
-          SizedBox(height: 50,),
-          Container(height: 220,  width: 220, child: Image.asset('assets/main3.png')),
+          myTextTop("Sounday\nFunday!", "That’s it! We analyze your emotions,\nand offer hand picked songs just fo\nyou, according to your mood!"),
+          SizedBox(height: 75,),
+          Container(height: 190,  width: 190, child: Image.asset('assets/main3.png')),
         ],
       ),
     );

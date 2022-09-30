@@ -8,7 +8,7 @@ class BgColor extends StatefulWidget {
   _BgColorState createState() => _BgColorState();
 }
 
-class _BgColorState extends State<BgColor> with TickerProviderStateMixin {
+class _BgColorState extends State<BgColor> with SingleTickerProviderStateMixin {
 
   late AnimationController _positionController;
 

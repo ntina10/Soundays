@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soundays/myElements.dart';
 import 'package:soundays/recoSong.dart';
 
 class EmotionScreen extends StatefulWidget {
@@ -69,22 +70,30 @@ class _EmotionScreenState extends State<EmotionScreen> {
               SizedBox(height: 20,),
               Text('Feeling\n' + emotionMap[emotion], textAlign: TextAlign.center, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",)),
               SizedBox(height: 50,),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            RecoSong(myemotion: emotion, mygenres: genres),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                    child: Text("Show me the music!", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: "Poppins")),
-                  )
-              ),
+              myButton(() {
+                Navigator.push(context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      RecoSong(myemotion: emotion, mygenres: genres),
+                                ),
+                              );
+              }, 'Show me the music!'),
+              // ElevatedButton(
+              //     style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) =>
+              //               RecoSong(myemotion: emotion, mygenres: genres),
+              //         ),
+              //       );
+              //     },
+              //     child: Padding(
+              //       padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
+              //       child: Text("Show me the music!", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: "Poppins")),
+              //     )
+              // ),
             ],
           ),
         )

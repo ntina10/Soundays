@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_background/animated_background.dart';
 import 'package:camera/camera.dart';
 import 'package:soundays/bg_color.dart';
+import 'package:soundays/myElements.dart';
 import 'package:soundays/mycamera.dart';
 import 'package:soundays/pre_picture.dart';
 import 'package:soundays/rtcamera.dart';
@@ -14,7 +16,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:soundays/welcome_pages/welcome_page1.dart';
 import 'package:soundays/welcome_pages/welcome_page2.dart';
 import 'package:soundays/welcome_pages/welcome_page3.dart';
-
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 //hello world!
@@ -30,13 +32,14 @@ Future<void> main() async {
     debugPrint('CameraError: ${e.description}');
   }
 
+  //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
   runApp(MaterialApp(
     routes: {
       '/camera': (context) => MyCamera(),
       '/rtcamera': (context) => RtCamera(),
       '/pre_pic': (context) => PrePicture(),
       '/take_pic': (context) => TakeMyPic(),
-      '/song': (context) => RecoSong(myemotion: 'disgust', mygenres: ['pop'],),
+      //'/song': (context) => RecoSong(myemotion: 'disgust', mygenres: ['pop'],),
       '/genres': (context) => ChooseGenres(),
     },
     title: 'Emotion Recognition and Song Recommendation',
@@ -81,13 +84,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-        // appBar: AppBar(
-        //   title: Text('Soundays'),
-        //   centerTitle: true,
-        //   backgroundColor: Colors.green[800],
-        //   elevation: 5.0,
-        // ),
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
@@ -101,40 +97,26 @@ class MyApp extends StatelessWidget {
               ],
             ),
 
-
-            // SizedBox(height: 200,),
-
-            Container(
-              alignment: Alignment(0, 0.45),
-              child: SmoothPageIndicator(
-                controller: _controller,
-                count: 3,
-                effect: ExpandingDotsEffect(dotColor:  Colors.white, activeDotColor:  Colors.white,),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SmoothPageIndicator(
+                    controller: _controller,
+                    count: 3,
+                    effect: ExpandingDotsEffect(dotColor:  Colors.black, activeDotColor:  Colors.black, dotHeight: 16.0, dotWidth: 16.0),
+                  ),
+                  SizedBox(height: 50,),
+                  myButton(() async {
+                    await Navigator.pushNamed(context, '/genres');
+                    //await Navigator.push(context, MaterialPageRoute(builder: (context) => BgColor(mychild: Text('Hello'))));
+                  }, 'Analyze my mood'),
+                  SizedBox(height: 90,)
+                ],
               ),
             ),
 
-            Positioned(
-              left: 90,
-              bottom: 80,
-              child: ElevatedButton(
-                  onPressed: () async {
-                    await Navigator.pushNamed(context, '/genres');
-                    //await Navigator.push(context, MaterialPageRoute(builder: (context) => BgColor(mychild: Text('Hello'))));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                      shape: StadiumBorder()
-                      // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
-                  ),
-                  // ButtonStyle(
-                  //   backgroundColor: MaterialStateProperty.all(Colors.black),
-                  // ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                    child: Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ),
-              ),
-            )
           ],
         ),
 

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:soundays/myElements.dart';
 import 'package:soundays/pre_picture.dart';
+import 'package:animated_background/animated_background.dart';
+import 'package:soundays/bg_color.dart';
 
 class ChooseGenres extends StatefulWidget {
   const ChooseGenres({Key? key}) : super(key: key);
@@ -40,6 +43,20 @@ class _ChooseGenresState extends State<ChooseGenres> {
   List<bool> selected = [];
   int counter = 0;
 
+  // ParticleOptions particles = const ParticleOptions(
+  //   //baseColor: Colors.cyan,
+  //   spawnOpacity: 0.8,
+  //   opacityChangeRate: 0.25,
+  //   minOpacity: 1.0,
+  //   maxOpacity: 1.0,
+  //   particleCount: 4,
+  //   spawnMaxRadius: 150.0,
+  //   spawnMaxSpeed: 50.0,
+  //   spawnMinSpeed: 30,
+  //   spawnMinRadius: 150.0,
+  //   image: Image(image: AssetImage('assets/bubble1.png'),),
+  // );
+
   List<String> get_selected() {
     List<String> ans = [];
     for(var i =0; i<genres.length; i++) {
@@ -60,7 +77,8 @@ class _ChooseGenresState extends State<ChooseGenres> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+      Container(
       decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -75,42 +93,42 @@ class _ChooseGenresState extends State<ChooseGenres> {
               ],
           )),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                SizedBox(height: 50,),
-                Text('What makes your\nheart move?', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
-                SizedBox(height: 20,),
-                Text('Select up to 5', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
-                SizedBox(height: 10,),
-                Expanded(
-                  child: Container(
-                    child: _myListWidget()
+          backgroundColor: Colors.transparent,
+          body:
+          // AnimatedBackground(
+          //   behaviour: RandomParticleBehaviour(options: particles),
+          //   vsync: this,
+          //   child:
+            Stack(
+                children: [
+                  Column(
+                    children: [
+                      myTextTop('What makes your\nheart move?', 'Select up to 5'),
+                      // SizedBox(height: 50,),
+                      // Text('What makes your\nheart move?', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
+                      // SizedBox(height: 20,),
+                      // Text('Select up to 5', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                      SizedBox(height: 24,),
+                      Expanded(
+                        child: Container(
+                          child: _myListWidget()
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 60,
-              left: 145,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: (counter < 1) ? Colors.grey : Colors.black, shape: StadiumBorder()),
-                onPressed: (counter < 1) ? null : () async {
-                  var genreResults = get_selected();
-                  await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                  child: Text("Next", style: TextStyle(color: Colors.white, fontSize: 18)),
-                )
+                  Positioned(
+                    bottom: 60,
+                    left: 145,
+                    child: myButton((counter < 1) ? null : () async {
+                                    var genreResults = get_selected();
+                                    await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);
+                                  }, 'Next'),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+          //),
       ),
-    );
+      );
   }
 
   Widget _myListWidget() {
@@ -137,88 +155,93 @@ class _ChooseGenresState extends State<ChooseGenres> {
               }
             }
           },
-          child: index == genres.length - 1 ? _lastElement(index) :
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-            //alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-                color: selected[index] ? Colors.white : Colors.transparent,
-                border: Border.all(
-                    color: Colors.white
-                  // color: selected[index]
-                  //     ? Colors.transparent
-                  //     : Colors.black26
-                ),
-                borderRadius: BorderRadius.circular(28.0)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      genres[index]['value'].toString(),
-                      style: TextStyle(
-                        // color: selected[index]
-                        //     ? Colors.white
-                        //     : Colors.blue.withOpacity(0.8),
-                          fontFamily: "Poppins",
-                          fontSize: 16),
+          child:
+          Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                //alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                    color: selected[index] ? Colors.white : Colors.transparent,
+                    border: Border.all(
+                        color: Colors.white
+                      // color: selected[index]
+                      //     ? Colors.transparent
+                      //     : Colors.black26
                     ),
-                  ),
+                    borderRadius: BorderRadius.circular(28.0)),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          genres[index]['value'].toString(),
+                          style: TextStyle(
+                            // color: selected[index]
+                            //     ? Colors.white
+                            //     : Colors.blue.withOpacity(0.8),
+                              fontFamily: "Poppins",
+                              fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
-                )
-              ],
-            ),
+              ),
+              if (index == genres.length - 1) SizedBox(height: 120,)
+            ],
           ),
         )
     );
 
   }
 
-  Widget _lastElement(index) {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-          //alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              color: selected[index] ? Colors.white : Colors.transparent,
-              border: Border.all(
-                  color: Colors.white
-                // color: selected[index]
-                //     ? Colors.transparent
-                //     : Colors.black26
-              ),
-              borderRadius: BorderRadius.circular(28.0)),
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    genres[index]['value'].toString(),
-                    style: TextStyle(
-                      // color: selected[index]
-                      //     ? Colors.white
-                      //     : Colors.blue.withOpacity(0.8),
-                        fontFamily: "Poppins",
-                        fontSize: 16),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
-              )
-            ],
-          ),
-        ),
-        SizedBox(height: 120,),
-      ],
-    );
-  }
+//   Widget _lastElement(index) {
+//     return Column(
+//       children: [
+//         Container(
+//           margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+//           //alignment: Alignment.centerLeft,
+//           decoration: BoxDecoration(
+//               color: selected[index] ? Colors.white : Colors.transparent,
+//               border: Border.all(
+//                   color: Colors.white
+//                 // color: selected[index]
+//                 //     ? Colors.transparent
+//                 //     : Colors.black26
+//               ),
+//               borderRadius: BorderRadius.circular(28.0)),
+//           child: Row(
+//             children: [
+//               Expanded(
+//                 child: Padding(
+//                   padding: const EdgeInsets.all(15.0),
+//                   child: Text(
+//                     genres[index]['value'].toString(),
+//                     style: TextStyle(
+//                       // color: selected[index]
+//                       //     ? Colors.white
+//                       //     : Colors.blue.withOpacity(0.8),
+//                         fontFamily: "Poppins",
+//                         fontSize: 16),
+//                   ),
+//                 ),
+//               ),
+//               Padding(
+//                 padding: const EdgeInsets.only(right: 15.0),
+//                 child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
+//               )
+//             ],
+//           ),
+//         ),
+//         SizedBox(height: 120,),
+//       ],
+//     );
+//   }
 }
 
