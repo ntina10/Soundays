@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:soundays/myElements.dart';
 import 'package:soundays/my_listview.dart';
 import 'package:http/http.dart' as http;
 import 'package:soundays/auth_spotify.dart';
@@ -176,26 +177,11 @@ class _RecoSongState extends State<RecoSong> {
     return Scaffold(
         backgroundColor: Colors.white,
 
-        // appBar: AppBar(
-        //   title: Text('Your $_myemotion Playlist'),
-        //   backgroundColor: Colors.green[800],
-        //   elevation: 5.0,
-        //     actions: <Widget> [
-        //       Padding(
-        //           padding: EdgeInsets.only(right: 20.0),
-        //           child: GestureDetector(
-        //             onTap: () {
-        //               //Navigator.pushReplacementNamed(context, "/home");
         //               Navigator.popUntil(context, (route) => route.isFirst);
         //             },
         //             child: Icon(
         //               Icons.home,
         //               size: 26.0,
-        //             ),
-        //           )
-        //       )
-        //     ]
-        // ),
 
         body: Center(
           child: Column(
@@ -218,18 +204,19 @@ class _RecoSongState extends State<RecoSong> {
                     SizedBox(height: 70,),
                     Container(width: 90, height: 90, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
                     SizedBox(height: 10,),
-                    Text('Feeling\n' + emotionMap[_myemotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",)),
+                    myTitle('Feeling\n' + emotionMap[_myemotion] + '!'),
                     SizedBox(height: 30,),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-                child: Divider(
-                  height: 10,
-                  color: Colors.grey[800],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
+              //   child: Divider(
+              //     height: 10,
+              //     color: Colors.grey[800],
+              //   ),
+              // ),
+              SizedBox(height: 16,),
               recommendation == null
                   ? Center(child: Column(
                       children: const [

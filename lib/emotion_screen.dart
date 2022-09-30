@@ -65,11 +65,11 @@ class _EmotionScreenState extends State<EmotionScreen> {
         body: Center(
           child: Column(
             children: [
-              SizedBox(height: 180,),
-              Container(width: 200, height: 200, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
-              SizedBox(height: 20,),
-              Text('Feeling\n' + emotionMap[emotion], textAlign: TextAlign.center, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",)),
-              SizedBox(height: 50,),
+              SizedBox(height: 170,),
+              Container(width: 220, height: 220, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
+              SizedBox(height: 40,),
+              Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Poppins", height: 1.01)),
+              SizedBox(height: 40,),
               myButton(() {
                 Navigator.push(context,
                                 MaterialPageRoute(
@@ -78,22 +78,6 @@ class _EmotionScreenState extends State<EmotionScreen> {
                                 ),
                               );
               }, 'Show me the music!'),
-              // ElevatedButton(
-              //     style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
-              //     onPressed: () {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //           builder: (context) =>
-              //               RecoSong(myemotion: emotion, mygenres: genres),
-              //         ),
-              //       );
-              //     },
-              //     child: Padding(
-              //       padding: const EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-              //       child: Text("Show me the music!", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: "Poppins")),
-              //     )
-              // ),
             ],
           ),
         )

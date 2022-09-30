@@ -19,8 +19,6 @@ import 'package:soundays/welcome_pages/welcome_page3.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-//hello world!
-
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {

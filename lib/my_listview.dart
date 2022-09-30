@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soundays/models/recommendations.dart';
 import 'package:soundays/models/track.dart';
+import 'package:soundays/myElements.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:soundays/alert_rating.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MyListView extends StatefulWidget {
   final Recommendation songData;
@@ -24,6 +27,16 @@ class _MyListViewState extends State<MyListView> {
   late String myemotion;
 
   int selectedIndex = -1;
+
+  Map colorMap = {
+    'surprise': Color(0xFFFCD06A),
+    'anger': Color(0xFFFCBBD7),
+    'disgust': Color(0xFF99FF8A),
+    'fear': Color(0xFFA9CFEA),
+    'happiness': Color(0xFFFCD06A),
+    'sadness': Color(0xFFA9CFEA),
+    'neutral': Color(0xFFFCD06A)
+  };
 
   AudioPlayer audioPlayer = AudioPlayer();
   Duration duration = Duration(seconds: 20);
@@ -138,7 +151,9 @@ class _MyListViewState extends State<MyListView> {
               children: [
                 Card(
                   elevation: 0.0,
+                  margin: EdgeInsets.zero,
                   child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                     dense: false,
                     leading: CircleAvatar(
                       //AssetImage('no_album.png'),
@@ -148,7 +163,7 @@ class _MyListViewState extends State<MyListView> {
                     ),
                     title: Text(s.name, style: TextStyle(fontSize: 14.0, fontFamily: "Poppins",)) ,
                     subtitle: Text("By ${s.artists[0].name}", style: TextStyle(fontSize: 14.0, fontFamily: "Poppins", color: Color(0xFFB1B1B1))),
-                    tileColor: selectedIndex == index ? Colors.yellow[100] : null,
+                    tileColor: selectedIndex == index ? Color(0xFFE5E5E5) : null,
                     onTap: () {
                       selectedIndex == index ?
                       setState(() {
@@ -163,9 +178,9 @@ class _MyListViewState extends State<MyListView> {
                     Stack(
                       children: [
                         Positioned(
-                          top: 9,
-                            right: 9,
-                            child: SizedBox(height: 30, width: 30, child: CircularProgressIndicator(value: audiostatus[index] ? position.inSeconds/duration.inSeconds : 0.0, strokeWidth: 2, backgroundColor: Colors.grey, color: Colors.green,))
+                          top: 12,
+                          right: 12,
+                          child: SizedBox(height: 24, width: 24, child: CircularProgressIndicator(value: audiostatus[index] ? position.inSeconds/duration.inSeconds : 0.0, strokeWidth: 2, backgroundColor: Color(0xFFE5E5E5), color: Colors.green,))
                         ),
                         IconButton(icon: audiostatus[index] ? const Icon(Icons.pause_rounded, color: Colors.green,) : const Icon(Icons.play_arrow_rounded),
                                     onPressed: audiostatus[index]
@@ -187,7 +202,7 @@ class _MyListViewState extends State<MyListView> {
                     : null
                   ),
                 ),
-                if (index == songData.tracks.length - 1) SizedBox(height: 110,)
+                if (index == songData.tracks.length - 1) SizedBox(height: 120,)
               ],
             );
           },
@@ -195,8 +210,8 @@ class _MyListViewState extends State<MyListView> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Divider(
-                height: 10,
-                color: Colors.grey[800],
+                height: 1,
+                color: Color(0xFFE5E5E5),
               ),
             );
           },
@@ -208,38 +223,32 @@ class _MyListViewState extends State<MyListView> {
             children: [
               Container(
                 height: 56,
-                  width: 56,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
-                  child: Center(
-                    child: IconButton(
-                      icon: Icon(Icons.star_rate_rounded,),
-                      color: Color(0xFFF9DB6F),
-                      iconSize: 40,
-                      onPressed: () {showAlertDialog(context, myemotion);},
-                    ),
-                  )
+                width: 56,
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
+                child: MaterialButton(onPressed: () {showAlertDialog(context, myemotion);},
+                  child: Container(
+                    height: 24,
+                    width: 24,
+                    child: SvgPicture.asset('assets/star_full.svg'),
+                  ),
+                ),
               ),
               SizedBox(width: 8,),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
-                  onPressed: selectedIndex != -1 ?
-                      () { _launchurl(); } : null,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 15.0, 16.0, 15.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 5.0),
-                          child: Text("Listen on", style: TextStyle(color: Colors.white, fontSize: 18)),
-                        ),
-                        SizedBox(
-                          height: 25,
-                          child: Image.asset('assets/spotify_logo.png'),
-                        )
-                      ],
+              myButtonWithChild(
+                selectedIndex != -1 ? () { _launchurl(); } : null,
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Text('Listen on', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
                     ),
-                  )
-              ),
+                    SizedBox(
+                      height: 20,
+                      child: Image.asset('assets/spotify_logo.png'),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

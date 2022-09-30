@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:soundays/main.dart';
+import 'package:soundays/myElements.dart';
 import 'package:soundays/picture_preview.dart';
 import 'package:soundays/recoSong.dart';
 import 'package:soundays/request.dart';
@@ -135,14 +136,15 @@ class _TakeMyPicState extends State<TakeMyPic> {
       body: Center(
             child: Column(
               children: [
+                // SizedBox(height: 50,),
+                // Text('Get ready!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
+                // SizedBox(height: 20,),
+                // Text('Show us the cute face!', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                myTextTop('Get ready!', 'Show us the cute face!'),
                 SizedBox(height: 50,),
-                Text('Get ready!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
-                SizedBox(height: 20,),
-                Text('Show us the cute face!', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
-                SizedBox(height: 40,),
                 Container(
-                  height: 630,
-                  width: 330,
+                  height: 550,
+                  width: 300,
                   color: Colors.white,
                   child: _controller.value.isInitialized ? Stack(
                     children: [
@@ -159,13 +161,6 @@ class _TakeMyPicState extends State<TakeMyPic> {
                           ? Center(
                             child: Text(myDuration.inSeconds.toString(), textAlign: TextAlign.center, style: TextStyle(fontSize: 100.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "Poppins",),)
                           )
-                          // : myDuration.inSeconds < 0
-                          //  ? Center(
-                          //   child: Column(children: const [
-                          //           Text("Your picture is ready! \nWait for the results..", textAlign: TextAlign.center, style: TextStyle(fontSize: 26.0, fontFamily: "Poppins",)),
-                          //       CircularProgressIndicator()
-                          //     ]),
-                          // )
                           : Container()
                     ],
                   ) : const SizedBox(
@@ -178,23 +173,6 @@ class _TakeMyPicState extends State<TakeMyPic> {
               ],
             ),
           )
-
-      // Stack(
-      //   children: <Widget>[
-      //     CameraPreview(_controller),
-      //     myDuration.inSeconds > -1
-      //         ? Text("take picture in " + myDuration.inSeconds.toString())
-      //         : _faceFound == true
-      //           ? Column(children: const [
-      //               Text("Your picture is ready! \nWait as we are getting the results.."),
-      //               CircularProgressIndicator()
-      //             ])
-      //           : _faceFound == false
-      //             ? Text("No Face Detected")
-      //             : Container()
-      //   ],
-      // )
-
     );
   }
 

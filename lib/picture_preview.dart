@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:soundays/animation_dots.dart';
 import 'package:soundays/emotion_screen.dart';
+import 'package:soundays/myElements.dart';
 import 'package:soundays/no_face_screen.dart';
 import 'package:soundays/request.dart';
 import 'package:soundays/globals.dart' as globals;
@@ -138,22 +139,22 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
         body: Center(
           child: Column(
             children: [
-              SizedBox(height: 70,),
-              Text('Looking good!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
-              SizedBox(height: 40,),
+              SizedBox(height: 100,),
+              myTitle('Looking good!'),
+              SizedBox(height: 48,),
               Transform.rotate(
-                angle: math.pi /40,
+                angle: - math.pi /30,
                 child: Transform(
                   alignment: Alignment.center,
                   transform: Matrix4.rotationY(math.pi),
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(32)),
                     ),
                     elevation: 12,
                     child: SizedBox(
-                      width: 240,
-                      height: 340,
+                      width: 270, //240
+                      height: 350, //340
                       child:  Container(
                           width: 190,
                           height: 250,
@@ -175,24 +176,10 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                 ),
               )
              ,
-              // : Transform.rotate(
-              //   angle: math.pi /40,
-              //   child: Transform(
-              //     alignment: Alignment.center,
-              //     transform: Matrix4.rotationY(math.pi),
-              //     child: Container(
-              //       //width: double.maxFinite,
-              //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.white,),
-              //       width: 220,
-              //       height: 390,
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 50,),
-              // ! in_progress ?
+              SizedBox(height: 70,),
               Container(
-                width: 240,
-                height: 60,
+                width: 240, //240
+                height: 60, //60
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
                     onPressed: ! in_progress
@@ -235,14 +222,14 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                     }
                     : () {},
                     child: ! in_progress
-                        ? Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 18,  fontFamily: "Poppins"))
+                        ? Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 16,  fontFamily: "Poppins"))
                         : Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 64.0),
                             child: AnimationDots()
                     )
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 24,),
               MaterialButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -256,7 +243,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       ),
                       child: Icon(Icons.autorenew),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width: 16,),
                     Text('Inaccurate? Retake photo', style: TextStyle(fontSize: 14.0, fontFamily: "Poppins",),),
                   ],
                 ),

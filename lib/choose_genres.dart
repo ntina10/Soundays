@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soundays/myElements.dart';
 import 'package:soundays/pre_picture.dart';
 import 'package:animated_background/animated_background.dart';
@@ -104,10 +105,6 @@ class _ChooseGenresState extends State<ChooseGenres> {
                   Column(
                     children: [
                       myTextTop('What makes your\nheart move?', 'Select up to 5'),
-                      // SizedBox(height: 50,),
-                      // Text('What makes your\nheart move?', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
-                      // SizedBox(height: 20,),
-                      // Text('Select up to 5', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
                       SizedBox(height: 24,),
                       Expanded(
                         child: Container(
@@ -116,14 +113,20 @@ class _ChooseGenresState extends State<ChooseGenres> {
                       ),
                     ],
                   ),
-                  Positioned(
-                    bottom: 60,
-                    left: 145,
-                    child: myButton((counter < 1) ? null : () async {
-                                    var genreResults = get_selected();
-                                    await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);
-                                  }, 'Next'),
-                  ),
+                  // Positioned(
+                  //   bottom: 60,
+                  //   left: 145,
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 90.0),
+                        child: myButton((counter < 1) ? null : () async {
+                                        var genreResults = get_selected();
+                                        await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);
+                                      }, 'Next'),
+                      ),
+                    ),
+                  //),
                 ],
               ),
           //),
@@ -169,26 +172,26 @@ class _ChooseGenresState extends State<ChooseGenres> {
                       //     ? Colors.transparent
                       //     : Colors.black26
                     ),
-                    borderRadius: BorderRadius.circular(28.0)),
+                    borderRadius: BorderRadius.circular(100.0)),
                 child: Row(
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
+                        padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
+                        child:
+                        Text(
                           genres[index]['value'].toString(),
                           style: TextStyle(
-                            // color: selected[index]
-                            //     ? Colors.white
-                            //     : Colors.blue.withOpacity(0.8),
+                              color: Colors.black,
                               fontFamily: "Poppins",
-                              fontSize: 16),
+                              fontSize: 16,
+                              height: 1.5),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
+                      padding: const EdgeInsets.only(right: 24.0),
+                      child: selected[index] ? SizedBox(height: 16,child: SvgPicture.asset('assets/selected.svg')) : SizedBox(height: 16,child: SvgPicture.asset('assets/default.svg'))//Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
                     )
                   ],
                 ),
@@ -201,47 +204,5 @@ class _ChooseGenresState extends State<ChooseGenres> {
 
   }
 
-//   Widget _lastElement(index) {
-//     return Column(
-//       children: [
-//         Container(
-//           margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-//           //alignment: Alignment.centerLeft,
-//           decoration: BoxDecoration(
-//               color: selected[index] ? Colors.white : Colors.transparent,
-//               border: Border.all(
-//                   color: Colors.white
-//                 // color: selected[index]
-//                 //     ? Colors.transparent
-//                 //     : Colors.black26
-//               ),
-//               borderRadius: BorderRadius.circular(28.0)),
-//           child: Row(
-//             children: [
-//               Expanded(
-//                 child: Padding(
-//                   padding: const EdgeInsets.all(15.0),
-//                   child: Text(
-//                     genres[index]['value'].toString(),
-//                     style: TextStyle(
-//                       // color: selected[index]
-//                       //     ? Colors.white
-//                       //     : Colors.blue.withOpacity(0.8),
-//                         fontFamily: "Poppins",
-//                         fontSize: 16),
-//                   ),
-//                 ),
-//               ),
-//               Padding(
-//                 padding: const EdgeInsets.only(right: 15.0),
-//                 child: selected[index] ? Icon(Icons.check_circle_outline, size: 16,) : Icon(Icons.radio_button_unchecked, size: 16,),
-//               )
-//             ],
-//           ),
-//         ),
-//         SizedBox(height: 120,),
-//       ],
-//     );
-//   }
 }
 
