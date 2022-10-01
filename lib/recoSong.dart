@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:soundays/botNavBar.dart';
 import 'package:soundays/myElements.dart';
 import 'package:soundays/my_listview.dart';
 import 'package:http/http.dart' as http;
@@ -176,7 +177,8 @@ class _RecoSongState extends State<RecoSong> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-
+        extendBody: true,
+        bottomNavigationBar: BotNavBar(mygenres: _mygenres,),
         //               Navigator.popUntil(context, (route) => route.isFirst);
         //             },
         //             child: Icon(

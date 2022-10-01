@@ -5,6 +5,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:soundays/animation_dots.dart';
+import 'package:soundays/botNavBar.dart';
 import 'package:soundays/emotion_screen.dart';
 import 'package:soundays/myElements.dart';
 import 'package:soundays/no_face_screen.dart';
@@ -92,21 +93,15 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
         _faceFound = true;
         _map = newMap;
       });
-      print(_map.toString());
-      print('in yes face variables are set');
+      print('RIGHT HERE' + _map.toString());
 
     } else {
-
       setState(() {
         _faceFound = false;
       });
-
-      print('in no face');
     }
-
     print('CALL API IS OVER');
     print('faceFound is ' + _faceFound.toString());
-
   }
 
   @override
@@ -136,6 +131,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
           )),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        bottomNavigationBar: BotNavBar(mygenres: mygenres,),
         body: Center(
           child: Column(
             children: [
@@ -192,14 +188,14 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       await callApi(_imagePath);
 
                       if (_faceFound == true) {
-                        var myemotion = _map.keys.first;
-                        print("emotionRes " + myemotion);
+                        //var myemotion = _map.keys.first;
+                        //print("emotionRes " + myemotion);
 
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                EmotionScreen(myEmotion: myemotion, myGenres: mygenres),
+                                EmotionScreen(myEmotions: _map, myGenres: mygenres),
                           ),
                         ).then((_) {
                           setState(() {
@@ -244,7 +240,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       child: Icon(Icons.autorenew),
                     ),
                     SizedBox(width: 16,),
-                    Text('Inaccurate? Retake photo', style: TextStyle(fontSize: 14.0, fontFamily: "Poppins",),),
+                    Text('Inaccurate? Retake photo', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
                   ],
                 ),
                 onPressed: () {

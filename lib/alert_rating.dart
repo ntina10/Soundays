@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:soundays/myElements.dart';
 import 'package:soundays/request.dart';
 import 'package:soundays/globals.dart' as globals;
 
@@ -46,13 +47,15 @@ showAlertDialog(BuildContext context, String myemotion) {
             child: Column(
               children: [
                 SizedBox(height: 20,),
-                Text('Are you feeling it?', textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Poppins",),),
+                // Text('Are you feeling it?', textAlign: TextAlign.center,
+                //   style: TextStyle(fontSize: 24.0,
+                //     fontWeight: FontWeight.bold,
+                //     fontFamily: "Poppins",),),
+                myTitle('Are you feeling it?'),
                 SizedBox(height: 10,),
-                Text('Please rate your playlist',
-                  style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                // Text('Please rate your playlist',
+                //   style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                mySubtitle('Please rate your playlist'),
                 SizedBox(height: 50,),
                 //stars
                 RatingBar(

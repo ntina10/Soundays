@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:soundays/alert_emotions.dart';
+import 'package:soundays/botNavBar.dart';
 import 'package:soundays/myElements.dart';
 import 'package:soundays/recoSong.dart';
 
 class EmotionScreen extends StatefulWidget {
-  final String myEmotion;
+  final Map myEmotions;
   final List<String> myGenres;
 
-  const EmotionScreen({required this.myEmotion, required this.myGenres});
+  const EmotionScreen({required this.myEmotions, required this.myGenres});
 
   @override
   _EmotionScreenState createState() => _EmotionScreenState();
 }
 
 class _EmotionScreenState extends State<EmotionScreen> {
-  late final String emotion;
+  late final Map emotions;
   late final List<String> genres;
+  late final String emotion;
 
   Map emotionMap = {
     'surprise': 'surprised',
@@ -38,7 +42,8 @@ class _EmotionScreenState extends State<EmotionScreen> {
   @override
   void initState() {
     super.initState();
-    emotion = widget.myEmotion;
+    emotions = widget.myEmotions;
+    emotion = emotions.keys.first;
     genres = widget.myGenres;
 
   }
@@ -62,13 +67,14 @@ class _EmotionScreenState extends State<EmotionScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        bottomNavigationBar: BotNavBar(mygenres: genres,),
         body: Center(
           child: Column(
             children: [
               SizedBox(height: 170,),
               Container(width: 220, height: 220, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
               SizedBox(height: 40,),
-              Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Poppins", height: 1.01)),
+              Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Poppins", height: 1.125)),
               SizedBox(height: 40,),
               myButton(() {
                 Navigator.push(context,
@@ -78,6 +84,38 @@ class _EmotionScreenState extends State<EmotionScreen> {
                                 ),
                               );
               }, 'Show me the music!'),
+              SizedBox(height: 100,),
+              MaterialButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: SvgPicture.asset('assets/selected.svg'),
+                      ),
+                    ),
+                    SizedBox(width: 16,),
+                    Text('Show me full results', style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: "Poppins",
+                      shadows: [Shadow(color: Colors.black, offset: Offset(0, -3))],
+                      color: Colors.transparent,
+                      decorationColor: Colors.black,
+                      decoration: TextDecoration.underline,),
+                    ),
+                  ],
+                ),
+                onPressed: () {
+                  showAlertDialogEmo(context, emotions);
+                },
+              ),
             ],
           ),
         )

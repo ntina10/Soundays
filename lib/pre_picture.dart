@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soundays/botNavBar.dart';
 import 'package:soundays/myElements.dart';
 
 class PrePicture extends StatefulWidget {
@@ -17,6 +18,7 @@ class _PrePictureState extends State<PrePicture> {
 
     return Scaffold(
       backgroundColor: Colors.lightBlue[100],
+      bottomNavigationBar: BotNavBar(mygenres: mygenres,),
       body: Center(
         child: Column(
           children: [
