@@ -110,12 +110,20 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
     mygenres = widget.genresList;
     _imagePath = widget.imagePath;
     _getImageSize(File(_imagePath));
+
+    //WidgetsBinding.instance.addPostFrameCallback((timeStamp) {getSize();});
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+
+  // final _myBeforeKey = GlobalKey();
+  // getSize() {
+  //   RenderBox _ob = _myBeforeKey.currentContext!.findRenderObject() as RenderBox;
+  //   print(_ob.size.toString());
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +139,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
           )),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        bottomNavigationBar: BotNavBar(mygenres: mygenres,),
+        //bottomNavigationBar: BotNavBar(mygenres: mygenres,),
         body: Center(
           child: Column(
             children: [
@@ -174,9 +182,10 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
              ,
               SizedBox(height: 70,),
               Container(
-                width: 240, //240
-                height: 60, //60
+                width: 224, //240
+                height: 56, //60
                 child: ElevatedButton(
+                    //key: _myBeforeKey,
                     style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
                     onPressed: ! in_progress
                         ? () async {
@@ -213,18 +222,59 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                             builder: (context) =>
                                 NoFaceScreen(mygenres: mygenres),
                           ),
-                        );
+                        ).then((_) {
+                          setState(() {
+                            in_progress = false;
+                          });
+                        });
                       }
                     }
                     : () {},
                     child: ! in_progress
-                        ? Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 16,  fontFamily: "Poppins"))
+                        ? Padding(
+                          padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
+                          child: Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 16,  fontFamily: "Poppins")),
+                        )
                         : Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 64.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 50.0),
                             child: AnimationDots()
                     )
                 ),
               ),
+              // ! in_progress ? myButton( () async {
+              //       setState(() {
+              //         in_progress = true;
+              //       });
+              //       await callApi(_imagePath);
+              //
+              //       if (_faceFound == true) {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) =>
+              //                 EmotionScreen(myEmotions: _map, myGenres: mygenres),
+              //           ),
+              //         ).then((_) {
+              //           setState(() {
+              //             in_progress = false;
+              //           });
+              //         });
+              //         print("Picture taken!!!");
+              //         print(_map);
+              //       } else if (_faceFound == false){
+              //         print("No face is in this picture");
+              //         //add navigation to no-face Screen
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) =>
+              //                 NoFaceScreen(mygenres: mygenres),
+              //           ),
+              //         );
+              //       }
+              //     }, "Analyze my mood")
+              //     :
+              //     myButtonWithChild(() {}, Container(height: 32, width: 100, child: AnimationDots())),
               SizedBox(height: 24,),
               MaterialButton(
                 child: Row(

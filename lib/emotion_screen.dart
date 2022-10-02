@@ -67,7 +67,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        bottomNavigationBar: BotNavBar(mygenres: genres,),
+        //bottomNavigationBar: BotNavBar(mygenres: genres,),
         body: Center(
           child: Column(
             children: [

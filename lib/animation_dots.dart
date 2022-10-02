@@ -36,17 +36,17 @@ class _AnimationDotsState extends State<AnimationDots> with SingleTickerProvider
 
     _appearanceController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1500),
     );
 
     _sizeAnimation = TweenSequence(
         <TweenSequenceItem<double>>[
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 14, end: 23),
+            tween: Tween<double>(begin: 14, end: 24),
             weight: 50,
           ),
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 23, end: 14),
+            tween: Tween<double>(begin: 24, end: 14),
             weight: 50,
           ),
         ]
@@ -57,11 +57,11 @@ class _AnimationDotsState extends State<AnimationDots> with SingleTickerProvider
     _sizeAnimation2 = TweenSequence(
         <TweenSequenceItem<double>>[
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 14, end: 23),
+            tween: Tween<double>(begin: 14, end: 24),
             weight: 50,
           ),
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 23, end: 14),
+            tween: Tween<double>(begin: 24, end: 14),
             weight: 50,
           ),
         ]
@@ -72,11 +72,11 @@ class _AnimationDotsState extends State<AnimationDots> with SingleTickerProvider
     _sizeAnimation3 = TweenSequence(
         <TweenSequenceItem<double>>[
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 14, end: 23),
+            tween: Tween<double>(begin: 14, end: 24),
             weight: 50,
           ),
           TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 23, end: 14),
+            tween: Tween<double>(begin: 24, end: 14),
             weight: 50,
           ),
         ]
@@ -102,9 +102,11 @@ class _AnimationDotsState extends State<AnimationDots> with SingleTickerProvider
         AnimatedBubble(
           animation: _sizeAnimation,
         ),
+        //SizedBox(width: 16,),
         AnimatedBubble(
           animation: _sizeAnimation2,
         ),
+        //SizedBox(width: 16,),
         AnimatedBubble(
           animation: _sizeAnimation3,
         ),

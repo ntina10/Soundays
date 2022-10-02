@@ -18,13 +18,13 @@ class _PrePictureState extends State<PrePicture> {
 
     return Scaffold(
       backgroundColor: Colors.lightBlue[100],
-      bottomNavigationBar: BotNavBar(mygenres: mygenres,),
+      //bottomNavigationBar: BotNavBar(mygenres: mygenres,),
       body: Center(
         child: Column(
           children: [
             myTextTop("Let us have a peak\ninside your soul!", "Show the cute face!"),
             SizedBox(height: 64,),
-            Container(height: 270,  width: 270, child: Image.asset('assets/no_face_img.png')),
+            Container(height: 270,  width: 270, child: Image.asset('assets/selfie.png')),
             SizedBox(height: 120,),
             myButton(() async {await Navigator.pushNamed(context, '/take_pic', arguments: mygenres);}, "Take a selfie!"),
           ],

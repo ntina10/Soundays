@@ -34,7 +34,7 @@ showAlertDialogEmo(BuildContext context, Map emotions) {
                   width: 180,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    //physics: const ScrollPhysics(),
+                    physics: const ScrollPhysics(),
                     itemCount: emotions.length,
                     itemBuilder: (BuildContext context, int index) {
                       String key = emotions.keys.elementAt(index);

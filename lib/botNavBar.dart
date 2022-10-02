@@ -57,13 +57,16 @@ class BotNavBar extends StatelessWidget {
               SizedBox(width: 20,),
               IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/take_pic', arguments: mygenres);
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                  //Navigator.pushNamed(context, '/take_pic', arguments: mygenres);
                 },
                 icon: SizedBox(height: 24, child: Image.asset('assets/logo.png')),
               ),
               SizedBox(width: 20,),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/rtcamera');
+                },
                 icon: const Icon(
                   Icons.info_rounded,
                   color: Colors.black,

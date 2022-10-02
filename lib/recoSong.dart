@@ -178,13 +178,7 @@ class _RecoSongState extends State<RecoSong> {
     return Scaffold(
         backgroundColor: Colors.white,
         extendBody: true,
-        bottomNavigationBar: BotNavBar(mygenres: _mygenres,),
-        //               Navigator.popUntil(context, (route) => route.isFirst);
-        //             },
-        //             child: Icon(
-        //               Icons.home,
-        //               size: 26.0,
-
+        //bottomNavigationBar: BotNavBar(mygenres: _mygenres,),
         body: Center(
           child: Column(
             children: [

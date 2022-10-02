@@ -10,7 +10,7 @@ class WelcomePage2 extends StatelessWidget {
       color: Colors.purple[100],
       child: Column(
         children: [
-          myTextTop("How it\nworks", "Tell us what music you\nlike and take a selfie"),
+          myTextTop("How\nit works", "First, you let us know a little bit about\nyour music taste. Then you take a\nselfie, expressing your mood."),
           SizedBox(height: 28,),
           Container(
             height: 300,

@@ -138,6 +138,7 @@ class _MyListViewState extends State<MyListView> {
     return Stack(
       children: [
         ListView.separated(
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.zero,
           itemCount: songData.tracks.length,
           itemBuilder: (context, int index) {
@@ -218,37 +219,68 @@ class _MyListViewState extends State<MyListView> {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 420.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
             children: [
-              Container(
-                height: 56,
-                width: 56,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
-                child: MaterialButton(onPressed: () {showAlertDialog(context, myemotion);},
-                  child: Container(
-                    height: 24,
-                    width: 24,
-                    child: SvgPicture.asset('assets/star_full.svg'),
-                  ),
-                ),
-              ),
-              SizedBox(width: 8,),
-              myButtonWithChild(
-                selectedIndex != -1 ? () { _launchurl(); } : null,
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Text('Listen on', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 56,
+                    width: 56,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
+                    child: MaterialButton(onPressed: () {showAlertDialog(context, myemotion);},
+                      child: Container(
+                        height: 24,
+                        width: 24,
+                        child: SvgPicture.asset('assets/star_full.svg'),
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
-                      child: Image.asset('assets/spotify_logo.png'),
-                    )
+                  ),
+                  SizedBox(width: 8,),
+                  myButtonWithChild(
+                    selectedIndex != -1 ? () { _launchurl(); } : null,
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Text('Listen on', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
+                        ),
+                        SizedBox(
+                          height: 20,
+                          child: Image.asset('assets/spotify_logo.png'),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 10,),
+              MaterialButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: colorMap[myemotion]
+                      ),
+                      child: Icon(Icons.home_rounded, color: Colors.black,),
+                    ),
+                    SizedBox(width: 8,),
+                    Text('Home', style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontFamily: "Poppins",),
+                    ),
                   ],
                 ),
-              )
+                onPressed: () {
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
+              ),
             ],
           ),
         ),

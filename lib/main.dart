@@ -31,22 +31,25 @@ Future<void> main() async {
   }
 
   //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
-  runApp(MaterialApp(
-    routes: {
-      '/camera': (context) => MyCamera(),
-      '/rtcamera': (context) => RtCamera(),
-      '/pre_pic': (context) => PrePicture(),
-      '/take_pic': (context) => TakeMyPic(),
-      //'/song': (context) => RecoSong(myemotion: 'disgust', mygenres: ['pop'],),
-      '/genres': (context) => ChooseGenres(),
-    },
-    title: 'Emotion Recognition and Song Recommendation',
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    home: MyApp() //SplashScreen()
-  )
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MaterialApp(
+            routes: {
+              '/camera': (context) => MyCamera(),
+              '/rtcamera': (context) => RtCamera(),
+              '/pre_pic': (context) => PrePicture(),
+              '/take_pic': (context) => TakeMyPic(),
+              //'/song': (context) => RecoSong(myemotion: 'disgust', mygenres: ['pop'],),
+              '/genres': (context) => ChooseGenres(),
+            },
+            title: 'Emotion Recognition and Song Recommendation',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: MyApp() //SplashScreen()
+      ))
   );
+
 }
 
 // class SplashScreen extends StatefulWidget {
