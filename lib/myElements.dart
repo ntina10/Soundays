@@ -30,31 +30,6 @@ Widget myButtonWithChild(fun, Widget mychild) {
   );
 }
 
-// class myButton extends StatelessWidget {
-//
-//   const myButton({required this.fun, required this.mytext});
-//
-//   final Function() fun;
-//   final String mytext;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ElevatedButton(
-//       onPressed: fun,
-//       style: ElevatedButton.styleFrom(
-//           primary: Colors.black,
-//           shape: StadiumBorder()
-//         // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-//         child: Text(mytext, style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
-//       ),
-//     );
-//   }
-// }
-
-
 Widget myTitle(String title) {
   return Text(
     title,
@@ -93,3 +68,5 @@ Widget myTextTop(context, String title, String subtitle) {
     ],
   );
 }
+
+Color myBgColor = Color(0xFFF3EFEA);

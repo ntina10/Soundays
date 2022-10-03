@@ -267,7 +267,7 @@ class _MyListViewState extends State<MyListView> {
                 ),
               ),
             ),
-            SizedBox(height: 90,)
+            SizedBox(height: MediaQuery.of(context).size.height / 9,)
           ],
         ),
       ],
