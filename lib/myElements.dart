@@ -83,10 +83,10 @@ Widget mySubtitle(String subtitle) {
   );
 }
 
-Widget myTextTop(String title, String subtitle) {
+Widget myTextTop(context, String title, String subtitle) {
   return Column(
     children: [
-      SizedBox(height: 100,),
+      SizedBox(height: MediaQuery.of(context).size.height / 8,),
       myTitle(title),
       SizedBox(height: 16,),
       mySubtitle(subtitle),

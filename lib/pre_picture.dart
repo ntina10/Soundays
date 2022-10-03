@@ -22,10 +22,10 @@ class _PrePictureState extends State<PrePicture> {
       body: Center(
         child: Column(
           children: [
-            myTextTop("Let us have a peak\ninside your soul!", "Show the cute face!"),
-            SizedBox(height: 64,),
+            myTextTop(context, "Let us have a peak\ninside your soul!", "Show the cute face!"),
+            SizedBox(height: MediaQuery.of(context).size.height / 12.5,),
             Container(height: 270,  width: 270, child: Image.asset('assets/selfie.png')),
-            SizedBox(height: 120,),
+            SizedBox(height: MediaQuery.of(context).size.height / 6.7,),
             myButton(() async {await Navigator.pushNamed(context, '/take_pic', arguments: mygenres);}, "Take a selfie!"),
           ],
         ),

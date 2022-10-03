@@ -104,8 +104,8 @@ class _ChooseGenresState extends State<ChooseGenres> {
                 children: [
                   Column(
                     children: [
-                      myTextTop('What makes your\nheart move?', 'Select up to 5'),
-                      SizedBox(height: 24,),
+                      myTextTop(context, 'What makes your\nheart move?', 'Select up to 5'),
+                      SizedBox(height: MediaQuery.of(context).size.height / 32,),
                       Expanded(
                         child: Container(
                           child: _myListWidget()
@@ -119,7 +119,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        margin: const EdgeInsets.only(bottom: 90.0),
+                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 9),
                         child: myButton((counter < 1) ? null : () async {
                                         var genreResults = get_selected();
                                         await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);

@@ -143,9 +143,9 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
         body: Center(
           child: Column(
             children: [
-              SizedBox(height: 100,),
+              SizedBox(height: MediaQuery.of(context).size.height / 8,),
               myTitle('Looking good!'),
-              SizedBox(height: 48,),
+              SizedBox(height: MediaQuery.of(context).size.height / 16,),
               Transform.rotate(
                 angle: - math.pi /30,
                 child: Transform(
@@ -157,11 +157,11 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                     ),
                     elevation: 12,
                     child: SizedBox(
-                      width: 270, //240
-                      height: 350, //340
+                      width: MediaQuery.of(context).size.width / 1.45, //240
+                      height: MediaQuery.of(context).size.height / 2.4, //340
                       child:  Container(
-                          width: 190,
-                          height: 250,
+                          // width: MediaQuery.of(context).size.width / 1.9,
+                          // height: MediaQuery.of(context).size.height / 3.2,
                           child: _imageSize != null
                               ? Padding(
                                 padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 80.0),
@@ -180,10 +180,10 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                 ),
               )
              ,
-              SizedBox(height: 70,),
+              SizedBox(height: MediaQuery.of(context).size.height / 11.5,),
               Container(
-                width: 224, //240
-                height: 56, //60
+                width: 224, //224
+                height: 56, //56
                 child: ElevatedButton(
                     //key: _myBeforeKey,
                     style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
@@ -275,7 +275,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
               //     }, "Analyze my mood")
               //     :
               //     myButtonWithChild(() {}, Container(height: 32, width: 100, child: AnimationDots())),
-              SizedBox(height: 24,),
+              SizedBox(height: MediaQuery.of(context).size.height / 32,),
               MaterialButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -108,12 +108,12 @@ class MyApp extends StatelessWidget {
                     count: 3,
                     effect: ExpandingDotsEffect(dotColor:  Colors.black, activeDotColor:  Colors.black, dotHeight: 16.0, dotWidth: 16.0),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: MediaQuery.of(context).size.height / 16,),
                   myButton(() async {
                     await Navigator.pushNamed(context, '/genres');
                     //await Navigator.push(context, MaterialPageRoute(builder: (context) => BgColor(mychild: Text('Hello'))));
                   }, 'Analyze my mood'),
-                  SizedBox(height: 90,)
+                  SizedBox(height: MediaQuery.of(context).size.height / 9,)
                 ],
               ),
             ),

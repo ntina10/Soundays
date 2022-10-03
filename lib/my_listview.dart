@@ -203,7 +203,7 @@ class _MyListViewState extends State<MyListView> {
                     : null
                   ),
                 ),
-                if (index == songData.tracks.length - 1) SizedBox(height: 120,)
+                if (index == songData.tracks.length - 1) SizedBox(height: MediaQuery.of(context).size.height / 6.7,)
               ],
             );
           },
@@ -217,72 +217,58 @@ class _MyListViewState extends State<MyListView> {
             );
           },
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 420.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 56,
-                    width: 56,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
-                    child: MaterialButton(onPressed: () {showAlertDialog(context, myemotion);},
-                      child: Container(
-                        height: 24,
-                        width: 24,
-                        child: SvgPicture.asset('assets/star_full.svg'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8,),
-                  myButtonWithChild(
-                    selectedIndex != -1 ? () { _launchurl(); } : null,
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Text('Listen on', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
-                        ),
-                        SizedBox(
-                          height: 20,
-                          child: Image.asset('assets/spotify_logo.png'),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10,),
-              MaterialButton(
+        Column(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  //crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: colorMap[myemotion]
+                      height: 56,
+                      width: 56,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
+                      child: MaterialButton(onPressed: () {Navigator.popUntil(context, (route) => route.isFirst);},
+                        child: Icon(Icons.home_rounded, color: colorMap[myemotion], size: 24,),
                       ),
-                      child: Icon(Icons.home_rounded, color: Colors.black,),
                     ),
                     SizedBox(width: 8,),
-                    Text('Home', style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontFamily: "Poppins",),
+                    Container(
+                      height: 56,
+                      width: 56,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
+                      child: MaterialButton(onPressed: () {showAlertDialog(context, myemotion);},
+                        child: Container(
+                          height: 24,
+                          width: 24,
+                          child: SvgPicture.asset('assets/star_full.svg'),
+                        ),
+                      ),
                     ),
+                    SizedBox(width: 8,),
+                    myButtonWithChild(
+                      selectedIndex != -1 ? () { _launchurl(); } : null,
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Text('Listen on', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
+                          ),
+                          SizedBox(
+                            height: 20,
+                            child: Image.asset('assets/spotify_logo.png'),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
-                onPressed: () {
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                },
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 90,)
+          ],
         ),
       ],
     );

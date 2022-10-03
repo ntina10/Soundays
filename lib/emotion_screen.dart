@@ -71,11 +71,11 @@ class _EmotionScreenState extends State<EmotionScreen> {
         body: Center(
           child: Column(
             children: [
-              SizedBox(height: 170,),
-              Container(width: 220, height: 220, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
-              SizedBox(height: 40,),
+              SizedBox(height: MediaQuery.of(context).size.height / 4.8,),
+              Container(width: 220, height: MediaQuery.of(context).size.height / 3.64, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
+              SizedBox(height: MediaQuery.of(context).size.height / 20,),
               Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Poppins", height: 1.125)),
-              SizedBox(height: 40,),
+              SizedBox(height: MediaQuery.of(context).size.height / 20,),
               myButton(() {
                 Navigator.push(context,
                                 MaterialPageRoute(
@@ -84,7 +84,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
                                 ),
                               );
               }, 'Show me the music!'),
-              SizedBox(height: 100,),
+              SizedBox(height: MediaQuery.of(context).size.height / 8,),
               MaterialButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

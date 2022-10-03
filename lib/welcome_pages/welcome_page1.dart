@@ -10,10 +10,10 @@ class WelcomePage1 extends StatelessWidget {
       color: Colors.green[100],
       child: Column(
         children: [
-          myTextTop("Welcome\nto Soundays!", "Use soundays to listen to great music,\naccording to your mood."),
-          SizedBox(height: 110,),
+          myTextTop(context, "Welcome\nto Soundays!", "Use soundays to listen to great music,\naccording to your mood."),
+          SizedBox(height: MediaQuery.of(context).size.height / 8,),
           Container(height: 145,  width: 200, child: Image.asset('assets/neutral.png')),
-          SizedBox(height: 100,)
+          SizedBox(height: MediaQuery.of(context).size.height / 8,)
         ],
       ),
     );

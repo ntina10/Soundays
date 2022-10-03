@@ -10,10 +10,10 @@ class WelcomePage2 extends StatelessWidget {
       color: Colors.purple[100],
       child: Column(
         children: [
-          myTextTop("How\nit works", "First, you let us know a little bit about\nyour music taste. Then you take a\nselfie, expressing your mood."),
+          myTextTop(context, "How\nit works", "First, you let us know a little bit about\nyour music taste. Then you take a\nselfie, expressing your mood."),
           SizedBox(height: 28,),
           Container(
-            height: 300,
+            height: MediaQuery.of(context).size.height / 2.67,
             width: 300,
             child: Image.asset('assets/main2.png')
           )

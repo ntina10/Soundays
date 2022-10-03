@@ -197,11 +197,11 @@ class _RecoSongState extends State<RecoSong> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 70,),
-                    Container(width: 90, height: 90, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
+                    SizedBox(height: MediaQuery.of(context).size.height / 11.7,), //70
+                    Container(width: 90, height: MediaQuery.of(context).size.height / 8.9, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
                     SizedBox(height: 10,),
                     myTitle('Feeling\n' + emotionMap[_myemotion] + '!'),
-                    SizedBox(height: 30,),
+                    SizedBox(height: MediaQuery.of(context).size.height / 26.8,),
                   ],
                 ),
               ),

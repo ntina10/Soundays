@@ -133,46 +133,47 @@ class _TakeMyPicState extends State<TakeMyPic> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-            child: Column(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // SizedBox(height: 50,),
+          // Text('Get ready!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
+          // SizedBox(height: 20,),
+          // Text('Show us the cute face!', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+          myTextTop(context, 'Get ready!', 'Show us the cute face!'),
+          SizedBox(height: MediaQuery.of(context).size.height / 16,),
+          Container(
+            height: MediaQuery.of(context).size.height / 1.5,
+            //width: 300,
+            color: Colors.white,
+            child: _controller.value.isInitialized ? Stack(
               children: [
-                // SizedBox(height: 50,),
-                // Text('Get ready!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
-                // SizedBox(height: 20,),
-                // Text('Show us the cute face!', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
-                myTextTop('Get ready!', 'Show us the cute face!'),
-                SizedBox(height: 50,),
-                Container(
-                  height: 550,
-                  width: 300,
-                  color: Colors.white,
-                  child: _controller.value.isInitialized ? Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child:
-                              // img_path != '' ? Image.file(
-                              //                     File(img_path),
-                              //                     fit: BoxFit.cover,
-                              //                   ) :
-                                            CameraPreview(_controller),
-                      ),
-                      myDuration.inSeconds < 4 && myDuration.inSeconds > 0
-                          ? Center(
-                            child: Text(myDuration.inSeconds.toString(), textAlign: TextAlign.center, style: TextStyle(fontSize: 100.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "Poppins",),)
-                          )
-                          : Container()
-                    ],
-                  ) : const SizedBox(
-                        height: 30,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                )
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child:
+                          // img_path != '' ? Image.file(
+                          //                     File(img_path),
+                          //                     fit: BoxFit.cover,
+                          //                   ) :
+                                        CameraPreview(_controller),
+                  ),
+                ),
+                myDuration.inSeconds < 4 && myDuration.inSeconds > 0
+                    ? Center(
+                      child: Text(myDuration.inSeconds.toString(), textAlign: TextAlign.center, style: TextStyle(fontSize: 100.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "Poppins",),)
+                    )
+                    : Container()
               ],
-            ),
+            ) : const SizedBox(
+                  height: 30,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
           )
+        ],
+      )
     );
   }
 
