@@ -17,7 +17,7 @@ class _PrePictureState extends State<PrePicture> {
     mygenres = ModalRoute.of(context)!.settings.arguments as List<String>;
 
     return Scaffold(
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: myBgColor,
       //bottomNavigationBar: BotNavBar(mygenres: mygenres,),
       body: Center(
         child: Column(

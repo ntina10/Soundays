@@ -23,9 +23,8 @@ class _NoFaceScreenState extends State<NoFaceScreen> {
   Widget build(BuildContext context) {
 
     return Container(
-      color: Colors.pink[100],
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: myBgColor,
         body: Center(
           child: Column(
             children: [

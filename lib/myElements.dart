@@ -4,13 +4,13 @@ Widget myButton(fun, String mytext) {
   return ElevatedButton(
     onPressed: fun,
     style: ElevatedButton.styleFrom(
-        primary: Colors.black,
+        primary: Colors.white,
         shape: StadiumBorder()
       // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
     ),
     child: Padding(
-      padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-      child: Text(mytext, style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
+      padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
+      child: Text(mytext, style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Poppins')),
     ),
   );
 }
@@ -24,7 +24,7 @@ Widget myButtonWithChild(fun, Widget mychild) {
       // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
     ),
     child: Padding(
-      padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
+      padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
       child: mychild,
     ),
   );
@@ -35,7 +35,7 @@ Widget myTitle(String title) {
     title,
     textAlign: TextAlign.center,
     style: TextStyle(
-      color: Colors.black,
+      color: Colors.white,
       fontWeight: FontWeight.bold,
       fontFamily: "Poppins",
       fontStyle: FontStyle.normal,
@@ -49,7 +49,7 @@ Widget mySubtitle(String subtitle) {
     subtitle,
     textAlign: TextAlign.center,
     style: TextStyle(
-        color: Colors.black,
+        color: Colors.white,
         fontFamily: "Poppins",
         fontStyle: FontStyle.normal,
         fontSize: 16.0,
@@ -69,4 +69,4 @@ Widget myTextTop(context, String title, String subtitle) {
   );
 }
 
-Color myBgColor = Color(0xFFF3EFEA);
+Color myBgColor = Color(0xFF1B1919);

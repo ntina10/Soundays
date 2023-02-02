@@ -197,7 +197,7 @@ class AnimatedBubble extends StatelessWidget {
             decoration: const BoxDecoration(
               //shape: BoxShape.circle,
               //borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         );

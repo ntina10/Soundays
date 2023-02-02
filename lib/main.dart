@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
                   SmoothPageIndicator(
                     controller: _controller,
                     count: 3,
-                    effect: ExpandingDotsEffect(dotColor:  Colors.black, activeDotColor:  Colors.black, dotHeight: 16.0, dotWidth: 16.0),
+                    effect: ExpandingDotsEffect(dotColor:  Colors.white, activeDotColor:  Colors.white, dotHeight: 16.0, dotWidth: 16.0),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 16,),
                   myButton(() async {

@@ -132,7 +132,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
     mydata = ModalRoute.of(context)!.settings.arguments as List<String>;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: myBgColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

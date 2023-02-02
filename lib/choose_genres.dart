@@ -15,30 +15,30 @@ class ChooseGenres extends StatefulWidget {
 
 class _ChooseGenresState extends State<ChooseGenres> {
   var genres = [
-    {'id': 'alternative', 'value': 'Alternative'},
-    {'id': 'anime', 'value': 'Anime'},
-    {'id': 'blues', 'value': 'Blues'},
-    {'id': 'classical', 'value': 'Classical'},
-    {'id': 'country', 'value': 'Country'},
-    {'id': 'disco', 'value': 'Disco'},
-    {'id': 'disney', 'value': 'Disney'},
-    {'id': 'electronic', 'value': 'Electronic'},
-    {'id': 'folk', 'value': 'Folk'},
-    {'id': 'funk', 'value': 'Funk'},
-    {'id': 'heavy-metal', 'value': 'Heavy Metal'},
-    {'id': 'hip-hop', 'value': 'Hip Hop'},
-    {'id': 'j-pop', 'value': 'j-pop'},
-    {'id': 'j-rock', 'value': 'j-rock'},
-    {'id': 'jazz', 'value': 'Jazz'},
-    {'id': 'k-pop', 'value': 'k-pop'},
-    {'id': 'metal', 'value': 'Metal'},
-    {'id': 'opera', 'value': 'Opera'},
-    {'id': 'pop', 'value': 'Pop'},
-    {'id': 'punk', 'value': 'Punk'},
-    {'id': 'r-n-b', 'value': 'RNB'},
-    {'id': 'reggae', 'value': 'Reggae'},
-    {'id': 'rock', 'value': 'Rock'},
-    {'id': 'soul', 'value': 'Soul'}
+    {'id': 'alternative', 'value': 'Alternative', 'image': 'alter.png'},
+    {'id': 'anime', 'value': 'Anime', 'image': 'anime.png'},
+    {'id': 'blues', 'value': 'Blues', 'image': 'blues.png'},
+    {'id': 'classical', 'value': 'Classical', 'image': 'class.png'},
+    {'id': 'country', 'value': 'Country', 'image': 'country.png'},
+    {'id': 'disco', 'value': 'Disco', 'image': 'disco.png'},
+    {'id': 'disney', 'value': 'Disney', 'image': 'disney.png'},
+    {'id': 'electronic', 'value': 'Electronic', 'image': 'electro.png'},
+    {'id': 'folk', 'value': 'Folk', 'image': 'folk.png'},
+    {'id': 'funk', 'value': 'Funk', 'image': 'funk.png'},
+    {'id': 'heavy-metal', 'value': 'Heavy Metal', 'image': 'heavy.png'},
+    {'id': 'hip-hop', 'value': 'Hip Hop', 'image': 'hiphop.png'},
+    {'id': 'j-pop', 'value': 'j-pop', 'image': 'jpop.png'},
+    {'id': 'j-rock', 'value': 'j-rock', 'image': 'jrock.png'},
+    {'id': 'jazz', 'value': 'Jazz', 'image': 'jazz.png'},
+    {'id': 'k-pop', 'value': 'k-pop', 'image': 'kpop.png'},
+    {'id': 'metal', 'value': 'Metal', 'image': 'metal.png'},
+    {'id': 'opera', 'value': 'Opera', 'image': 'opera.png'},
+    {'id': 'pop', 'value': 'Pop', 'image': 'pop.png'},
+    {'id': 'punk', 'value': 'Punk', 'image': 'punk.png'},
+    {'id': 'r-n-b', 'value': 'RNB', 'image': 'rnb.png'},
+    {'id': 'reggae', 'value': 'Reggae', 'image': 'reggae.png'},
+    {'id': 'rock', 'value': 'Rock', 'image': 'rock.png'},
+    {'id': 'soul', 'value': 'Soul', 'image': 'soul.png'}
   ];
 
   List<bool> selected = [];
@@ -80,21 +80,21 @@ class _ChooseGenresState extends State<ChooseGenres> {
   Widget build(BuildContext context) {
     return
       Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              // radius: 0.8,
-              // center: Alignment.center,
-              colors: [
-                // Color.fromARGB(255, 255, 255, 255),
-                // Color.fromARGB(255, 255, 205, 215),
-                Color(0xFFB79DFF),
-                Color(0xFFFFFFFF),
-              ],
-          )),
+      // decoration: const BoxDecoration(
+      //     gradient: LinearGradient(
+      //         begin: Alignment.topCenter,
+      //         end: Alignment.bottomCenter,
+      //         // radius: 0.8,
+      //         // center: Alignment.center,
+      //         colors: [
+      //           // Color.fromARGB(255, 255, 255, 255),
+      //           // Color.fromARGB(255, 255, 205, 215),
+      //           Color(0xFFB79DFF),
+      //           Color(0xFFFFFFFF),
+      //         ],
+      //     )),
       child: Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: myBgColor,
           body:
           // AnimatedBackground(
           //   behaviour: RandomParticleBehaviour(options: particles),
@@ -105,14 +105,85 @@ class _ChooseGenresState extends State<ChooseGenres> {
                   Column(
                     children: [
                       myTextTop(context, 'What makes your\nheart move?', 'Select up to 5'),
-                      SizedBox(height: MediaQuery.of(context).size.height / 32,),
+                      SizedBox(height: MediaQuery.of(context).size.height / 15,),
+                      // Expanded(
+                      //   child: Container(
+                      //     child: _myListWidget()
+                      //   ),
+                      // ),
                       Expanded(
-                        child: Container(
-                          child: _myListWidget()
+                        child: GridView.builder(
+                          // shrinkWrap: true,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          itemCount: genres.length,
+                          itemBuilder: (ctx, i) {
+                            return InkWell(
+                              onTap: () {
+                                if (selected[i]) {
+                                  setState(() {
+                                    selected[i] = false;
+                                    counter -= 1;
+                                  });
+                                } else {
+                                  if (counter < 5) {
+                                    setState(() {
+                                      selected[i] = true;
+                                      counter += 1;
+                                    });
+                                  }
+                                }
+                              },
+                              child: Container(
+                                // height: 290,
+                                decoration: BoxDecoration(
+                                    color: selected[i] ? Color(0xff5c5959) : Color(0xff272525),
+                                    borderRadius: BorderRadius.circular(20)),
+                                // margin: EdgeInsets.all(5),
+                                // padding: EdgeInsets.all(16),
+                                child: Column(
+                                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    // SizedBox(height: 16,),
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/albums/' + genres[i]['image'].toString())),
+                                    ),
+                                    // SizedBox(height: 16,),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            genres[i]['value'].toString(),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily: "Poppins",
+                                              fontSize: 14,
+                                              color: Color(0xffb6b6b6),
+                                            ),
+                                          ),
+                                          if (selected[i]) Expanded(child: Align(alignment: Alignment.centerRight, child: SvgPicture.asset('assets/selected.svg'))),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            // childAspectRatio: 1.0,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 16,
+                            // mainAxisExtent: 264,
+                          ),
                         ),
                       ),
+                      // SizedBox(height: 16,)
                     ],
                   ),
+
                   // Positioned(
                   //   bottom: 60,
                   //   left: 145,

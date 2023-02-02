@@ -128,17 +128,17 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF8D69FD),
-              Color(0xFFFFFFFF),
-            ],
-          )),
+      // decoration: const BoxDecoration(
+      //     gradient: LinearGradient(
+      //       begin: Alignment.topCenter,
+      //       end: Alignment.bottomCenter,
+      //       colors: [
+      //         Color(0xFF8D69FD),
+      //         Color(0xFFFFFFFF),
+      //       ],
+      //     )),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: myBgColor,
         //bottomNavigationBar: BotNavBar(mygenres: mygenres,),
         body: Center(
           child: Column(
@@ -186,7 +186,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                 height: 56, //56
                 child: ElevatedButton(
                     //key: _myBeforeKey,
-                    style: ElevatedButton.styleFrom(primary: Colors.black, shape: StadiumBorder()),
+                    style: ElevatedButton.styleFrom(primary: Colors.white, shape: StadiumBorder()),
                     onPressed: ! in_progress
                         ? () async {
                       setState(() {
@@ -233,7 +233,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                     child: ! in_progress
                         ? Padding(
                           padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-                          child: Text("Analyze my mood", style: TextStyle(color: Colors.white, fontSize: 16,  fontFamily: "Poppins")),
+                          child: Text("Analyze my mood", style: TextStyle(color: Colors.black, fontSize: 16,  fontFamily: "Poppins")),
                         )
                         : Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -290,7 +290,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       child: Icon(Icons.autorenew),
                     ),
                     SizedBox(width: 16,),
-                    Text('Inaccurate? Retake photo', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
+                    Text('Inaccurate? Retake photo', style: TextStyle(color: Colors.white, fontSize: 16.0, fontFamily: "Poppins",),),
                   ],
                 ),
                 onPressed: () {
