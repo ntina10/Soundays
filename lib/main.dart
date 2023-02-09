@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xFF1B1919), //Colors.transparent,
         body: Stack(
           children: [
 
@@ -108,12 +108,12 @@ class MyApp extends StatelessWidget {
                     count: 3,
                     effect: ExpandingDotsEffect(dotColor:  Colors.white, activeDotColor:  Colors.white, dotHeight: 16.0, dotWidth: 16.0),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 16,),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10,),
                   myButton(() async {
                     await Navigator.pushNamed(context, '/genres').then((value) => _controller.jumpToPage(0));
                     //await Navigator.push(context, MaterialPageRoute(builder: (context) => BgColor(mychild: Text('Hello'))));
-                  }, 'Analyze my mood'),
-                  SizedBox(height: MediaQuery.of(context).size.height / 9,)
+                  }, 'Let the music play'),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10,)
                 ],
               ),
             ),

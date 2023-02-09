@@ -114,10 +114,14 @@ class _ChooseGenresState extends State<ChooseGenres> {
                       Expanded(
                         child: GridView.builder(
                           // shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemCount: genres.length,
                           itemBuilder: (ctx, i) {
                             return InkWell(
+                              customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               onTap: () {
                                 if (selected[i]) {
                                   setState(() {
@@ -190,7 +194,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 9),
+                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 15),
                         child: myButton((counter < 1) ? null : () async {
                                         var genreResults = get_selected();
                                         await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);

@@ -140,12 +140,12 @@ class _TakeMyPicState extends State<TakeMyPic> {
           // Text('Get ready!', textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Poppins",),),
           // SizedBox(height: 20,),
           // Text('Show us the cute face!', style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
-          myTextTop(context, 'Get ready!', 'Show us the cute face!'),
+          myTextTop(context, 'Get ready!', 'Show the cute face!'),
           SizedBox(height: MediaQuery.of(context).size.height / 16,),
           Container(
             height: MediaQuery.of(context).size.height / 1.5,
             //width: 300,
-            color: Colors.white,
+            color: myBgColor,
             child: _controller.value.isInitialized ? Stack(
               children: [
                 Center(
@@ -161,7 +161,7 @@ class _TakeMyPicState extends State<TakeMyPic> {
                 ),
                 myDuration.inSeconds < 4 && myDuration.inSeconds > 0
                     ? Center(
-                      child: Text(myDuration.inSeconds.toString(), textAlign: TextAlign.center, style: TextStyle(fontSize: 100.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "Poppins",),)
+                      child: Text(myDuration.inSeconds.toString(), textAlign: TextAlign.center, style: TextStyle(fontSize: 200.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "Poppins",),)
                     )
                     : Container()
               ],

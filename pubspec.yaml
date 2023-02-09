@@ -51,7 +51,8 @@ dependencies:
 
 flutter_native_splash:
   color: "#000000"
-  image: assets/logo_text.png
+  image: assets/logo_text_splash.png
+#  background_image: "assets/my_splash_background.png" ...anti gia color
 
 flutter_icons:
   android: "launcher_icon"

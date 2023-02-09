@@ -7,12 +7,21 @@ class WelcomePage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orange[100],
+      // color: Colors.orange[100],
+      decoration: const BoxDecoration(
+          gradient: RadialGradient(
+              radius: 2.7,
+              center: Alignment(0.0, 0.70),
+              colors: [
+                Color.fromRGBO(189, 0, 255, 0.964792),
+                Colors.transparent
+              ]
+          )),
       child: Column(
         children: [
-          myTextTop(context, "Begin\nyour journey!", "That’s it! We analyze your emotions,\nand offer hand picked songs just for\nyou. Have fun!"),
+          myTextTop(context, "Your mood\nin a playlist", "Moodle uses machine learning to\nanalyze your mood, and create a\nplaylist that 100% reflects your mood."),
           SizedBox(height: MediaQuery.of(context).size.height / 10.67,),
-          Container(height: 190,  width: 190, child: Image.asset('assets/main3.png')),
+          Container(height: 170,  width: 170, child: Image.asset('assets/main3.png')),
         ],
       ),
     );
