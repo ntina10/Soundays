@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soundays/alert_emotions.dart';
+import 'package:soundays/bg_color.dart';
 import 'package:soundays/botNavBar.dart';
 import 'package:soundays/myElements.dart';
 import 'package:soundays/recoSong.dart';
@@ -60,8 +61,11 @@ class _EmotionScreenState extends State<EmotionScreen> {
             center: Alignment(0.0, -0.35),
             colors: [
               //colorMap[emotion],
-              Color(0xFFFFFFFF),
-              colorMap[emotion]
+              // Color(0xFFFFFFFF),
+              // colorMap[emotion]
+              Color(0xFFBD00FF),
+              myBgColor,
+
             ],
           )
       ),
@@ -71,10 +75,10 @@ class _EmotionScreenState extends State<EmotionScreen> {
         body: Center(
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height / 4.8,),
-              Container(width: 220, height: MediaQuery.of(context).size.height / 3.64, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
+              SizedBox(height: MediaQuery.of(context).size.height / 16.7,),
+              Container(width: 280, height: MediaQuery.of(context).size.height / 2.7, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
               SizedBox(height: MediaQuery.of(context).size.height / 20,),
-              Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Poppins", height: 1.125)),
+              Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Satoshi", height: 1.125)),
               SizedBox(height: MediaQuery.of(context).size.height / 20,),
               myButton(() {
                 Navigator.push(context,
@@ -84,7 +88,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
                                 ),
                               );
               }, 'Show me the music!'),
-              SizedBox(height: MediaQuery.of(context).size.height / 8,),
+              SizedBox(height: MediaQuery.of(context).size.height / 16,),
               MaterialButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,10 +109,12 @@ class _EmotionScreenState extends State<EmotionScreen> {
                     Text('Show me full results', style: TextStyle(
                       fontSize: 16.0,
                       fontFamily: "Poppins",
-                      shadows: [Shadow(color: Colors.black, offset: Offset(0, -3))],
-                      color: Colors.transparent,
-                      decorationColor: Colors.black,
-                      decoration: TextDecoration.underline,),
+                      color: Colors.white,
+                      // shadows: [Shadow(color: Colors.black, offset: Offset(0, -3))],
+                      // color: Colors.transparent,
+                      // decorationColor: Colors.black,
+                      // decoration: TextDecoration.underline,
+                    ),
                     ),
                   ],
                 ),

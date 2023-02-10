@@ -28,7 +28,8 @@ class WelcomePage1 extends StatelessWidget {
             // ]
             center: Alignment(0.0, 0.70),
             colors: [
-              Color.fromRGBO(189, 0, 255, 0.964792),
+              //Color.fromRGBO(189, 0, 255, 0.964792),
+              Color(0xFFBD00FF),
               Colors.transparent
             ]
           )),

@@ -44,6 +44,8 @@ class _ChooseGenresState extends State<ChooseGenres> {
   List<bool> selected = [];
   int counter = 0;
 
+  List<int> indexes = [];
+
   // ParticleOptions particles = const ParticleOptions(
   //   //baseColor: Colors.cyan,
   //   spawnOpacity: 0.8,
@@ -74,6 +76,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
     for (int i = 0; i < genres.length; i++) {
       selected.add(false);
     }
+    indexes = List.generate(genres.length, (index) => index);
   }
 
   @override
@@ -111,6 +114,72 @@ class _ChooseGenresState extends State<ChooseGenres> {
                       //     child: _myListWidget()
                       //   ),
                       // ),
+                      // Expanded(
+                      //   child: Wrap(
+                      //     spacing: 16,
+                      //     runSpacing: 16,
+                      //     // alignment: WrapAlignment.center,
+                      //     children: [for (var i in indexes)
+                      //       InkWell(
+                      //           customBorder: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //           ),
+                      //           onTap: () {
+                      //             if (selected[i]) {
+                      //               setState(() {
+                      //                 selected[i] = false;
+                      //                 counter -= 1;
+                      //               });
+                      //             } else {
+                      //               if (counter < 5) {
+                      //                 setState(() {
+                      //                   selected[i] = true;
+                      //                   counter += 1;
+                      //                 });
+                      //               }
+                      //             }
+                      //           },
+                      //           child: Container(
+                      //             // height: 50,
+                      //             decoration: BoxDecoration(
+                      //                 color: selected[i] ? Color(0xff5c5959) : Color(0xff272525),
+                      //                 borderRadius: BorderRadius.circular(20)),
+                      //             // margin: EdgeInsets.all(5),
+                      //             // padding: EdgeInsets.all(16),
+                      //             child: Column(children: [
+                      //               ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/albums/' + genres[i]['image'].toString())),
+                      //               Row(mainAxisSize: MainAxisSize.min,
+                      //                 children: [
+                      //                 Wrap(children: [ Text('hi')])
+                      //               ],)
+                      //             ])
+                      //             // Column(
+                      //             //   // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      //             //   children: [
+                      //             //     // SizedBox(height: 16,),
+                      //             //     Align(alignment: Alignment.centerLeft, child: ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/albums/' + genres[i]['image'].toString()))),
+                      //             //     //SizedBox(height: 40,),
+                      //             //     Row(
+                      //             //       children: [
+                      //             //         Text(
+                      //             //           genres[i]['value'].toString(),
+                      //             //           style: TextStyle(
+                      //             //             fontWeight: FontWeight.w400,
+                      //             //             fontFamily: "Poppins",
+                      //             //             fontSize: 14,
+                      //             //             color: Color(0xffb6b6b6),
+                      //             //           ),
+                      //             //         ),
+                      //             //         if (selected[i]) Align(alignment: Alignment.centerRight, child: SvgPicture.asset('assets/selected.svg')),
+                      //             //       ],
+                      //             //     )
+                      //             //   ],
+                      //             // ),
+                      //           ),
+                      //         )
+                      //       ],
+                      //   )
+                      // ),
                       Expanded(
                         child: GridView.builder(
                           // shrinkWrap: true,
@@ -138,24 +207,28 @@ class _ChooseGenresState extends State<ChooseGenres> {
                                 }
                               },
                               child: Container(
-                                // height: 290,
+                                // height: 50,
+                                // width: 90,
                                 decoration: BoxDecoration(
                                     color: selected[i] ? Color(0xff5c5959) : Color(0xff272525),
                                     borderRadius: BorderRadius.circular(20)),
                                 // margin: EdgeInsets.all(5),
                                 // padding: EdgeInsets.all(16),
-                                child: Column(
+                                child:
+                                Column(
+                                  // mainAxisSize: MainAxisSize.min,
                                   // crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     // SizedBox(height: 16,),
                                     Padding(
                                       padding: const EdgeInsets.all(16.0),
-                                      child: ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/albums/' + genres[i]['image'].toString())),
+                                      child: ClipRRect(borderRadius: BorderRadius.circular(10), child: SizedBox(width: 140, child: Image.asset('assets/photo-1507832321772-e86cc0452e9c.jpg' ))), //+ genres[i]['image'].toString()
                                     ),
-                                    // SizedBox(height: 16,),
+                                    //SizedBox(height: 40,),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0), //const EdgeInsets.symmetric(horizontal: 16.0),
                                       child: Row(
+                                        // mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
                                             genres[i]['value'].toString(),
@@ -166,7 +239,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                                               color: Color(0xffb6b6b6),
                                             ),
                                           ),
-                                          if (selected[i]) Expanded(child: Align(alignment: Alignment.centerRight, child: SvgPicture.asset('assets/selected.svg'))),
+                                          if (selected[i]) Expanded(child: Align(alignment: Alignment.centerRight, child: SvgPicture.asset('assets/checkbox.svg'))),
                                         ],
                                       ),
                                     )
@@ -177,8 +250,8 @@ class _ChooseGenresState extends State<ChooseGenres> {
                           },
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            // childAspectRatio: 1.0,
-                            crossAxisSpacing: 20,
+                            childAspectRatio: 1.05,
+                            crossAxisSpacing: 16,
                             mainAxisSpacing: 16,
                             // mainAxisExtent: 264,
                           ),

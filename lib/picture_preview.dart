@@ -4,6 +4,8 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/parser.dart';
 import 'package:soundays/animation_dots.dart';
 import 'package:soundays/botNavBar.dart';
 import 'package:soundays/emotion_screen.dart';
@@ -147,26 +149,26 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
               myTitle('Looking good!'),
               SizedBox(height: MediaQuery.of(context).size.height / 16,),
               Transform.rotate(
-                angle: - math.pi /30,
+                angle: - math.pi /18.3,
                 child: Transform(
                   alignment: Alignment.center,
                   transform: Matrix4.rotationY(math.pi),
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(32)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                     ),
                     elevation: 12,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width / 1.45, //240
-                      height: MediaQuery.of(context).size.height / 2.4, //340
+                      height: MediaQuery.of(context).size.height / 2.5, //320
                       child:  Container(
                           // width: MediaQuery.of(context).size.width / 1.9,
                           // height: MediaQuery.of(context).size.height / 3.2,
                           child: _imageSize != null
                               ? Padding(
-                                padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 80.0),
+                                padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 85.0),
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: BorderRadius.circular(11),
                                   child: Image.file(
                                     File(_imagePath),
                                     fit: BoxFit.cover,
@@ -180,7 +182,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                 ),
               )
              ,
-              SizedBox(height: MediaQuery.of(context).size.height / 11.5,),
+              SizedBox(height: MediaQuery.of(context).size.height / 13,), //61.5
               Container(
                 width: 224, //224
                 height: 56, //56
@@ -281,8 +283,8 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 27,
-                      height: 27,
+                      width: 30,
+                      height: 30,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white
@@ -290,7 +292,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       child: Icon(Icons.autorenew),
                     ),
                     SizedBox(width: 16,),
-                    Text('Inaccurate? Retake photo', style: TextStyle(color: Colors.white, fontSize: 16.0, fontFamily: "Poppins",),),
+                    Text('Inaccurate? Retake photo', style: TextStyle(color: Colors.white, fontSize: 14.0, fontFamily: "Poppins",),),
                   ],
                 ),
                 onPressed: () {

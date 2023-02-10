@@ -1,5 +1,5 @@
 name: soundays
-description: A new Flutter project.
+description: Our thesis project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -104,6 +104,10 @@ flutter:
       fonts:
         - asset: fonts/Poppins-Regular.ttf
         - asset: fonts/Poppins-Bold.ttf
+    - family: Satoshi
+      fonts:
+        - asset: fonts/Satoshi-Regular.ttf
+        - asset: fonts/Satoshi-Bold.ttf
 
   #   - family: Trajan Pro
   #     fonts:

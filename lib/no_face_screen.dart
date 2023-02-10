@@ -30,9 +30,9 @@ class _NoFaceScreenState extends State<NoFaceScreen> {
             children: [
               SizedBox(height: 100,),
               myTitle('No face detected!\nTry again.'),
-              SizedBox(height: 80,),
+              SizedBox(height: 100,),
               Container(height: 230,  width: 230, child: Image.asset('assets/no_face_new.png')),
-              SizedBox(height: 110,),
+              SizedBox(height: 112,),
               myButton(() async {
                 await Navigator.pushNamed(context, '/take_pic', arguments: genres);
               }, 'Retake photo')

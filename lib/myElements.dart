@@ -10,7 +10,7 @@ Widget myButton(fun, String mytext) {
     ),
     child: Padding(
       padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
-      child: Text(mytext, style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Poppins')),
+      child: Text(mytext, style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Satoshi')),
     ),
   );
 }
@@ -37,7 +37,7 @@ Widget myTitle(String title) {
     style: TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,
-      fontFamily: "Poppins",
+      fontFamily: "Satoshi",
       fontStyle: FontStyle.normal,
       fontSize: 24.0,
       height: 1.17,
@@ -50,7 +50,7 @@ Widget mySubtitle(String subtitle) {
     textAlign: TextAlign.center,
     style: TextStyle(
         color: Colors.white,
-        fontFamily: "Poppins",
+        fontFamily: "Satoshi",
         fontStyle: FontStyle.normal,
         fontSize: 16.0,
         height: 1.5
