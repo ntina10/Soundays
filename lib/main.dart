@@ -34,6 +34,7 @@ Future<void> main() async {
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(MaterialApp(
+            debugShowCheckedModeBanner: false,
             routes: {
               '/camera': (context) => MyCamera(),
               '/rtcamera': (context) => RtCamera(),

@@ -11,7 +11,7 @@ class WelcomePage1 extends StatelessWidget {
           gradient: RadialGradient(
             // begin: Alignment.topLeft,
             // end: Alignment.bottomRight,
-            radius: 2.7,
+            radius: 1.0,
             // colors: [
             //   // Color(0xFF8D69FD),
             //   //Color(0xFFFFFFFF),
@@ -26,11 +26,13 @@ class WelcomePage1 extends StatelessWidget {
             //   5.902,
             //   7.14
             // ]
-            center: Alignment(0.0, 0.70),
+            center: Alignment(0.0, 0.05),
             colors: [
               //Color.fromRGBO(189, 0, 255, 0.964792),
-              Color(0xFFBD00FF),
-              Colors.transparent
+              //Color(0xFFBD00FF),
+              //Colors.transparent
+              Color(0xFFF6F7FF),
+              Color(0xFF232323)
             ]
           )),
         // linear-gradient(140.69deg, rgba(189, 0, 255, 0.964792) 43.31%, rgba(220, 0, 134, 0.981469) 59.01%, #FF0000 59.02%, #2400FF 71.42%);
@@ -39,7 +41,7 @@ class WelcomePage1 extends StatelessWidget {
         children: [
           myTextTop(context, "Welcome\nto moodle!", "Use moodle to listen to great music,\naccording to your mood."),
           SizedBox(height: MediaQuery.of(context).size.height / 8,),
-          Container(height: 190,  width: 190, child: Image.asset('assets/fear.png')),
+          Container(height: 213,  width: 213, child: Image.asset('assets/neutral.png')),
           SizedBox(height: MediaQuery.of(context).size.height / 8,)
         ],
       ),

@@ -31,7 +31,7 @@ showAlertDialogEmo(BuildContext context, Map emotions) {
                 child: Column(
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height /20,),
-                    myTitle('These are\nyour results:'),
+                    myBlackTitle('These are\nyour results:'),
                     SizedBox(height: MediaQuery.of(context).size.height / 20,),
                     Container(
                       height: 320,
@@ -59,7 +59,7 @@ showAlertDialogEmo(BuildContext context, Map emotions) {
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height / 20,),
-                    myButton(() { Navigator.pop(context);}, 'Close'),
+                    myBlackButton(() { Navigator.pop(context);}, 'Close'),
                     SizedBox(height: MediaQuery.of(context).size.height / 20,)
                   ],
                 ),

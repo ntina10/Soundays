@@ -10,18 +10,18 @@ class WelcomePage3 extends StatelessWidget {
       // color: Colors.orange[100],
       decoration: const BoxDecoration(
           gradient: RadialGradient(
-              radius: 2.7,
-              center: Alignment(0.0, 0.70),
+              radius: 1.0,
+              center: Alignment(0.0, 0.05),
               colors: [
-                Color.fromRGBO(189, 0, 255, 0.964792),
-                Colors.transparent
+                Color(0xFFFAD983),
+                Color(0xFF232323)
               ]
           )),
       child: Column(
         children: [
           myTextTop(context, "Your mood\nin a playlist", "Moodle uses machine learning to\nanalyze your mood, and create a\nplaylist that 100% reflects your mood."),
-          SizedBox(height: MediaQuery.of(context).size.height / 10.67,),
-          Container(height: 170,  width: 170, child: Image.asset('assets/main3.png')),
+          SizedBox(height: MediaQuery.of(context).size.height / 9.3,),
+          Container(height: 170,  width: 170, child: Image.asset('assets/w3.png')),
         ],
       ),
     );

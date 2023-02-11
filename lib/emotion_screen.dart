@@ -31,13 +31,20 @@ class _EmotionScreenState extends State<EmotionScreen> {
     'neutral': 'neutral'
   };
   Map colorMap = {
-    'surprise': Color(0xFFFCD06A),
-    'anger': Color(0xFFFCBBD7),
-    'disgust': Color(0xFF99FF8A),
-    'fear': Color(0xFFA9CFEA),
-    'happiness': Color(0xFFFCD06A),
-    'sadness': Color(0xFFA9CFEA),
-    'neutral': Color(0xFFFCD06A)
+    // 'surprise': Color(0xFFFCD06A),
+    // 'anger': Color(0xFFFCBBD7),
+    // 'disgust': Color(0xFF99FF8A),
+    // 'fear': Color(0xFFA9CFEA),
+    // 'happiness': Color(0xFFFCD06A),
+    // 'sadness': Color(0xFFA9CFEA),
+    // 'neutral': Color(0xFFFCD06A)
+    'surprise': Color(0xFFC57DE2),
+    'anger': Color(0xFFF9907F),
+    'disgust': Color(0xFFABE79C),
+    'fear': Color(0xFF8E74F9),
+    'happiness': Color(0xFFFAD983),
+    'sadness': Color(0xFF9CE4FF),
+    'neutral': Color(0xFFF6F7FF)
   };
 
   @override
@@ -56,14 +63,14 @@ class _EmotionScreenState extends State<EmotionScreen> {
           gradient: RadialGradient(
             // begin: Alignment.centerLeft,
             // end: Alignment.centerRight,
-            radius: 1.0,
+            radius: 0.77,
             //focal: Alignment(0.3, -0.1),
-            center: Alignment(0.0, -0.35),
+            center: Alignment(0.0, -0.5),
             colors: [
               //colorMap[emotion],
               // Color(0xFFFFFFFF),
-              // colorMap[emotion]
-              Color(0xFFBD00FF),
+              myColorMap[emotion],
+              //Color(0xFFBD00FF),
               myBgColor,
 
             ],

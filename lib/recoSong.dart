@@ -190,7 +190,7 @@ class _RecoSongState extends State<RecoSong> {
                     center: Alignment(0.0, -0.20),
                     colors: [
                       Color(0xFFFFFFFF),
-                      colorMap[_myemotion]
+                      myColorMap[_myemotion]
                     ],
                   ),
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),

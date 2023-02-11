@@ -222,7 +222,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                                     // SizedBox(height: 16,),
                                     Padding(
                                       padding: const EdgeInsets.all(16.0),
-                                      child: ClipRRect(borderRadius: BorderRadius.circular(10), child: SizedBox(width: 140, child: Image.asset('assets/photo-1507832321772-e86cc0452e9c.jpg' ))), //+ genres[i]['image'].toString()
+                                      child: ClipRRect(borderRadius: BorderRadius.circular(10), child: SizedBox(width: 140, child: Image.asset('assets/albums/' + genres[i]['image'].toString() ))), //photo-1507832321772-e86cc0452e9c.jpg
                                     ),
                                     //SizedBox(height: 40,),
                                     Padding(
@@ -250,7 +250,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                           },
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 1.05,
+                            childAspectRatio: 0.95,
                             crossAxisSpacing: 16,
                             mainAxisSpacing: 16,
                             // mainAxisExtent: 264,
