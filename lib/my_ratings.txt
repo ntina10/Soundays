@@ -35,3 +35,7 @@
 {emotion: happiness, rating: 4.0}
 {emotion: happiness, rating: 3.0}
 {emotion: happiness, rating: 5.0}
+{emotion: neutral, rating: 5.0}
+{emotion: happiness, rating: 4.0}
+{emotion: happiness, rating: 5.0}
+{emotion: happiness, rating: 5.0}

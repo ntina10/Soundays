@@ -46,20 +46,6 @@ class _ChooseGenresState extends State<ChooseGenres> {
 
   List<int> indexes = [];
 
-  // ParticleOptions particles = const ParticleOptions(
-  //   //baseColor: Colors.cyan,
-  //   spawnOpacity: 0.8,
-  //   opacityChangeRate: 0.25,
-  //   minOpacity: 1.0,
-  //   maxOpacity: 1.0,
-  //   particleCount: 4,
-  //   spawnMaxRadius: 150.0,
-  //   spawnMaxSpeed: 50.0,
-  //   spawnMinSpeed: 30,
-  //   spawnMinRadius: 150.0,
-  //   image: Image(image: AssetImage('assets/bubble1.png'),),
-  // );
-
   List<String> get_selected() {
     List<String> ans = [];
     for(var i =0; i<genres.length; i++) {
@@ -99,92 +85,17 @@ class _ChooseGenresState extends State<ChooseGenres> {
       child: Scaffold(
           backgroundColor: myBgColor,
           body:
-          // AnimatedBackground(
-          //   behaviour: RandomParticleBehaviour(options: particles),
-          //   vsync: this,
-          //   child:
             Stack(
                 children: [
                   Column(
                     children: [
                       myTextTop(context, 'What makes your\nheart move?', 'Select up to 5'),
                       SizedBox(height: MediaQuery.of(context).size.height / 15,),
-                      // Expanded(
-                      //   child: Container(
-                      //     child: _myListWidget()
-                      //   ),
-                      // ),
-                      // Expanded(
-                      //   child: Wrap(
-                      //     spacing: 16,
-                      //     runSpacing: 16,
-                      //     // alignment: WrapAlignment.center,
-                      //     children: [for (var i in indexes)
-                      //       InkWell(
-                      //           customBorder: RoundedRectangleBorder(
-                      //             borderRadius: BorderRadius.circular(20),
-                      //           ),
-                      //           onTap: () {
-                      //             if (selected[i]) {
-                      //               setState(() {
-                      //                 selected[i] = false;
-                      //                 counter -= 1;
-                      //               });
-                      //             } else {
-                      //               if (counter < 5) {
-                      //                 setState(() {
-                      //                   selected[i] = true;
-                      //                   counter += 1;
-                      //                 });
-                      //               }
-                      //             }
-                      //           },
-                      //           child: Container(
-                      //             // height: 50,
-                      //             decoration: BoxDecoration(
-                      //                 color: selected[i] ? Color(0xff5c5959) : Color(0xff272525),
-                      //                 borderRadius: BorderRadius.circular(20)),
-                      //             // margin: EdgeInsets.all(5),
-                      //             // padding: EdgeInsets.all(16),
-                      //             child: Column(children: [
-                      //               ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/albums/' + genres[i]['image'].toString())),
-                      //               Row(mainAxisSize: MainAxisSize.min,
-                      //                 children: [
-                      //                 Wrap(children: [ Text('hi')])
-                      //               ],)
-                      //             ])
-                      //             // Column(
-                      //             //   // crossAxisAlignment: CrossAxisAlignment.stretch,
-                      //             //   children: [
-                      //             //     // SizedBox(height: 16,),
-                      //             //     Align(alignment: Alignment.centerLeft, child: ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/albums/' + genres[i]['image'].toString()))),
-                      //             //     //SizedBox(height: 40,),
-                      //             //     Row(
-                      //             //       children: [
-                      //             //         Text(
-                      //             //           genres[i]['value'].toString(),
-                      //             //           style: TextStyle(
-                      //             //             fontWeight: FontWeight.w400,
-                      //             //             fontFamily: "Poppins",
-                      //             //             fontSize: 14,
-                      //             //             color: Color(0xffb6b6b6),
-                      //             //           ),
-                      //             //         ),
-                      //             //         if (selected[i]) Align(alignment: Alignment.centerRight, child: SvgPicture.asset('assets/selected.svg')),
-                      //             //       ],
-                      //             //     )
-                      //             //   ],
-                      //             // ),
-                      //           ),
-                      //         )
-                      //       ],
-                      //   )
-                      // ),
                       Expanded(
                         child: GridView.builder(
                           // shrinkWrap: true,
                           physics: BouncingScrollPhysics(),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: EdgeInsets.fromLTRB(16, 0, 16, MediaQuery.of(context).size.height / 6), //const EdgeInsets.symmetric(horizontal: 16),
                           itemCount: genres.length,
                           itemBuilder: (ctx, i) {
                             return InkWell(
@@ -234,7 +145,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                                             genres[i]['value'].toString(),
                                             style: TextStyle(
                                               fontWeight: FontWeight.w400,
-                                              fontFamily: "Poppins",
+                                              // fontFamily: "Poppins",
                                               fontSize: 14,
                                               color: Color(0xffb6b6b6),
                                             ),
@@ -264,14 +175,14 @@ class _ChooseGenresState extends State<ChooseGenres> {
                   // Positioned(
                   //   bottom: 60,
                   //   left: 145,
-                    Align(
+                  if (counter >= 1) Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 15),
-                        child: myButton((counter < 1) ? null : () async {
-                                        var genreResults = get_selected();
-                                        await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);
-                                      }, 'Next'),
+                        child: myButton(() async {  //(counter < 1) ? null : () async {
+                                  var genreResults = get_selected();
+                                  await Navigator.pushNamed(context, '/pre_pic', arguments: genreResults);
+                                }, 'Next'),
                       ),
                     ),
                   //),
@@ -331,7 +242,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                           genres[index]['value'].toString(),
                           style: TextStyle(
                               color: Colors.black,
-                              fontFamily: "Poppins",
+                              // fontFamily: "Poppins",
                               fontSize: 16,
                               height: 1.5),
                         ),

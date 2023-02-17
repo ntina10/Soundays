@@ -45,7 +45,8 @@ Future<void> main() async {
             },
             title: 'Emotion Recognition and Song Recommendation',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              // primarySwatch: Colors.blue,
+              fontFamily: 'Satoshi'
             ),
             home: MyApp() //SplashScreen()
       ))

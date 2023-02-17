@@ -175,59 +175,54 @@ class _RecoSongState extends State<RecoSong> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        extendBody: true,
-        //bottomNavigationBar: BotNavBar(mygenres: _mygenres,),
-        body: Center(
-          child: Column(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    radius: 1.0,
-                    center: Alignment(0.0, -0.20),
-                    colors: [
-                      Color(0xFFFFFFFF),
-                      myColorMap[_myemotion]
-                    ],
-                  ),
-                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height / 11.7,), //70
-                    Container(width: 90, height: MediaQuery.of(context).size.height / 8.9, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
-                    SizedBox(height: 10,),
-                    myTitle('Feeling\n' + emotionMap[_myemotion] + '!'),
-                    SizedBox(height: MediaQuery.of(context).size.height / 26.8,),
-                  ],
-                ),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-              //   child: Divider(
-              //     height: 10,
-              //     color: Colors.grey[800],
-              //   ),
-              // ),
-              SizedBox(height: 16,),
-              recommendation == null
-                  ? Center(child: Column(
-                      children: const [
-                        SizedBox(height: 100,),
-                        Text("We are generating\nyour playlist", textAlign: TextAlign.center, style: TextStyle(fontSize: 24.0, fontFamily: "Poppins",)),
-                        SizedBox(height: 40,),
-                        CircularProgressIndicator(),
-                      ],
-                    ))
-                  : Expanded(
-                      child: Scrollbar(child: MyListView(songData: recommendation, emotion: _myemotion))
-                    ),
-            ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          radius: 0.9,
+          center: Alignment(0.0, -1.0),
+          colors: [
+            //Color(0xFFFFFFFF),
+            myColorMap[_myemotion],
+            myBgColor
+          ],
         ),
+      ),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          extendBody: true,
+          //bottomNavigationBar: BotNavBar(mygenres: _mygenres,),
+          body: Center(
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height / 11.7,), //70
+                Container(width: 90, height: MediaQuery.of(context).size.height / 8.9, child: Image.asset('assets/' + emotionMap[_myemotion] + '.png')),
+                SizedBox(height: 10,),
+                myTitle('Feeling\n' + emotionMap[_myemotion] + '!'),
+                SizedBox(height: MediaQuery.of(context).size.height / 26.8,),
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
+                //   child: Divider(
+                //     height: 10,
+                //     color: Colors.grey[800],
+                //   ),
+                // ),
+                SizedBox(height: 16,),
+                recommendation == null
+                    ? Center(child: Column(
+                        children: [
+                          SizedBox(height: MediaQuery.of(context).size.height / 6,),
+                          Text("We are generating\nyour playlist", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 24.0, fontFamily: "Poppins",)),
+                          SizedBox(height: 40,),
+                          CircularProgressIndicator(color: Colors.white,),
+                        ],
+                      ))
+                    : Expanded(
+                        child: Scrollbar(child: MyListView(songData: recommendation, emotion: _myemotion))
+                      ),
+              ],
+            ),
+          ),
+      ),
     );
   }
 

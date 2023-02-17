@@ -113,7 +113,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
     _imagePath = widget.imagePath;
     _getImageSize(File(_imagePath));
 
-    //WidgetsBinding.instance.addPostFrameCallback((timeStamp) {getSize();});
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {getSize();});
   }
 
   @override
@@ -183,100 +183,65 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
               )
              ,
               SizedBox(height: MediaQuery.of(context).size.height / 13,), //61.5
-              Container(
-                width: 224, //224
-                height: 56, //56
-                child: ElevatedButton(
-                    //key: _myBeforeKey,
-                    style: ElevatedButton.styleFrom(primary: Colors.white, shape: StadiumBorder()),
-                    onPressed: ! in_progress
-                        ? () async {
-                      setState(() {
-                        in_progress = true;
+              ElevatedButton(
+
+                  style: ElevatedButton.styleFrom(primary: Colors.white, shape: StadiumBorder()),
+                  onPressed: ! in_progress
+                      ? () async {
+                    setState(() {
+                      in_progress = true;
+                    });
+                    //_repeatingController.repeat();
+                    //_appearanceController.repeat();
+                    await callApi(_imagePath);
+
+                    if (_faceFound == true) {
+                      //var myemotion = _map.keys.first;
+                      //print("emotionRes " + myemotion);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              EmotionScreen(myEmotions: _map, myGenres: mygenres),
+                        ),
+                      ).then((_) {
+                        setState(() {
+                          in_progress = false;
+                        });
                       });
-                      //_repeatingController.repeat();
-                      //_appearanceController.repeat();
-                      await callApi(_imagePath);
-
-                      if (_faceFound == true) {
-                        //var myemotion = _map.keys.first;
-                        //print("emotionRes " + myemotion);
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                EmotionScreen(myEmotions: _map, myGenres: mygenres),
-                          ),
-                        ).then((_) {
-                          setState(() {
-                            in_progress = false;
-                          });
+                      print("Picture taken!!!");
+                      print(_map);
+                    } else if (_faceFound == false){
+                      print("No face is in this picture");
+                      //add navigation to no-face Screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NoFaceScreen(mygenres: mygenres),
+                        ),
+                      ).then((_) {
+                        setState(() {
+                          in_progress = false;
                         });
-                        print("Picture taken!!!");
-                        print(_map);
-                      } else if (_faceFound == false){
-                        print("No face is in this picture");
-                        //add navigation to no-face Screen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                NoFaceScreen(mygenres: mygenres),
-                          ),
-                        ).then((_) {
-                          setState(() {
-                            in_progress = false;
-                          });
-                        });
-                      }
+                      });
                     }
-                    : () {},
-                    child: ! in_progress
-                        ? Padding(
-                          padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-                          child: Text("Analyze my mood", style: TextStyle(color: Colors.black, fontSize: 16,  fontFamily: "Poppins")),
-                        )
-                        : Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                            child: AnimationDots()
-                    )
-                ),
+                  }
+                  : () {},
+                  child: ! in_progress
+                      ? Padding(
+                        padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
+                        child: Text("Analyze my mood",
+                            // key: _myBeforeKey,
+                            style: TextStyle(color: Colors.black, fontSize: 16,)
+                        ),
+                  )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                          child: Container(width: 85, height: 70, child: AnimationDots())
+                  )
               ),
-              // ! in_progress ? myButton( () async {
-              //       setState(() {
-              //         in_progress = true;
-              //       });
-              //       await callApi(_imagePath);
-              //
-              //       if (_faceFound == true) {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) =>
-              //                 EmotionScreen(myEmotions: _map, myGenres: mygenres),
-              //           ),
-              //         ).then((_) {
-              //           setState(() {
-              //             in_progress = false;
-              //           });
-              //         });
-              //         print("Picture taken!!!");
-              //         print(_map);
-              //       } else if (_faceFound == false){
-              //         print("No face is in this picture");
-              //         //add navigation to no-face Screen
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) =>
-              //                 NoFaceScreen(mygenres: mygenres),
-              //           ),
-              //         );
-              //       }
-              //     }, "Analyze my mood")
-              //     :
-              //     myButtonWithChild(() {}, Container(height: 32, width: 100, child: AnimationDots())),
               SizedBox(height: MediaQuery.of(context).size.height / 32,),
               MaterialButton(
                 child: Row(
@@ -292,7 +257,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       child: Icon(Icons.autorenew),
                     ),
                     SizedBox(width: 16,),
-                    Text('Inaccurate? Retake photo', style: TextStyle(color: Colors.white, fontSize: 14.0, fontFamily: "Poppins",),),
+                    Text('Inaccurate? Retake photo', style: TextStyle(color: Colors.white, fontSize: 14.0,),),
                   ],
                 ),
                 onPressed: () {

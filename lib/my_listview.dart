@@ -153,6 +153,8 @@ class _MyListViewState extends State<MyListView> {
                 Card(
                   elevation: 0.0,
                   margin: EdgeInsets.zero,
+                  //color: Colors.transparent,
+                  color: selectedIndex == index ? Color(0xFF272525) : Colors.transparent,
                   child: ListTile(
                     contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                     dense: false,
@@ -162,9 +164,9 @@ class _MyListViewState extends State<MyListView> {
                                                          : NetworkImage(album_pic), //AssetImage('assets/some_album.jpg'),
                       radius: 28.0,
                     ),
-                    title: Text(s.name, style: TextStyle(fontSize: 14.0, fontFamily: "Poppins",)) ,
-                    subtitle: Text("By ${s.artists[0].name}", style: TextStyle(fontSize: 14.0, fontFamily: "Poppins", color: Color(0xFFB1B1B1))),
-                    tileColor: selectedIndex == index ? Color(0xFFE5E5E5) : null,
+                    title: Text(s.name, style: TextStyle(fontSize: 14.0, fontFamily: "Satoshi", color: Colors.white)) ,
+                    subtitle: Text("By ${s.artists[0].name}", style: TextStyle(fontSize: 14.0, fontFamily: "Satoshi", color: Color(0xFF717171))),
+                    // tileColor: selectedIndex == index ? Color(0xFFE5E5E5) : null,
                     onTap: () {
                       selectedIndex == index ?
                       setState(() {
@@ -181,9 +183,9 @@ class _MyListViewState extends State<MyListView> {
                         Positioned(
                           top: 12,
                           right: 12,
-                          child: SizedBox(height: 24, width: 24, child: CircularProgressIndicator(value: audiostatus[index] ? position.inSeconds/duration.inSeconds : 0.0, strokeWidth: 2, backgroundColor: Color(0xFFE5E5E5), color: Colors.green,))
+                          child: SizedBox(height: 24, width: 24, child: CircularProgressIndicator(value: audiostatus[index] ? position.inSeconds/duration.inSeconds : 0.0, strokeWidth: 1, backgroundColor: Color(0xFFCECECE), color: Colors.green,))
                         ),
-                        IconButton(icon: audiostatus[index] ? const Icon(Icons.pause_rounded, color: Colors.green,) : const Icon(Icons.play_arrow_rounded),
+                        IconButton(icon: audiostatus[index] ? const Icon(Icons.pause_rounded, color: Colors.green, size: 16.0,) : const Icon(Icons.play_arrow_rounded, color: Color(0xFFDEDEDE), size: 16.0,),
                                     onPressed: audiostatus[index]
                                                 ? () { pause(); setState(() {
                                                                   audiostatus[index] = false;
@@ -203,7 +205,7 @@ class _MyListViewState extends State<MyListView> {
                     : null
                   ),
                 ),
-                if (index == songData.tracks.length - 1) SizedBox(height: MediaQuery.of(context).size.height / 6.7,)
+                if (index == songData.tracks.length - 1) SizedBox(height: (MediaQuery.of(context).size.height / 16) + 60,)
               ],
             );
           },
@@ -212,7 +214,7 @@ class _MyListViewState extends State<MyListView> {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Divider(
                 height: 1,
-                color: Color(0xFFE5E5E5),
+                color: Color(0xFFCECECE),
               ),
             );
           },
@@ -226,19 +228,20 @@ class _MyListViewState extends State<MyListView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   //crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    // HOME BUTTON
+                    // Container(
+                    //   height: 56,
+                    //   width: 56,
+                    //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
+                    //   child: MaterialButton(onPressed: () {Navigator.popUntil(context, (route) => route.isFirst);},
+                    //     child: Icon(Icons.home_rounded, color: myColorMap[myemotion], size: 24,),
+                    //   ),
+                    // ),
+                    // SizedBox(width: 8,),
                     Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
-                      child: MaterialButton(onPressed: () {Navigator.popUntil(context, (route) => route.isFirst);},
-                        child: Icon(Icons.home_rounded, color: colorMap[myemotion], size: 24,),
-                      ),
-                    ),
-                    SizedBox(width: 8,),
-                    Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black,),
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Colors.white,),
                       child: MaterialButton(onPressed: () {showAlertDialog(context, myemotion);},
                         child: Container(
                           height: 24,
@@ -248,26 +251,49 @@ class _MyListViewState extends State<MyListView> {
                       ),
                     ),
                     SizedBox(width: 8,),
-                    myButtonWithChild(
-                      selectedIndex != -1 ? () { _launchurl(); } : null,
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10.0),
-                            child: Text('Listen on', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Poppins')),
-                          ),
-                          SizedBox(
-                            height: 20,
-                            child: Image.asset('assets/spotify_logo.png'),
-                          )
-                        ],
+                    ElevatedButton(
+                      onPressed: selectedIndex != -1 ? () { _launchurl(); } : () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: selectedIndex != -1 ? Colors.white : Colors.grey[400],//(0xff5c5959),
+                        shape: StadiumBorder()
+                      // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
                       ),
-                    )
+                      child: Padding(
+                      padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
+                      child:  Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Text('Listen on', style: TextStyle(color: Colors.black, fontSize: 16,)),
+                            ),
+                            SizedBox(
+                              height: 20,
+                              child: Image.asset('assets/spotify_logo.png'),
+                            )
+                          ],
+                        ),
+                      ),
+                      )
+                    // myButtonWithChild(
+                    //   selectedIndex != -1 ? () { _launchurl(); } : null,
+                    //   Row(
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.only(right: 10.0),
+                    //         child: Text('Listen on', style: TextStyle(color: Colors.black, fontSize: 16,)),
+                    //       ),
+                    //       SizedBox(
+                    //         height: 20,
+                    //         child: Image.asset('assets/spotify_logo.png'),
+                    //       )
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 9,)
+            SizedBox(height: MediaQuery.of(context).size.height / 16,)
           ],
         ),
       ],

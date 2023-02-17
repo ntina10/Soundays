@@ -9,16 +9,6 @@ class AnimationDots extends StatefulWidget {
 
 class _AnimationDotsState extends State<AnimationDots> with SingleTickerProviderStateMixin{
 
-  //about flashing circles
-  // late AnimationController _repeatingController;
-  // final List<Interval> _dotIntervals = const [
-  //   Interval(0.25, 0.8),
-  //   Interval(0.35, 0.9),
-  //   Interval(0.45, 1.0),
-  // ];
-  // Color flashingCircleDarkColor = const Color(0xFF333333);
-  // Color flashingCircleBrightColor = const Color(0xFFaec1dd);
-
   //trials
   late AnimationController _appearanceController;
   late Animation<double> _sizeAnimation;
@@ -110,70 +100,7 @@ class _AnimationDotsState extends State<AnimationDots> with SingleTickerProvider
         AnimatedBubble(
           animation: _sizeAnimation3,
         ),
-        // FlashingCircle(
-        //   index: 0,
-        //   repeatingController: _repeatingController,
-        //   dotIntervals: _dotIntervals,
-        //   flashingCircleDarkColor: flashingCircleDarkColor,
-        //   flashingCircleBrightColor: flashingCircleBrightColor,
-        // ),
-        // FlashingCircle(
-        //   index: 1,
-        //   repeatingController: _repeatingController,
-        //   dotIntervals: _dotIntervals,
-        //   flashingCircleDarkColor: flashingCircleDarkColor,
-        //   flashingCircleBrightColor: flashingCircleBrightColor,
-        // ),
-        // FlashingCircle(
-        //   index: 2,
-        //   repeatingController: _repeatingController,
-        //   dotIntervals: _dotIntervals,
-        //   flashingCircleDarkColor: flashingCircleDarkColor,
-        //   flashingCircleBrightColor: flashingCircleBrightColor,
-        // ),
       ],
-    );
-  }
-}
-
-class FlashingCircle extends StatelessWidget {
-  const FlashingCircle({
-    required this.index,
-    required this.repeatingController,
-    required this.dotIntervals,
-    required this.flashingCircleBrightColor,
-    required this.flashingCircleDarkColor,
-  });
-
-  final int index;
-  final AnimationController repeatingController;
-  final List<Interval> dotIntervals;
-  final Color flashingCircleDarkColor;
-  final Color flashingCircleBrightColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: repeatingController,
-      builder: (context, child) {
-        final circleFlashPercent = dotIntervals[index].transform(
-          repeatingController.value,
-        );
-        final circleColorPercent = math.sin(math.pi * circleFlashPercent);
-
-        return Container(
-          width: 16,
-          height: 16,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color.lerp(
-              flashingCircleDarkColor,
-              flashingCircleBrightColor,
-              circleColorPercent,
-            ),
-          ),
-        );
-      },
     );
   }
 }
@@ -197,7 +124,7 @@ class AnimatedBubble extends StatelessWidget {
             decoration: const BoxDecoration(
               //shape: BoxShape.circle,
               //borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
-              color: Colors.black,
+              color: Color(0xFF1B1919),
             ),
           ),
         );

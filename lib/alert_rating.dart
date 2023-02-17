@@ -11,7 +11,7 @@ showAlertDialog(BuildContext context, String myemotion) {
 
   // set up the button
   Widget noButton = FlatButton(
-    child: Text("I'll do it later", style: TextStyle(fontSize: 16.0, fontFamily: "Poppins", color: Color(0xFFA3A2A2))),
+    child: Text("I'll do it later", style: TextStyle(fontSize: 16.0, color: Color(0xFFA3A2A2))),
     onPressed: () {
       Navigator.pop(context);
     },
@@ -29,7 +29,7 @@ showAlertDialog(BuildContext context, String myemotion) {
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-        child: Text("Submit!", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: "Poppins")),
+        child: Text("Submit!", style: TextStyle(color: Colors.white, fontSize: 18)),
       )
   );
 
@@ -49,15 +49,9 @@ showAlertDialog(BuildContext context, String myemotion) {
                 child: Column(
                   children: [
                     SizedBox(height: 20,),
-                    // Text('Are you feeling it?', textAlign: TextAlign.center,
-                    //   style: TextStyle(fontSize: 24.0,
-                    //     fontWeight: FontWeight.bold,
-                    //     fontFamily: "Poppins",),),
-                    myTitle('Are you feeling it?'),
+                    myBlackTitle('Are you feeling it?'),
                     SizedBox(height: 10,),
-                    // Text('Please rate your playlist',
-                    //   style: TextStyle(fontSize: 16.0, fontFamily: "Poppins",),),
-                    mySubtitle('Please rate your playlist'),
+                    myBlackSubtitle('Please rate your playlist'),
                     SizedBox(height: 50,),
                     //stars
                     RatingBar(

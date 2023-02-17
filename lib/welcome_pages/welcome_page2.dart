@@ -21,12 +21,12 @@ class WelcomePage2 extends StatelessWidget {
       child: Column(
         children: [
           myTextTop(context, "Moodle,\nmeet user", "First, you let us know a little bit about\nyour music taste. Then you take a\nselfie, expressing your mood."),
-          SizedBox(height: 40,),
+          SizedBox(height: 70,),
           Container(
             //height: MediaQuery.of(context).size.height / 3.6,
             height: 230,
             width: 230,
-            child: SvgPicture.asset('assets/w2.svg')
+            child: Image.asset('assets/w2.png')
           )
         ],
       ),

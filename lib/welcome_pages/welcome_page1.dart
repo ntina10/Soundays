@@ -40,7 +40,7 @@ class WelcomePage1 extends StatelessWidget {
       child: Column(
         children: [
           myTextTop(context, "Welcome\nto moodle!", "Use moodle to listen to great music,\naccording to your mood."),
-          SizedBox(height: MediaQuery.of(context).size.height / 8,),
+          SizedBox(height: MediaQuery.of(context).size.height / 9,),
           Container(height: 213,  width: 213, child: Image.asset('assets/neutral.png')),
           SizedBox(height: MediaQuery.of(context).size.height / 8,)
         ],

@@ -10,7 +10,7 @@ Widget myButton(fun, String mytext) {
     ),
     child: Padding(
       padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
-      child: Text(mytext, style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Satoshi')),
+      child: Text(mytext, style: TextStyle(color: Colors.black, fontSize: 16,)),
     ),
   );
 }
@@ -24,25 +24,25 @@ Widget myBlackButton(fun, String mytext) {
     ),
     child: Padding(
       padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
-      child: Text(mytext, style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Satoshi')),
+      child: Text(mytext, style: TextStyle(color: Colors.white, fontSize: 16,)),
     ),
   );
 }
 
-Widget myButtonWithChild(fun, Widget mychild) {
-  return ElevatedButton(
-    onPressed: fun,
-    style: ElevatedButton.styleFrom(
-        primary: Colors.black,
-        shape: StadiumBorder()
-      // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
-    ),
-    child: Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
-      child: mychild,
-    ),
-  );
-}
+// Widget myButtonWithChild(fun, Widget mychild) {
+//   return ElevatedButton(
+//     onPressed: fun,
+//     style: ElevatedButton.styleFrom(
+//         primary: Colors.white,
+//         shape: StadiumBorder()
+//       // shape: const RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(2)))
+//     ),
+//     child: Padding(
+//       padding: const EdgeInsets.fromLTRB(40.0, 24.0, 40.0, 24.0),
+//       child: mychild,
+//     ),
+//   );
+// }
 
 Widget myTitle(String title) {
   return Text(
@@ -51,7 +51,7 @@ Widget myTitle(String title) {
     style: TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,
-      fontFamily: "Satoshi",
+      // fontFamily: "Satoshi",
       fontStyle: FontStyle.normal,
       fontSize: 24.0,
       height: 1.125,
@@ -65,7 +65,6 @@ Widget myBlackTitle(String title) {
     style: TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.bold,
-      fontFamily: "Satoshi",
       fontStyle: FontStyle.normal,
       fontSize: 24.0,
       height: 1.125,
@@ -78,7 +77,19 @@ Widget mySubtitle(String subtitle) {
     textAlign: TextAlign.center,
     style: TextStyle(
         color: Colors.white,
-        fontFamily: "Satoshi",
+        // fontFamily: "Satoshi",
+        fontStyle: FontStyle.normal,
+        fontSize: 14.0,
+        height: 1.36
+    ),
+  );
+}
+Widget myBlackSubtitle(String subtitle) {
+  return Text(
+    subtitle,
+    textAlign: TextAlign.center,
+    style: TextStyle(
+        color: Colors.black,
         fontStyle: FontStyle.normal,
         fontSize: 14.0,
         height: 1.36

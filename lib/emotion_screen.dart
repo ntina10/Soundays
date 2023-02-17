@@ -30,22 +30,15 @@ class _EmotionScreenState extends State<EmotionScreen> {
     'sadness': 'sad',
     'neutral': 'neutral'
   };
-  Map colorMap = {
-    // 'surprise': Color(0xFFFCD06A),
-    // 'anger': Color(0xFFFCBBD7),
-    // 'disgust': Color(0xFF99FF8A),
-    // 'fear': Color(0xFFA9CFEA),
-    // 'happiness': Color(0xFFFCD06A),
-    // 'sadness': Color(0xFFA9CFEA),
-    // 'neutral': Color(0xFFFCD06A)
-    'surprise': Color(0xFFC57DE2),
-    'anger': Color(0xFFF9907F),
-    'disgust': Color(0xFFABE79C),
-    'fear': Color(0xFF8E74F9),
-    'happiness': Color(0xFFFAD983),
-    'sadness': Color(0xFF9CE4FF),
-    'neutral': Color(0xFFF6F7FF)
-  };
+  // Map colorMap = {
+  //   'surprise': Color(0xFFFCD06A),
+  //   'anger': Color(0xFFFCBBD7),
+  //   'disgust': Color(0xFF99FF8A),
+  //   'fear': Color(0xFFA9CFEA),
+  //   'happiness': Color(0xFFFCD06A),
+  //   'sadness': Color(0xFFA9CFEA),
+  //   'neutral': Color(0xFFFCD06A)
+  // };
 
   @override
   void initState() {
@@ -85,7 +78,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
               SizedBox(height: MediaQuery.of(context).size.height / 16.7,),
               Container(width: 280, height: MediaQuery.of(context).size.height / 2.7, child: Image.asset('assets/' + emotionMap[emotion] + '.png')),
               SizedBox(height: MediaQuery.of(context).size.height / 20,),
-              Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: "Satoshi", height: 1.125)),
+              Text('Feeling\n' + emotionMap[emotion] + '!', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 32.0, fontWeight: FontWeight.bold, height: 1.125)),
               SizedBox(height: MediaQuery.of(context).size.height / 20,),
               myButton(() {
                 Navigator.push(context,
@@ -115,7 +108,6 @@ class _EmotionScreenState extends State<EmotionScreen> {
                     SizedBox(width: 16,),
                     Text('Show me full results', style: TextStyle(
                       fontSize: 16.0,
-                      fontFamily: "Poppins",
                       color: Colors.white,
                       // shadows: [Shadow(color: Colors.black, offset: Offset(0, -3))],
                       // color: Colors.transparent,
