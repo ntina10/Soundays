@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -31,9 +33,18 @@ Future<http.Response> getData(file, url) async {
 
   request.headers.addAll(headers);
   print("request: " + request.toString());
-  var res = await request.send();
-  var response = await http.Response.fromStream(res);
-  print("This is response:" + response.body);
+
+  var res;
+  var response;
+  try {
+    res = await request.send().timeout(
+      const Duration(seconds: 15),
+    );
+    response = await http.Response.fromStream(res);
+  } on TimeoutException catch (e) {
+    print('Runtime error' + e.toString()); // SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.1.10, port = 43004
+    response = http.Response('Connection timed out', 408);
+  }
 
   return response;
 }

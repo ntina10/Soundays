@@ -13,6 +13,7 @@ import 'package:soundays/myElements.dart';
 import 'package:soundays/no_face_screen.dart';
 import 'package:soundays/request.dart';
 import 'package:soundays/globals.dart' as globals;
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class PicturePreview extends StatefulWidget {
   final String imagePath;
@@ -63,45 +64,85 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
     var url = Uri.parse(globals.apiAddress + '/emotion');
 
     var data = await getData(File(mypath), url);
-    var decodedData = jsonDecode(data.body);
+    print("Returned data" + data.toString());
 
-    if (decodedData['result']['ans'] == null) {
+    if (data.statusCode == 200) {
+      var decodedData = jsonDecode(data.body);
+      print("Decoded data" + decodedData.toString());
 
-      List<String> emotionStrings = [
-        "anger",
-        "disgust",
-        "fear",
-        "happiness",
-        "neutral",
-        "sadness",
-        "surprise"
-      ];
-      List<double> resultsD = [];
-      print('hereeeeeee');
+      if (decodedData['result']['ans'] == null) {
 
-      for (var i in emotionStrings) {
-        resultsD.add(decodedData['result'][i]['0']);
+        List<String> emotionStrings = [
+          "anger",
+          "disgust",
+          "fear",
+          "happiness",
+          "neutral",
+          "sadness",
+          "surprise"
+        ];
+        List<double> resultsD = [];
+        print('hereeeeeee');
+
+        for (var i in emotionStrings) {
+          resultsD.add(decodedData['result'][i]['0']);
+        }
+
+        Map<String, double> map = Map.fromIterables(emotionStrings, resultsD);
+        var sortedEntries = map.entries.toList()..sort((e1, e2) {
+          var diff = e2.value.compareTo(e1.value);
+          if (diff == 0) diff = e2.key.compareTo(e1.key);
+          return diff;
+        });
+        var newMap = Map<String, double>.fromEntries(sortedEntries);
+
+        setState(() {
+          _faceFound = true;
+          _map = newMap;
+        });
+        print('RIGHT HERE' + _map.toString());
+
+      } else {
+        setState(() {
+          _faceFound = false;
+        });
       }
-
-      Map<String, double> map = Map.fromIterables(emotionStrings, resultsD);
-      var sortedEntries = map.entries.toList()..sort((e1, e2) {
-        var diff = e2.value.compareTo(e1.value);
-        if (diff == 0) diff = e2.key.compareTo(e1.key);
-        return diff;
-      });
-      var newMap = Map<String, double>.fromEntries(sortedEntries);
+    } else if (data.statusCode == 408) {
+      print('error - connection timed out');
 
       setState(() {
-        _faceFound = true;
-        _map = newMap;
+        _faceFound = false;
+        in_progress = false;
       });
-      print('RIGHT HERE' + _map.toString());
 
+      //throw alert message for timeout
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Connection timed out'),
+            backgroundColor: Colors.red,
+            shape: StadiumBorder(),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.all(20),
+            elevation: 30,
+          )
+      );
+      // Fluttertoast.showToast(
+      //     msg: "This is Center Short Toast",
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //     fontSize: 16.0
+      // );
     } else {
+      print('error - unknown error occurred');
+
       setState(() {
         _faceFound = false;
       });
     }
+
     print('CALL API IS OVER');
     print('faceFound is ' + _faceFound.toString());
   }
@@ -195,7 +236,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                     //_appearanceController.repeat();
                     await callApi(_imagePath);
 
-                    if (_faceFound == true) {
+                    if (_faceFound == true && in_progress) {
                       //var myemotion = _map.keys.first;
                       //print("emotionRes " + myemotion);
 
@@ -212,7 +253,7 @@ class _PicturePreviewState extends State<PicturePreview> with TickerProviderStat
                       });
                       print("Picture taken!!!");
                       print(_map);
-                    } else if (_faceFound == false){
+                    } else if (_faceFound == false && in_progress){
                       print("No face is in this picture");
                       //add navigation to no-face Screen
                       Navigator.push(
