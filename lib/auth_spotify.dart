@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:soundays/credentials.dart' as creds;
 
 class Authentication {
   final String url = "https://accounts.spotify.com/api/token";
   final Map<String, String> body = {"grant_type": "client_credentials"};
   static Map<String, String> headers = {};
-  String id = '';
-  String secret = '';
+  String id = creds.id;
+  String secret = creds.secret;
 
   // Future _setTokenExpirationDate() async {
   //   if (prefs == null) {
@@ -24,8 +25,7 @@ class Authentication {
 
   Future<String> getAuthToken() async {
     //prefs = await SharedPreferences.getInstance();
-    id = 'ea02e1bbc577462bbb9d9baa73c55151';
-    secret = '9b895619bd414c1eae753515e45f2561';
+    print("oooooo" + " " + id + " " + secret);
     Map<String, String> headers = {
       "Authorization": "Basic " + base64.encode(utf8.encode(id + ':' + secret)),
       "Content-Type": "application/x-www-form-urlencoded",

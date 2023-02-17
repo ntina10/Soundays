@@ -45,12 +45,18 @@ class _MyListViewState extends State<MyListView> {
   get isPlaying => audioPlayer.state == PlayerState.playing;
   get isPaused => audioPlayer.state == PlayerState.paused;
 
+  List<String> album_images = [];
   List<bool> audiostatus = [];
 
   @override
   void initState() {
     songData = widget.songData;
     myemotion = widget.emotion;
+
+    for (var i=0; i<songData.tracks.length; i++) {
+      album_images.add(songData.tracks[i].album.images[0].url);
+    }
+
     for(var i = 0; i<songData.tracks.length; i++) {
       audiostatus.add(false);
     }
@@ -145,7 +151,8 @@ class _MyListViewState extends State<MyListView> {
             var s = songData.tracks[index];
             //var myindex = index;
             //final MaterialColor color = _colors[index % _colors.length];
-            var album_pic = s.album.images[0].url;
+            //var album_pic = s.album.images[0].url;
+            var album_pic = album_images[index];
             //s.albumArt == null ? null : File.fromUri(Uri.parse(s.albumArt));
 
             return Column(
@@ -160,8 +167,8 @@ class _MyListViewState extends State<MyListView> {
                     dense: false,
                     leading: CircleAvatar(
                       //AssetImage('no_album.png'),
-                      backgroundImage: album_pic == null ? NetworkImage('https://i.scdn.co/image/ab67616d0000b273c5015d2a9270865a5979f56b')
-                                                         : NetworkImage(album_pic), //AssetImage('assets/some_album.jpg'),
+                      backgroundColor: Color(0xFF272525),
+                      backgroundImage: NetworkImage(album_pic), //AssetImage('assets/some_album.jpg'),
                       radius: 28.0,
                     ),
                     title: Text(s.name, style: TextStyle(fontSize: 14.0, fontFamily: "Satoshi", color: Colors.white)) ,

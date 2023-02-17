@@ -118,7 +118,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                                 }
                               },
                               child: Container(
-                                // height: 50,
+                                height: 200,
                                 // width: 90,
                                 decoration: BoxDecoration(
                                     color: selected[i] ? Color(0xff5c5959) : Color(0xff272525),
@@ -161,7 +161,7 @@ class _ChooseGenresState extends State<ChooseGenres> {
                           },
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.95,
+                            childAspectRatio: (0.5 * MediaQuery.of(context).size.width) / (0.25 * MediaQuery.of(context).size.height), //width / height
                             crossAxisSpacing: 16,
                             mainAxisSpacing: 16,
                             // mainAxisExtent: 264,
