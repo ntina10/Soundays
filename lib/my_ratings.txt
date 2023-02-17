@@ -39,3 +39,4 @@
 {emotion: happiness, rating: 4.0}
 {emotion: happiness, rating: 5.0}
 {emotion: happiness, rating: 5.0}
+{emotion: happiness, rating: 5.0}
