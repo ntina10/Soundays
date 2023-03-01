@@ -1,5 +1,6 @@
-# soundays
+# Soundays
 
-Flutter project - emotion based music recommendation system
+Emotion Based Music Recommendation System - Flutter project
 
-Διπλωματική εργασία 2022
+Diploma Thesis 
+Copyright © Κonstantina Freri, 2022
